@@ -4,8 +4,8 @@
 #ifndef __WORDMACHINE_H__
 #define __WORDMACHINE_H__
 
-#include "boolean.h"
-#include "charmachine.h"
+#include "../boolean.h"
+#include "../mesinkarakter/charmachine.h"
 
 #define NMax 50
 #define BLANK ' '
@@ -45,5 +45,9 @@ void CopyWord();
           currentChar = BLANK atau currentChar = MARK;
           currentChar adalah karakter sesudah karakter terakhir yang diakuisisi.
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
+
+void ClearWord(Word *word);
+
+void StartSentence();
 
 #endif

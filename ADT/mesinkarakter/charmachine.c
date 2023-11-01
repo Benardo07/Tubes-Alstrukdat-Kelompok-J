@@ -20,6 +20,7 @@ void START()
 
        /* Algoritma */
        pita = stdin;
+       fflush(pita);
        ADV();
 }
 
@@ -35,8 +36,9 @@ void ADV()
        /* Algoritma */
        retval = fscanf(pita, "%c", &currentChar);
        EOP = (currentChar == MARK);
-       if (EOP)
-       {
-              fclose(pita);
-       }
+}
+
+void CLOSE()
+{
+    fclose(pita);
 }
