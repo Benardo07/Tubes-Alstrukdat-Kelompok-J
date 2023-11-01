@@ -4,11 +4,14 @@
 #include "adt\mesinkarakter\charmachine.h"
 #include "adt\mesinkata\wordmachine.h"
 #include "adt\liststatik\listpengguna.h"
-#include "boolean.h"
+#include "ADT\listlinier\kicau.h"
+#include "adt\boolean.h"
 #include "main.h"
 
 //inisialisasi variabel di luar supaya bisa langsung diakses semua function (gk usah oper parameter), tapi! lokalisasi buruk
 ListPengguna LPengguna;
+List LKicau;
+int JumlahId = 1;
 
 int main()
 {
@@ -96,6 +99,14 @@ void strCpy(char *str1, char *dest){
     dest[i] = '\0';
 }
 
+int strlen(char *str1){
+    int i = 0;
+    while(str1[i]!='\0'&&str1[i]!='\n') {
+        i++;
+    }
+    return i;
+}
+
 char *strLower(char *str){
     static char str2[1000];
     int i;
@@ -167,9 +178,10 @@ boolean Muat(){
 
     if (!isDirectoryExist(namafolder)) {
         sukses = false;
-        printf("\nFile tidak ditemukan\n");
+        printf("\nFolder tidak ditemukan\n");
     } else printf("\nFolder ditemukan\n");
         sukses = MuatPengguna(namafolder);
+        sukses = MuatKicauan(namafolder);
         //dilanjutkan sukses = MuatTeman, etc
 
     return sukses;
@@ -226,6 +238,61 @@ boolean MuatPengguna(char *namafolder){
     }
 
     fclose(fPengguna);
+    return sukses;
+}
+
+boolean MuatKicauan(char *namafolder){
+    FILE *fKicauan;
+    boolean sukses = true;
+    char namafile[100]; //asumsi batasan strlen
+
+    strCat(namafolder,"/kicauan.config", namafile);
+    fKicauan = fopen(namafile,"r");
+
+    if (fKicauan == NULL) {
+        printf("Tidak ada file konfigurasi kicauan.\n");
+        sukses = false;
+    } else {
+        printf("File kicauan ditemukan\n");
+
+        char line[280];
+        int n, i, j;
+        DATETIME date;
+
+        fscanf(fKicauan,"%d",&n);
+        fgets(line,280,fKicauan);
+
+        for (i=0;i<n;i++){
+            Kicau p;
+            int id,like;
+
+            fscanf(fKicauan,"%d",&id);
+            fgets(line,280,fKicauan);
+            p.id = id;
+
+            fgets(p.text.TabWord, sizeof(p.text.TabWord), fKicauan);
+            p.text.Length = strlen(p.text.TabWord);
+
+            fscanf(fKicauan,"%d",&like);
+            fgets(line,280,fKicauan);
+            p.like = like;
+
+            fgets(p.author.TabWord, sizeof(p.author.TabWord), fKicauan);
+            p.author.Length = strlen(p.text.TabWord);
+            p.author.TabWord[strlen(p.author.TabWord)] = '\0';
+
+            int h,m,s,d,b,y;
+            fscanf(fKicauan, "%d/%d/%d %d:%d:%d", &d, &b, &y, &h, &m, &s);
+            fgets(line,280,fKicauan);
+            CreateDATETIME(&date,d,b,y,h,m,s);
+            p.waktu = date;
+
+            insertLastKicau(&LKicau,p);
+            JumlahId+=1;
+        }
+    }
+
+    fclose(fKicauan);
     return sukses;
 }
 

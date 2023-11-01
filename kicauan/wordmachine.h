@@ -4,11 +4,10 @@
 #ifndef __WORDMACHINE_H__
 #define __WORDMACHINE_H__
 
-#include "../boolean.h"
-#include "../mesinkarakter/charmachine.h"
+#include "../ADT/boolean.h"
+#include "charmachine.h"
 
-#define NMax 50
-#define BLANK ' '
+#define NMax 3000
 
 typedef struct
 {
@@ -46,16 +45,13 @@ void CopyWord();
           currentChar adalah karakter sesudah karakter terakhir yang diakuisisi.
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
 
-void ClearWord(Word *word);
+boolean isEqual(Word w1,Word w2);
 
-void StartSentence();
-
-void printWord(Word word);
+void readWord(Word *input);
 
 void readKicau(Word *input);
 
 boolean allSpace(Word input);
 
-boolean isEqual(Word w1,Word w2);
-
+void printWord(Word word);
 #endif

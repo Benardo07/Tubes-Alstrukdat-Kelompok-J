@@ -103,3 +103,59 @@ void StartSentence()
         currentWord.Length = i;
     }
 }
+
+void printWord(Word word) {
+   int i;
+   for (i = 0; i < word.Length; i++) {
+      printf("%c", word.TabWord[i]);
+   }
+}
+
+// khusus kicau
+void readKicau(Word *input){
+    int i;
+    START();
+
+    (*input).Length = 0;
+    i = 0;
+
+    while ((currentChar != MARK) && (i < 3000)) {
+        if (i<=280){
+            (*input).TabWord[i] = currentChar;
+        }
+        if(i==280){
+            (*input).TabWord[i] = '\0';
+        }
+        ADV();
+        i++;
+    }
+
+    (*input).Length = i;
+}
+
+// cek apakah hanya berisi spasi atau tidak
+boolean allSpace(Word input){
+    boolean space = true;
+    for(int i=0;i<input.Length;i++){
+        if(input.TabWord[i]!=' '){
+            space=false;
+        }
+    }
+    return space;
+}
+
+// cek apakah dua kata sama atau tidak
+boolean isEqual(Word w1,Word w2){
+    boolean sama = true;
+    if(w1.Length!=w2.Length){
+        sama = false;
+    }
+    else{
+        for(int i=0;i<w1.Length;i++){
+            if(w1.TabWord[i]!=w2.TabWord[i]){
+                sama = false;
+            }
+        }
+    }
+    return sama;
+}
