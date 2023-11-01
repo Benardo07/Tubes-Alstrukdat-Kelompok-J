@@ -5,11 +5,15 @@
 #include "adt/mesinkata/wordmachine.h"
 #include "adt/liststatik/listpengguna.h"
 #include "adt/listlinier/kicau.h"
+#include "ADT\graf\graf.h"
 #include "adt/boolean.h"
 #include "main.h"
 #include "adt/stack/drafStack.h"
+
 //inisialisasi variabel di luar supaya bisa langsung diakses semua function (gk usah oper parameter), tapi! lokalisasi buruk
 ListPengguna LPengguna;
+ListPengguna users[20];
+graf Teman;
 List LKicau;
 DrafStack sDraf;
 int JumlahId = 1;
