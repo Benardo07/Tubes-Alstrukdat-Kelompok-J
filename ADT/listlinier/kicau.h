@@ -1,9 +1,9 @@
 #ifndef listlinier_H
 #define listlinier_H
-#include "../ADT/boolean.h"
-#include "../adt/datetime/datetime.h"
-#include "../ADT/mesinkarakter/charmachine.h"
-#include "../ADT/mesinkata/wordmachine.h"
+#include "../boolean.h"
+#include "../datetime/datetime.h"
+#include "../mesinkarakter/charmachine.h"
+#include "../mesinkata/wordmachine.h"
 
 /* Definisi Node : */
 typedef struct {
@@ -38,7 +38,7 @@ Address newNode(Kicau val);
 
 typedef Address List;
 
-#define IDX_UNDEF (-1)
+#define IDX_UNDEFINE (-1)
 #define FIRST(l) (l)
 
 /* PROTOTYPE */

@@ -1,11 +1,11 @@
 #ifndef MAIN_H_INCLUDED
 #define MAIN_H_INCLUDED
 
-#include "adt\mesinkarakter\charmachine.h"
-#include "adt\mesinkata\wordmachine.h"
-#include "adt\liststatik\listpengguna.h"
-#include "ADT\listlinier\kicau.h"
-#include "adt\boolean.h"
+#include "adt/mesinkarakter/charmachine.h"
+#include "adt/mesinkata/wordmachine.h"
+#include "adt/liststatik/listpengguna.h"
+#include "adt/listlinier/kicau.h"
+#include "adt/boolean.h"
 #include <stdio.h>
 
 extern char currentChar;
@@ -20,7 +20,7 @@ void strCat(char *str1, char *str2, char *dest);
 
 void strCpy(char *str1, char *dest);
 
-int strlen(char *str1);
+int strlength(char *str1);
 
 char *strLower(char *str);
 
@@ -31,6 +31,8 @@ boolean isStrEqual(char *str1, char *str2);
 boolean Muat();
 
 boolean MuatPengguna(char *namafolder);
+
+boolean MuatDraf (char *namafolder);
 
 boolean MuatKicauan(char *namafolder);
 

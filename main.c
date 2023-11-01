@@ -1,16 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
-#include "adt\mesinkarakter\charmachine.h"
-#include "adt\mesinkata\wordmachine.h"
-#include "adt\liststatik\listpengguna.h"
-#include "ADT\listlinier\kicau.h"
-#include "adt\boolean.h"
+#include "adt/mesinkarakter/charmachine.h"
+#include "adt/mesinkata/wordmachine.h"
+#include "adt/liststatik/listpengguna.h"
+#include "adt/listlinier/kicau.h"
+#include "adt/boolean.h"
 #include "main.h"
-
+#include "adt/stack/drafStack.h"
 //inisialisasi variabel di luar supaya bisa langsung diakses semua function (gk usah oper parameter), tapi! lokalisasi buruk
 ListPengguna LPengguna;
 List LKicau;
+DrafStack sDraf;
 int JumlahId = 1;
 
 int main()
@@ -33,6 +34,8 @@ int main()
 
     printf("\nFile konfigurasi berhasil dimuat! Selamat berkicau!\n");
     printList(LPengguna);
+    // printf("\n");
+    // DisplayDraf(InfoTop(sDraf));
 
     //*********************************MAIN-LOOP******************************************//
     loop = true;
@@ -99,7 +102,7 @@ void strCpy(char *str1, char *dest){
     dest[i] = '\0';
 }
 
-int strlen(char *str1){
+int strlength(char *str1){
     int i = 0;
     while(str1[i]!='\0'&&str1[i]!='\n') {
         i++;
@@ -182,6 +185,7 @@ boolean Muat(){
     } else printf("\nFolder ditemukan\n");
         sukses = MuatPengguna(namafolder);
         sukses = MuatKicauan(namafolder);
+        sukses = MuatDraf(namafolder);
         //dilanjutkan sukses = MuatTeman, etc
 
     return sukses;
@@ -190,7 +194,7 @@ boolean Muat(){
 boolean MuatPengguna(char *namafolder){
     FILE *fPengguna;
     boolean sukses = true;
-    char namafile[100]; //asumsi batasan strlen
+    char namafile[100]; //asumsi batasan strlength
 
     strCat(namafolder,"/pengguna.config", namafile);
     //printf("%s\n",namafile);
@@ -244,7 +248,7 @@ boolean MuatPengguna(char *namafolder){
 boolean MuatKicauan(char *namafolder){
     FILE *fKicauan;
     boolean sukses = true;
-    char namafile[100]; //asumsi batasan strlen
+    char namafile[100]; //asumsi batasan strlength
 
     strCat(namafolder,"/kicauan.config", namafile);
     fKicauan = fopen(namafile,"r");
@@ -271,15 +275,15 @@ boolean MuatKicauan(char *namafolder){
             p.id = id;
 
             fgets(p.text.TabWord, sizeof(p.text.TabWord), fKicauan);
-            p.text.Length = strlen(p.text.TabWord);
+            p.text.Length = strlength(p.text.TabWord);
 
             fscanf(fKicauan,"%d",&like);
             fgets(line,280,fKicauan);
             p.like = like;
 
             fgets(p.author.TabWord, sizeof(p.author.TabWord), fKicauan);
-            p.author.Length = strlen(p.text.TabWord);
-            p.author.TabWord[strlen(p.author.TabWord)] = '\0';
+            p.author.Length = strlength(p.text.TabWord);
+            p.author.TabWord[strlength(p.author.TabWord)] = '\0';
 
             int h,m,s,d,b,y;
             fscanf(fKicauan, "%d/%d/%d %d:%d:%d", &d, &b, &y, &h, &m, &s);
@@ -293,6 +297,44 @@ boolean MuatKicauan(char *namafolder){
     }
 
     fclose(fKicauan);
+    return sukses;
+}
+
+boolean MuatDraf (char *namafolder){
+    FILE *fDraf;
+    boolean sukses = true;
+    char namafile[100]; //asumsi batasan strlength
+
+    strCat(namafolder,"/draf.config", namafile);
+    fDraf = fopen(namafile,"r");
+
+    if(fDraf == NULL){
+        printf("Tidak ada file konfigurasi draf.\n");
+        sukses = false;
+    }else{
+        printf("File draf ditemukan.\n");
+        char line[280];
+        int n, j;
+
+        fscanf(fDraf,"%d\n",&n);
+        int i ;
+        for(i = 0 ; i < n ; i++){
+            Draf d;
+            fscanf(fDraf,"%d\n",&Id(d));
+
+            fgets(line,280,fDraf);
+            strCpy(line,DrafTweet(d));
+
+            fgets(line,280,fDraf);
+            strCpy(line,Author(d));
+
+            fgets(line,280,fDraf);
+            int temp = sscanf(line, "%d/%d/%d %d:%d:%d", &Day(DateTime(d)), &Month(DateTime(d)), &Year(DateTime(d)), &Hour(Time(DateTime(d))) ,&Minute(Time(DateTime(d))) , &Second(Time(DateTime(d))));
+            Push(&sDraf,d);
+        }
+        
+    }
+    fclose(fDraf);
     return sukses;
 }
 

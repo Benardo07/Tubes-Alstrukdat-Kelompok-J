@@ -7,7 +7,7 @@
 
 #include <time.h>
 #include "../boolean.h"
-#include "../datetime/time.h"
+#include "time.h"
 
 
 /* *** Definisi TYPE DATETIME <DD/MM/YY HH:MM:SS> *** */

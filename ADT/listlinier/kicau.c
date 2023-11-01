@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "kicau.h"
-
+#include "../datetime/datetime.h"
 
 Address newNode(Kicau val){
     Address new = (Address) malloc (sizeof(Node));
@@ -81,13 +81,13 @@ int indexOf(List l, int id){
         return(idx);
     }
     else{
-        return(IDX_UNDEF);
+        return(IDX_UNDEFINE);
     }
 }
 /* I.S. l, val terdefinisi */
 /* F.S. Mencari apakah ada elemen list l yang bernilai val */
 /* Jika ada, mengembalikan indeks elemen pertama l yang bernilai val */
-/* Mengembalikan IDX_UNDEF jika tidak ditemukan */
+/* Mengembalikan IDX_UNDEFINE jika tidak ditemukan */
 
 /****************** PRIMITIF BERDASARKAN NILAI ******************/
 /*** PENAMBAHAN ELEMEN ***/
@@ -162,7 +162,7 @@ void insertKicau(List *l, Word val, int *id){ //val ini buat authornya terus idn
 }
 
 void editKicau(List *l, int id, Word auth){
-    if (indexOf(*l,id)==IDX_UNDEF){
+    if (indexOf(*l,id)==IDX_UNDEFINE){
         printf("Tidak ditemukan kicauan dengan ID = %d!\n",id);
         printf("\n");
     }
@@ -203,7 +203,7 @@ void editKicau(List *l, int id, Word auth){
 }
 
 void sukaKicau(List *l, int id, Word auth){
-    if (indexOf(*l,id)==IDX_UNDEF){
+    if (indexOf(*l,id)==IDX_UNDEFINE){
         printf("Tidak ditemukan kicauan dengan ID = %d!\n",id);
         printf("\n");
     }
