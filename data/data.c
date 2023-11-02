@@ -5,11 +5,11 @@ ListPengguna LPengguna;
 ListPengguna users[20];
 // extern Graf Teman;
 List LKicau;
+List LUtas;
 DrafStack sDraf;
 Pengguna currentUser;
-int JumlahId ;
-
-
+int IdKicau=1;
+int IdUtas=1;
 
 boolean Muat(){
     char namafolder[100];
@@ -133,7 +133,7 @@ boolean MuatKicauan(char *namafolder){
             p.waktu = date;
 
             insertLastKicau(&LKicau,p);
-            JumlahId+=1;
+            IdKicau+=1;
         }
     }
 
@@ -176,5 +176,66 @@ boolean MuatDraf (char *namafolder){
         
     }
     fclose(fDraf);
+    return sukses;
+}
+
+boolean MuatUtas(char *namafolder){
+    FILE *fUtas;
+    boolean sukses = true;
+    char namafile[100]; //asumsi batasan strlength
+
+    strCat(namafolder,"/utas.config", namafile);
+    fUtas = fopen(namafile,"r");
+
+    if (fUtas == NULL) {
+        printf("Tidak ada file konfigurasi utas.\n");
+        sukses = false;
+    } else {
+        printf("File utas ditemukan\n");
+
+        char line[280];
+        int n, m, i, j;
+        DATETIME date;
+
+        fscanf(fUtas,"%d",&n);
+        fgets(line,280,fUtas);
+
+        for (i=0;i<n;i++){
+            int id;
+            fscanf(fUtas,"%d",&id);
+            fgets(line,280,fUtas);
+            insertLastKicau(&LUtas,getElmt(LKicau,id-1));
+
+            fscanf(fUtas,"%d",&m);
+            fgets(line,280,fUtas);
+            Kicau p;
+            for (j=0;j<m;j++){
+                int idx,like;
+                fscanf(fUtas,"%d",&idx);
+                fgets(line,280,fUtas);
+                p.id = idx;
+
+                fgets(p.text.TabWord, sizeof(p.text.TabWord), fUtas);
+                p.text.Length = strlength(p.text.TabWord);
+
+                fgets(p.author.TabWord, sizeof(p.author.TabWord), fUtas);
+                p.author.Length = strlength(p.text.TabWord);
+                p.author.TabWord[strlength(p.author.TabWord)] = '\0';
+
+                int h,m,s,d,b,y;
+                fscanf(fUtas, "%d/%d/%d %d:%d:%d", &d, &b, &y, &h, &m, &s);
+                fgets(line,280,fUtas);
+                CreateDATETIME(&date,d,b,y,h,m,s);
+                p.waktu = date;
+                Kicau k;
+                k= getElmt(LUtas,i);
+                insertLastKicau(&(k.Utas),p);
+            }
+            setElmt(&LUtas,IdUtas-1,p);
+            IdUtas+=1;
+        }
+    }
+
+    fclose(fUtas);
     return sukses;
 }

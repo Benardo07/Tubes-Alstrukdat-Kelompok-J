@@ -1,32 +1,44 @@
-/* File : listlinier.h */
-/* contoh ADT list berkait dengan representasi fisik pointer  */
-/* Representasi address dengan pointer */
-/* ElType adalah integer */
 
 #ifndef listlinier_H
 #define listlinier_H
 
 #include "../boolean.h"
+#include "../datetime/datetime.h"
+#include "../../kicauan/charmachine.h"
+#include "../../kicauan/wordmachine.h"
 
 /* Definisi Node : */
-typedef int ElType;
 typedef struct node* Address;
+typedef Address List;
+
+typedef struct {
+    int id;
+    int like;
+    Word text;
+    Word author; // ini authornya nunggu profil nanti disesuaikan
+    DATETIME waktu;
+    List Utas;
+} Kicau;
+
 typedef struct node {
-    ElType info;
+    Kicau info;
     Address next;
 } Node;
 
-#define INFO(p) (p)->info
-#define NEXT(p) (p)->next
+#define INFO(p) ((p)->info)
+#define NEXT(p) ((p)->next)
+#define id(p) (((p)->info).id)
+#define like(p) (((p)->info).like)
+#define text(p) (((p)->info).text)
+#define author(p) (((p)->info).author)
+#define waktu(p) (((p)->info).waktu)
 
-Address newNode(ElType val);
 
 /* Definisi List : */
 /* List kosong : FIRST(l) = NULL */
 /* Setiap elemen dengan Address p dapat diacu INFO(p), NEXT(p) */
 /* Elemen terakhir list: jika addressnya Last, maka NEXT(Last)=NULL */
 
-typedef Address List;
 
 #define IDX_UNDEF (-1)
 #define FIRST(l) (l)
@@ -38,19 +50,19 @@ void CreateList(List *l);
 /* F.S. Terbentuk list kosong */
 
 /****************** TEST LIST KOSONG ******************/
-boolean isEmpty(List l);
+boolean isEmptyListLinier(List l);
 /* Mengirim true jika list kosong */
 
 /****************** GETTER SETTER ******************/
-ElType getElmt(List l, int idx);
+Kicau getElmt(List l, int idx);
 /* I.S. l terdefinisi, idx indeks yang valid dalam l, yaitu 0..length(l) */
 /* F.S. Mengembalikan nilai elemen l pada indeks idx */
 
-void setElmt(List *l, int idx, ElType val);
+void setElmt(List *l, int idx, Kicau val);
 /* I.S. l terdefinisi, idx indeks yang valid dalam l, yaitu 0..length(l) */
 /* F.S. Mengubah elemen l pada indeks ke-idx menjadi val */
 
-int indexOf(List l, ElType val);
+int indexOf(List l, int id);
 /* I.S. l, val terdefinisi */
 /* F.S. Mencari apakah ada elemen list l yang bernilai val */
 /* Jika ada, mengembalikan indeks elemen pertama l yang bernilai val */
@@ -58,35 +70,35 @@ int indexOf(List l, ElType val);
 
 /****************** PRIMITIF BERDASARKAN NILAI ******************/
 /*** PENAMBAHAN ELEMEN ***/
-void insertFirst(List *l, ElType val);
+void insertFirst(List *l, Kicau val);
 /* I.S. l mungkin kosong */
 /* F.S. Melakukan alokasi sebuah elemen dan */
 /* menambahkan elemen pertama dengan nilai val jika alokasi berhasil. */
 /* Jika alokasi gagal: I.S.= F.S. */
 
-void insertLast(List *l, ElType val);
+void insertLastKicau(List *l, Kicau val);
 /* I.S. l mungkin kosong */
 /* F.S. Melakukan alokasi sebuah elemen dan */
 /* menambahkan elemen list di akhir: elemen terakhir yang baru */
 /* bernilai val jika alokasi berhasil. Jika alokasi gagal: I.S.= F.S. */
 
-void insertAt(List *l, ElType val, int idx);
+void insertAt(List *l, Kicau val, int idx);
 /* I.S. l tidak mungkin kosong, idx indeks yang valid dalam l, yaitu 0..length(l) */
 /* F.S. Melakukan alokasi sebuah elemen dan */
 /* menyisipkan elemen dalam list pada indeks ke-idx (bukan menimpa elemen di i) */
 /* yang bernilai val jika alokasi berhasil. Jika alokasi gagal: I.S.= F.S. */
 
 /*** PENGHAPUSAN ELEMEN ***/
-void deleteFirst(List *l, ElType *val);
+void deleteFirst(List *l, Kicau *val);
 /* I.S. List l tidak kosong  */
 /* F.S. Elemen pertama list dihapus: nilai info disimpan pada x */
 /*      dan alamat elemen pertama di-dealokasi */
-void deleteLast(List *l, ElType *val);
+void deleteLast(List *l, Kicau *val);
 /* I.S. list tidak kosong */
 /* F.S. Elemen terakhir list dihapus: nilai info disimpan pada x */
 /*      dan alamat elemen terakhir di-dealokasi */
 
-void deleteAt(List *l, int idx, ElType *val);
+void deleteAt(List *l, int idx, Kicau *val);
 /* I.S. list tidak kosong, idx indeks yang valid dalam l, yaitu 0..length(l) */
 /* F.S. val diset dengan elemen l pada indeks ke-idx. */
 /*      Elemen l pada indeks ke-idx dihapus dari l */
@@ -113,16 +125,6 @@ List concat(List l1, List l2) ;
 /* Tidak ada alokasi/dealokasi pada prosedur ini */
 
 boolean fSearch(List L, Address P);
-
-Address searchPrec(List L,ElType X);
-
-Address adrMax(List l);
-
-ElType max(List l);
-
-Address adrMin(List l);
-
-ElType min(List l);
 
 void deleteAll(List *l);
 

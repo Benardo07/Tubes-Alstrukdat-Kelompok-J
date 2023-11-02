@@ -1,13 +1,13 @@
 /* File : listlinier.h */
 /* contoh ADT list berkait dengan representasi fisik pointer  */
 /* Representasi address dengan pointer */
-/* ElType adalah integer */
+/* Kicau adalah integer */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include "listlinier.h"
 
-Address newNode(ElType val){
+Address newNode(Kicau val){
     Address new = (Address) malloc (sizeof(Node));
     INFO(new) = val;
     NEXT(new) = NULL;
@@ -29,13 +29,13 @@ void CreateList(List *l){
 /* F.S. Terbentuk list kosong */
 
 /****************** TEST LIST KOSONG ******************/
-boolean isEmpty(List l){
+boolean isEmptyListLinier(List l){
     return (FIRST(l)==NULL);
 }
 /* Mengirim true jika list kosong */
 
 /****************** GETTER SETTER ******************/
-ElType getElmt(List l, int idx){
+Kicau getElmt(List l, int idx){
     int ctr = 0;
     Address p = l;
     while (ctr<idx){
@@ -47,7 +47,7 @@ ElType getElmt(List l, int idx){
 /* I.S. l terdefinisi, idx indeks yang valid dalam l, yaitu 0..length(l) */
 /* F.S. Mengembalikan nilai elemen l pada indeks idx */
 
-void setElmt(List *l, int idx, ElType val){
+void setElmt(List *l, int idx, Kicau val){
     int ctr = 0;
     Address p = *l;
     while (ctr < idx){
@@ -59,12 +59,12 @@ void setElmt(List *l, int idx, ElType val){
 /* I.S. l terdefinisi, idx indeks yang valid dalam l, yaitu 0..length(l) */
 /* F.S. Mengubah elemen l pada indeks ke-idx menjadi val */
 
-int indexOf(List l, ElType val){
+int indexOf(List l, int id){
     int idx = 0;
     Address p = l;
     boolean found = false;
     while (p!=NULL && !found){
-        if (INFO(p)==val){
+        if (id(p)==id){
             found = true;
         }
         else{
@@ -86,7 +86,7 @@ int indexOf(List l, ElType val){
 
 /****************** PRIMITIF BERDASARKAN NILAI ******************/
 /*** PENAMBAHAN ELEMEN ***/
-void insertFirst(List *l, ElType val){
+void insertFirst(List *l, Kicau val){
     Address p = newNode(val);
     if (p!=NULL){
         NEXT(p) = *l;
@@ -98,9 +98,9 @@ void insertFirst(List *l, ElType val){
 /* menambahkan elemen pertama dengan nilai val jika alokasi berhasil. */
 /* Jika alokasi gagal: I.S.= F.S. */
 
-void insertLast(List *l, ElType val){
+void insertLastKicau(List *l, Kicau val){
     Address p,loc;
-    if(isEmpty(*l)){
+    if(isEmptyListLinier(*l)){
         insertFirst(l,val);
     }
     else{
@@ -117,7 +117,7 @@ void insertLast(List *l, ElType val){
 /* menambahkan elemen list di akhir: elemen terakhir yang baru */
 /* bernilai val jika alokasi berhasil. Jika alokasi gagal: I.S.= F.S. */
 
-void insertAt(List *l, ElType val, int idx){
+void insertAt(List *l, Kicau val, int idx){
     int ctr;
     Address p,loc;
     if (idx==0){
@@ -141,7 +141,7 @@ void insertAt(List *l, ElType val, int idx){
 /* yang bernilai val jika alokasi berhasil. Jika alokasi gagal: I.S.= F.S. */
 
 /*** PENGHAPUSAN ELEMEN ***/
-void deleteFirst(List *l, ElType *val){
+void deleteFirst(List *l, Kicau *val){
     Address p = *l;
     *val = INFO(p);
     *l = NEXT(p);
@@ -150,7 +150,7 @@ void deleteFirst(List *l, ElType *val){
 /* I.S. List l tidak kosong  */
 /* F.S. Elemen pertama list dihapus: nilai info disimpan pada x */
 /*      dan alamat elemen pertama di-dealokasi */
-void deleteLast(List *l, ElType *val){
+void deleteLast(List *l, Kicau *val){
     Address p,loc;
     p = *l;
     loc = NULL;
@@ -171,7 +171,7 @@ void deleteLast(List *l, ElType *val){
 /* F.S. Elemen terakhir list dihapus: nilai info disimpan pada x */
 /*      dan alamat elemen terakhir di-dealokasi */
 
-void deleteAt(List *l, int idx, ElType *val){
+void deleteAt(List *l, int idx, Kicau *val){
     int ctr;
     Address p,loc;
     if (idx==0){
@@ -197,7 +197,7 @@ void deleteAt(List *l, int idx, ElType *val){
 
 /****************** PROSES SEMUA ELEMEN LIST ******************/
 void displayList(List l){
-    if (isEmpty(l)){
+    if (isEmptyListLinier(l)){
         printf("[]");
     }
     else{
@@ -224,7 +224,7 @@ void displayList(List l){
 int length(List l){
     int ctr = 0;
     Address p = l;
-    if (isEmpty(l)){
+    if (isEmptyListLinier(l)){
         return 0;
     }
     while (p!=NULL){
@@ -242,12 +242,12 @@ List concat(List l1, List l2) {
     CreateList(&l3);
     p = l1;
     while (p!=NULL){
-        insertLast(&l3,INFO(p));
+        insertLastKicau(&l3,INFO(p));
         p = NEXT(p);
     }
     p = l2;
     while (p!=NULL){
-        insertLast(&l3,INFO(p));
+        insertLastKicau(&l3,INFO(p));
         p = NEXT(p);
     }
     return(l3);
@@ -267,60 +267,60 @@ boolean fSearch(List L, Address P){
     return found;
 }
 
-Address searchPrec(List L,ElType X){
-    Address p,loc;
-    ElType temp;
-    p = L;
-    loc = NULL;
-    while (p!=NULL){
-        if (INFO(p)==X){
-            return loc;
-        }else{
-            loc = p;
-            p = NEXT(p);
-        }
-     }
-     return NULL;
-}
+// Address searchPrec(List L,Kicau X){
+//     Address p,loc;
+//     Kicau temp;
+//     p = L;
+//     loc = NULL;
+//     while (p!=NULL){
+//         if (INFO(p)==X){
+//             return loc;
+//         }else{
+//             loc = p;
+//             p = NEXT(p);
+//         }
+//      }
+//      return NULL;
+// }
 
-Address adrMax(List l){
-    Address max = l;
-    Address p = l;
-    p = NEXT(p);
-    while (p!=NULL){
-        if(INFO(p)>INFO(max)){
-            max = p;
-        }
-        p=NEXT(p);
-    }
-    return max;
-}
+// Address adrMax(List l){
+//     Address max = l;
+//     Address p = l;
+//     p = NEXT(p);
+//     while (p!=NULL){
+//         if(INFO(p)>INFO(max)){
+//             max = p;
+//         }
+//         p=NEXT(p);
+//     }
+//     return max;
+// }
 
-ElType max(List l){
-    return(INFO(adrMax(l)));
-}
+// Kicau max(List l){
+//     return(INFO(adrMax(l)));
+// }
 
-Address adrMin(List l){
-    Address max = l;
-    Address p = l;
-    p = NEXT(p);
-    while (p!=NULL){
-        if(INFO(p)<INFO(max)){
-            max = p;
-        }
-        p=NEXT(p);
-    }
-    return max;
-}
+// Address adrMin(List l){
+//     Address max = l;
+//     Address p = l;
+//     p = NEXT(p);
+//     while (p!=NULL){
+//         if(INFO(p)<INFO(max)){
+//             max = p;
+//         }
+//         p=NEXT(p);
+//     }
+//     return max;
+// }
 
-ElType min(List l){
-    return(INFO(adrMin(l)));
-}
+// Kicau min(List l){
+//     return(INFO(adrMin(l)));
+// }
 
 void deleteAll(List *l){
     Address p = *l;
-    ElType val;
-    while(!isEmpty(*l)){
+    Kicau val;
+    while(!isEmptyListLinier(*l)){
         deleteFirst(l,&val);
     }
 }
@@ -332,7 +332,7 @@ void copyList(List *l1, List *l2){
 
 void inverseList(List *l){
     Address p = *l;
-    ElType temp;
+    Kicau temp;
     for(int i = 0; i<length(*l)/2;i++){
         temp = getElmt(*l,i);
         setElmt(l,i,getElmt(*l,length(*l)-1-i));
@@ -350,9 +350,9 @@ void splitList(List *l1, List *l2, List l){
     while (p!=NULL){
         pNew = newNode(INFO(p));
         if (i<length(l)/2){
-            insertLast(l1, INFO(pNew));
+            insertLastKicau(l1, INFO(pNew));
         }else{
-            insertLast(l2, INFO(pNew));
+            insertLastKicau(l2, INFO(pNew));
         }
         free(pNew);
         p=NEXT(p);

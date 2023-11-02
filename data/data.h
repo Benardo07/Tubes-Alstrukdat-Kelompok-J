@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include "../ADT/liststatik/listpengguna.h"
-#include "../ADT/listlinier/kicau.h"
+#include "../kicauan/kicauan.h"
 // #include "ADT\graf\graf.h"
 #include "../ADT/boolean.h"
 #include "../ADT/stack/drafStack.h"
 #include "../primitif/primitif.h"
+#include "../ADT/listlinier/listlinier.h"
 
 extern ListPengguna LPengguna;
 extern ListPengguna users[20];
@@ -12,7 +13,7 @@ extern ListPengguna users[20];
 extern List LKicau;
 extern DrafStack sDraf;
 extern Pengguna currentUser;
-extern int JumlahId ;
+extern int IdKicau;
 
 extern char currentChar;
 extern boolean EOP;

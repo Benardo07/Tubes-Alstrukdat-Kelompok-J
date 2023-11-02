@@ -1,20 +1,27 @@
 #include <stdio.h>
-#include "kicau.h"
 #include "wordmachine.h"
+#include "kicauan.h"
+#include "../ADT/listlinier/listlinier.h"
+#include "../utas/utas.h"
 
 List l;
+List LUtas;
 int JumlahId = 1;
+int IdUtas = 1;
 
 boolean MuatKicauan(char *namafolder);
-
-// gcc -o q kicauan/driver.c adt/datetime/datetime.c kicauan/kicau.c adt/datetime/time.c kicauan/wordmachine.c kicauan/charmachine.c
+boolean MuatUtas(char *namafolder);
+// gcc -o q kicauan/driver.c adt/datetime/datetime.c kicauan/kicauan.c adt/datetime/time.c kicauan/wordmachine.c kicauan/charmachine.c adt/listlinier/listlinier.c utas/utas.c
 
 int main() {
     boolean loop = true;
     while (loop) {
         loop = !MuatKicauan("configs");
+        loop = !MuatUtas("configs");
     }
     kicauan(l);
+    perutasan(getElmt(LUtas,0));
+    perutasan(getElmt(LUtas,1));
     printf("\nFile konfigurasi berhasil dimuat! Selamat berkicau!\n");
     // Create a Word to store the author's name
     Word aut,aut2;
@@ -23,12 +30,6 @@ int main() {
     
     insertKicau(&l, aut,&JumlahId);
     insertKicau(&l, aut,&JumlahId);
-
-    printf("masukkan author: ");
-    readWord(&aut2);
-
-    insertKicau(&l, aut2,&JumlahId);
-    insertKicau(&l, aut2,&JumlahId);
 
     // Print semua kicauan
     kicauan(l);
@@ -49,6 +50,34 @@ int main() {
 
     kicauan(l);
 
+    // try utas
+    printf("mau buat utas id berapa: ");
+    scanf("%d",&idx);
+    Kicau k1 = getElmt(l,idx-1);
+    buatUtas(&LUtas,&k1,&IdUtas,idx,aut);
+    
+    printf("mau buat utas id berapa: ");
+    scanf("%d",&idx);
+    k1 = getElmt(l,idx-1);
+    buatUtas(&LUtas,&k1,&IdUtas,idx,aut);
+
+    printf("mau cetak utas id berapa: ");
+    scanf("%d",&idx);
+    perutasan(getElmt(LUtas,idx-1));
+
+    printf("mau SAMBUNG utas idx berapa: ");
+    scanf("%d",&idx);
+    k1 = getElmt(LUtas,0);
+    sambungUtas(&k1,idx,1,&LUtas,aut);
+    perutasan(getElmt(LUtas,0));
+
+    printf("mau hapus utas idx berapa: ");
+    scanf("%d",&idx);
+    k1 = getElmt(LUtas,0);
+    hapusUtas(&k1,idx,IdUtas,LUtas,aut);
+    perutasan(getElmt(LUtas,0));
+
+    printf("done");
     return 0;
 }
 
@@ -140,5 +169,66 @@ boolean MuatKicauan(char *namafolder){
     }
 
     fclose(fKicauan);
+    return sukses;
+}
+
+boolean MuatUtas(char *namafolder){
+    FILE *fUtas;
+    boolean sukses = true;
+    char namafile[100]; //asumsi batasan strlength
+
+    strCat(namafolder,"/utas.config", namafile);
+    fUtas = fopen(namafile,"r");
+
+    if (fUtas == NULL) {
+        printf("Tidak ada file konfigurasi kicauan.\n");
+        sukses = false;
+    } else {
+        printf("File kicauan ditemukan\n");
+
+        char line[280];
+        int n, m, i, j;
+        DATETIME date;
+
+        fscanf(fUtas,"%d",&n);
+        fgets(line,280,fUtas);
+
+        for (i=0;i<n;i++){
+            int id;
+            fscanf(fUtas,"%d",&id);
+            fgets(line,280,fUtas);
+            insertLastKicau(&LUtas,getElmt(l,id-1));
+
+            fscanf(fUtas,"%d",&m);
+            fgets(line,280,fUtas);
+            Kicau p;
+            for (j=0;j<m;j++){
+                int idx,like;
+                fscanf(fUtas,"%d",&id);
+                fgets(line,280,fUtas);
+                p.id = id;
+
+                fgets(p.text.TabWord, sizeof(p.text.TabWord), fUtas);
+                p.text.Length = strlen(p.text.TabWord);
+
+                fgets(p.author.TabWord, sizeof(p.author.TabWord), fUtas);
+                p.author.Length = strlen(p.text.TabWord);
+                p.author.TabWord[strlen(p.author.TabWord)] = '\0';
+
+                int h,m,s,d,b,y;
+                fscanf(fUtas, "%d/%d/%d %d:%d:%d", &d, &b, &y, &h, &m, &s);
+                fgets(line,280,fUtas);
+                CreateDATETIME(&date,d,b,y,h,m,s);
+                p.waktu = date;
+                Kicau k;
+                k= getElmt(LUtas,i);
+                insertLastKicau(&(k.Utas),p);
+            }
+            setElmt(&LUtas,IdUtas,p);
+            IdUtas+=1;
+        }
+    }
+
+    fclose(fUtas);
     return sukses;
 }
