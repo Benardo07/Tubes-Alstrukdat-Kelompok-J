@@ -1,39 +1,103 @@
-# include "graf.h"
-# include <stdio.h>
+#include <stdio.h>
+#include "graf.h"
+#include "queue/queue.h"
 
-void CreateGraphMatrix(graf *G, int row, int col){
-    ROW_EFF(*G) = row;
-    COL_EFF(*G) = col;
-    for(int i = 0; i < row; i++) {
-        for(int j = 0; j < col; j++) {
-            ELMT(*G,i,j) = 0;
+/* ********** Predikat ********** */
+boolean IsEmpty(Graf g) {
+/* I.S. Graf g terdefinisi */
+/* F.S. Mengembalikan true jika graf kosong, yaitu jumlah busur nol */
+    return BUSUR(g) == 0;
+}
+
+boolean isDirectlyConnected(Graf g, int idx1, int idx2) {
+/* I.S. Graf g terdefinisi */
+/* F.S. Mengembalikan true jika terdapat busur yang menghubungkan langsung */
+/*      simpul 1 dengan simpul 2, false jika tidak */
+    return ELMT(g, idx1, idx2) == 1;
+}
+
+boolean isIndirectlyConnected(Graf g, int idx1, int idx2) {
+/* I.S. Graf g terdefinisi */
+/* F.S. Mengembalikan true jika user dengan id_1 terhubung dengan user dengan id_2, */
+/*      yaitu terdapat jalan yang menghubungkan simpul 1 dengan simpul 2 */
+/* Proses : Melakukan algoritma BFS pada graf untuk mengecek apakah simpul 1 dan simpul 2 terhubung */
+    if (isDirectlyConnected(g, idx1, idx2)) return true;
+
+    boolean visited[SIMPUL(g)];
+    for (int i=0; i<SIMPUL(g); ++i) visited[i] = false;
+
+    Queue q; CreateQueue(&q);
+    enqueue(&q, idx1);
+    visited[idx1] = true;
+
+    ElType val;
+    while(!isEmpty(q)) {
+        int cur = HEAD(q);
+        dequeue(&q, &val);
+
+        for(int i=0; i<SIMPUL(g); ++i) {
+            if (ELMT(g, cur, i) == 1) {
+                if (i == idx2) return true;
+                
+                if (!visited[i]) {
+                    visited[i] = true;
+                    enqueue(&q, i);
+                }
+            }
         }
     }
-};
 
-void DisplayGraph(graf G){
-    int i,j;
-    for(i=0;i<G.row;i++){
-        for(j=0;j<G.col;j++){
-            if(j != G.col){
-                printf("%d ", ELMT(G,i,j));
-            }else{
-                printf("%d",ELMT(G,i,j));
-            }
+    return false;
+}
+
+/* ********** Konstruktor ********** */
+void createGraph(Graf *g) {
+/* I.S. sembarang */
+/* F.S. Graf kosong g terbentuk, dengan kondisi semua simpul tidak terhubung */
+/*      satu sama lain dan jumlah busur adalan nol */
+    IdxType i, j;
+    for (i=0; i<CAPACITY; ++i) {
+        for (j=0; j<CAPACITY; ++j) {
+            ELMT(*g, i, j) == 0;
+        }
+    }
+
+    SIMPUL(*g) = 0;
+    BUSUR(*g) = 0;
+}
+
+/* ********** Primitif Add/Delete ********** */
+void addNode(Graf *g) {
+/* I.S. Graf g terdefinisi */
+/* F.S. Jumlah node pada graf bertambah satu */
+    SIMPUL(*g)++;
+}
+
+void connectNode(Graf *g, int idx1, int idx2) {
+/* I.S. Graf g terdefinisi */
+/* F.S. Simpul 1 dengan simpul 2 terhubung */
+    ELMT(*g, idx1, idx2) = 1;
+    ELMT(*g, idx2, idx1) = 1;
+    BUSUR(*g)++;
+}
+
+void deleteEdge(Graf *g, int idx1, int idx2) {
+/* I.S. Graf g terdefinisi */
+/* F.S. Menghapus busur yang menghubungkan simpul 1 dengan simpul 2 */
+    ELMT(*g, idx1, idx2) = 0;
+    ELMT(*g, idx2, idx1) = 0;
+    BUSUR(*g)++;
+}
+
+/* ********** Primitif Lain ********** */
+void displayGraph(Graf g) {
+/* I.S. Graf g terdefinisi */
+/* F.S. Menampilkan representasi matriks graf g pada layar */
+    IdxType i, j;
+    for (i=0; i<SIMPUL(g); ++i) {
+        for (j=0; j<SIMPUL(g); ++j) {
+            printf("%d ", ELMT(g, i, j));
         }
         printf("\n");
     }
-};
-
-// 
-void MatriksTeman(graf *G, int row, int col){
-    ELMT(*G,row,col) = 1;
-    ELMT(*G,col,row) = 1; 
-};
-
-void DelMatriksTeman(graf *G, int row, int col){
-    if(ELMT(*G,row,col) == 1){
-        ELMT(*G,row,col) = 0;
-        ELMT(*G,col,row) = 0;
-    }
-};
+}

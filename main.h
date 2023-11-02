@@ -8,6 +8,13 @@
 #include "adt/boolean.h"
 #include <stdio.h>
 
+extern ListPengguna LPengguna;
+extern ListPengguna users[20];
+extern Graf Teman;
+extern List LKicau;
+extern DrafStack sDraf;
+extern Pengguna currentUser;
+
 extern char currentChar;
 extern boolean EOP;
 

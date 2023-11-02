@@ -11,11 +11,12 @@
 #include "adt/stack/drafStack.h"
 
 //inisialisasi variabel di luar supaya bisa langsung diakses semua function (gk usah oper parameter), tapi! lokalisasi buruk
-ListPengguna LPengguna;
-ListPengguna users[20];
-graf Teman;
-List LKicau;
-DrafStack sDraf;
+extern ListPengguna LPengguna;
+extern ListPengguna users[20];
+extern Graf Teman;
+extern List LKicau;
+extern DrafStack sDraf;
+extern Pengguna currentUser;
 int JumlahId = 1;
 
 int main()

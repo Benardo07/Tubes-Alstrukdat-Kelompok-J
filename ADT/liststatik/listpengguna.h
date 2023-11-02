@@ -20,6 +20,7 @@
 typedef int IdxType;
 typedef struct
 {
+    int id;
     char nama[20];
     char password[20];
     char bio[135];
@@ -43,6 +44,7 @@ typedef struct {
    Definisi elemen pertama: ELMT(l,i) dengan i=0 */
 
 /* ********** SELEKTOR ********** */
+#define ID(p) (p).id
 #define NAMA(p) (p).nama
 #define PASSWORD(p) (p).password
 #define BIO(p) (p).bio
