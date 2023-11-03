@@ -5,7 +5,7 @@
 #ifndef GRAPH_H
 #define GRAPH_H
 
-#include "boolean.h"
+#include "../boolean.h"
 
 /* Jumlah maksimum user yang terdaftar */
 #define CAPACITY 20

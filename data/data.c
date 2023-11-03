@@ -8,6 +8,7 @@ List LKicau;
 List LUtas;
 DrafStack sDraf;
 Pengguna currentUser;
+int IdCurrentUser;
 int IdKicau=1;
 int IdUtas=1;
 
@@ -16,18 +17,20 @@ boolean Muat(){
     boolean sukses = true;
 
     printf("\nSilahkan masukan folder konfigurasi untuk dimuat: ");
-    STARTWORD();
+    StartSentence();
     strCat("./",currentWord.TabWord,namafolder); //menggunakan relative path
     //printf("%s\n", namafolder);
 
     if (!isDirectoryExist(namafolder)) {
         sukses = false;
         printf("\nFolder tidak ditemukan\n");
-    } else printf("\nFolder ditemukan\n");
+    } else {
+        printf("\nFolder ditemukan\n");
         sukses = MuatPengguna(namafolder);
         sukses = MuatKicauan(namafolder);
         sukses = MuatDraf(namafolder);
         //dilanjutkan sukses = MuatTeman, etc
+    }
 
     return sukses;
 }
@@ -78,7 +81,7 @@ boolean MuatPengguna(char *namafolder){
                 strCpy(line,FOTO(p)[j]);
             }
 
-            insertLast(&LPengguna,p);
+            insertLastP(&LPengguna,p);
         }
     }
 
@@ -173,7 +176,7 @@ boolean MuatDraf (char *namafolder){
             int temp = sscanf(line, "%d/%d/%d %d:%d:%d", &Day(DateTime(d)), &Month(DateTime(d)), &Year(DateTime(d)), &Hour(Time(DateTime(d))) ,&Minute(Time(DateTime(d))) , &Second(Time(DateTime(d))));
             Push(&sDraf,d);
         }
-        
+
     }
     fclose(fDraf);
     return sukses;
@@ -238,4 +241,69 @@ boolean MuatUtas(char *namafolder){
 
     fclose(fUtas);
     return sukses;
+}
+
+boolean MASUK() {
+    //return true jika tutup program
+    char nama[21];
+    boolean loop = true;
+    int idx;
+    while (loop) {
+        printf("\nMasukkan nama:\n");
+        StartSentence();
+        strCpy(currentWord.TabWord,nama);
+
+        idx = searchNama(LPengguna,nama);
+        if (idx == IDX_UNDEF){
+            printf("\nWah, nama yang Anda cari tidak ada. Masukkan nama lain!\n");
+        } else {
+            loop = false;
+        }
+    }
+
+    char sandi[21];
+    loop = true;
+    while(loop){
+        printf("\nMasukkan kata sandi:\n");
+        StartSentence();
+        strCpy(currentWord.TabWord,sandi);
+
+        if (!checkSandi(LPengguna,idx,sandi)) {
+            printf("\nWah, kata sandi yang Anda masukkan belum tepat. Periksa kembali kata sandi Anda!\n");
+        } else {
+            loop = false;
+            currentUser = ELMT(LPengguna,idx);
+            IdCurrentUser = idx;
+            printf("\nAnda telah berhasil masuk dengan nama pengguna %s. Mari menjelajahi BurBir bersama Ande-Ande Lumut!\n", NAMA(currentUser));
+        }
+    }
+
+    //printPengguna(currentUser);
+    //printf("%d\n", IdCurrentUser);
+
+    //*************************************MAIN-LOOP******************************************//
+    boolean keluar = false;
+    loop = true;
+    while (loop) {
+        printf("\n>> ");
+        char *operasi;
+
+        STARTWORD(); //Operasi hanya 1 kata (jika beberapa huruf, dipisah simbol '_')
+        operasi = currentWord.TabWord;
+
+        if (isStrEqual(operasi, "MASUK")){
+            printf("\nWah Anda sudah masuk. Keluar dulu yuk!\n");
+        } else if (isStrEqual(operasi, "KELUAR")){
+            printf("\nAnda berhasil logout. Sampai jumpa di pertemuan berikutnya!\n");
+            loop = false;
+        } else if (isStrEqual(operasi, "TUTUP_PROGRAM")){
+            printf("\nAnda telah keluar dari program BurBir. Sampai jumpa di penjelajahan berikutnya.\n");
+            loop = false;
+            keluar = true;
+        } //else if (isStrEqual(operasi, "_____")) { } <--- dilanjutkan
+        else {
+            printf("\nPerintah invalid.\n");
+        }
+    }
+    return keluar;
 }

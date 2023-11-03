@@ -3,7 +3,7 @@
 #ifndef MATRIX_H
 #define MATRIX_H
 
-#include "boolean.h"
+#include "../boolean.h"
 
 /* Ukuran maksimum baris dan kolom */
 #define ROW_CAP 100
@@ -60,11 +60,11 @@ void readMatrix(Matrix *m, int nRow, int nCol);
 /* Contoh: Jika nRow = 3 dan nCol = 3, maka contoh cara membaca isi matriks :
 1 2 3
 4 5 6
-8 9 10 
+8 9 10
 */
 void displayMatrix(Matrix m);
 /* I.S. m terdefinisi */
-/* F.S. Nilai m(i,j) ditulis ke layar per baris per kolom, masing-masing elemen per baris 
+/* F.S. Nilai m(i,j) ditulis ke layar per baris per kolom, masing-masing elemen per baris
    dipisahkan sebuah spasi. Baris terakhir tidak diakhiri dengan newline */
 /* Proses: Menulis nilai setiap elemen m ke layar dengan traversal per baris dan per kolom */
 /* Contoh: menulis matriks 3x3 (ingat di akhir tiap baris, tidak ada spasi)
@@ -111,13 +111,13 @@ int countElmt(Matrix m);
 boolean isSquare(Matrix m);
 /* Mengirimkan true jika m adalah matriks dg ukuran baris dan kolom sama */
 boolean isSymmetric(Matrix m);
-/* Mengirimkan true jika m adalah matriks simetri : isSquare(m) 
+/* Mengirimkan true jika m adalah matriks simetri : isSquare(m)
    dan untuk setiap elemen m, m(i,j)=m(j,i) */
 boolean isIdentity(Matrix m);
-/* Mengirimkan true jika m adalah matriks satuan: isSquare(m) dan 
+/* Mengirimkan true jika m adalah matriks satuan: isSquare(m) dan
    setiap elemen diagonal m bernilai 1 dan elemen yang bukan diagonal bernilai 0 */
 boolean isSparse(Matrix m);
-/* Mengirimkan true jika m adalah matriks sparse: matriks “jarang” dengan definisi: 
+/* Mengirimkan true jika m adalah matriks sparse: matriks “jarang” dengan definisi:
    hanya maksimal 5% dari memori matriks yang efektif bukan bernilai 0 */
 Matrix negation(Matrix m);
 /* Menghasilkan salinan m dengan setiap elemen dinegasikan (dikalikan -1) */

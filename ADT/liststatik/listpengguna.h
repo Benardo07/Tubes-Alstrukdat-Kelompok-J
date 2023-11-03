@@ -66,7 +66,7 @@ void CreateListPengguna(ListPengguna *l);
 
 /* ********** SELEKTOR (TAMBAHAN) ********** */
 /* *** Banyaknya elemen *** */
-int listLength(ListPengguna l);
+int listLengthP(ListPengguna l);
 /* Mengirimkan banyaknya elemen efektif List */
 /* Mengirimkan nol jika List kosong */
 
@@ -82,20 +82,20 @@ IdxType getLastIdx(ListPengguna l);
 boolean isIdxValid(ListPengguna l, IdxType i);
 /* Mengirimkan true jika i adalah indeks yang valid utk kapasitas List l */
 /* yaitu antara indeks yang terdefinisi utk container*/
-boolean isIdxEff(ListPengguna l, IdxType i);
+boolean isIdxEffP(ListPengguna l, IdxType i);
 /* Mengirimkan true jika i adalah indeks yang terdefinisi utk List l */
 /* yaitu antara 0..length(l)-1 */
 
 /* ********** TEST KOSONG/PENUH ********** */
 /* *** Test List kosong *** */
-boolean isEmpty(ListPengguna l);
+boolean isEmptyP(ListPengguna l);
 /* Mengirimkan true jika List l kosong, mengirimkan false jika tidak */
 /* *** Test List penuh *** */
-boolean isFull(ListPengguna l);
+boolean isFullP(ListPengguna l);
 /* Mengirimkan true jika List l penuh, mengirimkan false jika tidak */
 
 /* ********** BACA dan TULIS dengan INPUT/OUTPUT device ********** */
-void printList(ListPengguna l);
+void printListP(ListPengguna l);
 /* Proses : Menuliskan isi List dengan traversal, List ditulis di antara kurung
    siku; antara dua elemen dipisahkan dengan separator "koma", tanpa tambahan
    karakter di depan, di tengah, atau di belakang, termasuk spasi dan enter */
@@ -114,42 +114,43 @@ void printList(ListPengguna l);
 
 /* ********** MENAMBAH ELEMEN ********** */
 /* *** Menambahkan elemen terakhir *** */
-void insertFirst(ListPengguna *l, ElType val);
+void insertFirstP(ListPengguna *l, ElType val);
 /* Proses: Menambahkan val sebagai elemen pertama List */
 /* I.S. List l boleh kosong, tetapi tidak penuh */
 /* F.S. val adalah elemen pertama l yang baru */
 /* *** Menambahkan elemen pada index tertentu *** */
-void insertAt(ListPengguna *l, ElType val, IdxType idx);
+void insertAtP(ListPengguna *l, ElType val, IdxType idx);
 /* Proses: Menambahkan val sebagai elemen pada index idx List */
 /* I.S. List l tidak kosong dan tidak penuh, idx merupakan index yang valid di l */
 /* F.S. val adalah elemen yang disisipkan pada index idx l */
 /* *** Menambahkan elemen terakhir *** */
-void insertLast(ListPengguna *l, ElType val);
+void insertLastP(ListPengguna *l, ElType val);
 /* Proses: Menambahkan val sebagai elemen terakhir List */
 /* I.S. List l boleh kosong, tetapi tidak penuh */
 /* F.S. val adalah elemen terakhir l yang baru */
 
 /* ********** MENGHAPUS ELEMEN ********** */
 /* *** Menghapus elemen pertama *** */
-void deleteFirst(ListPengguna *l, ElType *val);
+void deleteFirstP(ListPengguna *l, ElType *val);
 /* Proses : Menghapus elemen pertama List */
 /* I.S. List tidak kosong */
 /* F.S. val adalah nilai elemen pertama l sebelum penghapusan, */
 /*      Banyaknya elemen List berkurang satu */
 /*      List l mungkin menjadi kosong */
 /* *** Menghapus elemen pada index tertentu *** */
-void deleteAt(ListPengguna *l, ElType *val, IdxType idx);
+void deleteAtP(ListPengguna *l, ElType *val, IdxType idx);
 /* Proses : Menghapus elemen pada index idx List */
 /* I.S. List tidak kosong, idx adalah index yang valid di l */
 /* F.S. val adalah nilai elemen pada index idx l sebelum penghapusan, */
 /*      Banyaknya elemen List berkurang satu */
 /*      List l mungkin menjadi kosong */
 /* *** Menghapus elemen terakhir *** */
-void deleteLast(ListPengguna *l, ElType *val);
+void deleteLastP(ListPengguna *l, ElType *val);
 /* Proses : Menghapus elemen terakhir List */
 /* I.S. List tidak kosong */
 /* F.S. val adalah nilai elemen terakhir l sebelum penghapusan, */
 /*      Banyaknya elemen List berkurang satu */
 /*      List l mungkin menjadi kosong */
-
+int searchNama(ListPengguna l, char *nama);
+boolean checkSandi(ListPengguna l, int idx, char *sandi);
 #endif

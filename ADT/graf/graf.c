@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "graf.h"
-#include "queue/queue.h"
+#include "../queue/queue.h"
 
 /* ********** Predikat ********** */
 boolean IsEmpty(Graf g) {
@@ -38,7 +38,7 @@ boolean isIndirectlyConnected(Graf g, int idx1, int idx2) {
         for(int i=0; i<SIMPUL(g); ++i) {
             if (ELMT(g, cur, i) == 1) {
                 if (i == idx2) return true;
-                
+
                 if (!visited[i]) {
                     visited[i] = true;
                     enqueue(&q, i);

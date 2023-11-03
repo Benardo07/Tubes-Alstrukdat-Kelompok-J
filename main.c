@@ -39,11 +39,11 @@ int main()
     }
 
     printf("\nFile konfigurasi berhasil dimuat! Selamat berkicau!\n");
-    printList(LPengguna);
+    printListP(LPengguna);
     // printf("\n");
     // DisplayDraf(InfoTop(sDraf));
 
-    //*********************************MAIN-LOOP******************************************//
+    //*********************************START MENU LOOP******************************************//
     loop = true;
     while (loop) {
         printf("\n>> ");
@@ -55,12 +55,16 @@ int main()
         if (isStrEqual(operasi, "DAFTAR")){
             //DAFTAR();
         } else if (isStrEqual(operasi, "MASUK")){
-            //MASUK();
+            if (MASUK()) {
+                loop = false;
+            }
         } else if (isStrEqual(operasi, "KELUAR")){
             printf("\nAnda belum login! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
         } else if (isStrEqual(operasi, "TUTUP_PROGRAM")){
             printf("\nAnda telah keluar dari program BurBir. Sampai jumpa di penjelajahan berikutnya.\n");
             loop = false;
+        } else if (isStrEqual(operasi, "MUAT")){
+            if (Muat()) printf("\nPemuatan berhasil!\n");
         }
         else {
             printf("\nPerintah invalid.\n");
@@ -338,22 +342,11 @@ int main()
 //             int temp = sscanf(line, "%d/%d/%d %d:%d:%d", &Day(DateTime(d)), &Month(DateTime(d)), &Year(DateTime(d)), &Hour(Time(DateTime(d))) ,&Minute(Time(DateTime(d))) , &Second(Time(DateTime(d))));
 //             Push(&sDraf,d);
 //         }
-        
+
 //     }
 //     fclose(fDraf);
 //     return sukses;
 // }
-
-boolean isWeton(char *weton){
-    boolean sukses=false;
-    char* temp = strLower(weton);
-
-    if (isStrEqual("pahing",temp) || isStrEqual("kliwon",temp) || isStrEqual("wage",temp) || isStrEqual("pon",temp) || isStrEqual("legi",temp)){
-        sukses = true;
-    }
-
-    return sukses;
-}
 
 void DAFTAR(){ //WIP
     boolean loop = true;

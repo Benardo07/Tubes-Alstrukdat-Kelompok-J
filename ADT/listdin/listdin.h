@@ -7,7 +7,7 @@
 #ifndef LISTDIN_H
 #define LISTDIN_H
 
-#include "boolean.h"
+#include "../boolean.h"
 
 /*  Kamus Umum */
 #define IDX_MIN 0
@@ -135,7 +135,7 @@ void extremeValues(ListDin l, ElType *max, ElType *min);
 void copyList(ListDin lIn, ListDin *lOut);
 /* I.S. lIn terdefinisi tidak kosong, lOut sembarang */
 /* F.S. lOut berisi salinan dari lIn (identik, nEff dan capacity sama) */
-/* Proses : Menyalin isi lIn ke lOut */ 
+/* Proses : Menyalin isi lIn ke lOut */
 ElType sumList(ListDin l);
 /* Menghasilkan hasil penjumlahan semua elemen l */
 /* Jika l kosong menghasilkan 0 */

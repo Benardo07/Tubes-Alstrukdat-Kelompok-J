@@ -10,8 +10,6 @@
 #include "data/data.h"
 #include <stdio.h>
 
-boolean isWeton(char *weton);
-
 void DAFTAR();
 
 #endif // MAIN_H_INCLUDED

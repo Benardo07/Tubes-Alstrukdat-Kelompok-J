@@ -13,6 +13,7 @@ extern ListPengguna users[20];
 extern List LKicau;
 extern DrafStack sDraf;
 extern Pengguna currentUser;
+extern int IdCurrentUser;
 extern int IdKicau;
 
 extern char currentChar;
@@ -28,4 +29,6 @@ boolean MuatPengguna(char *namafolder);
 boolean MuatKicauan(char *namafolder);
 
 boolean MuatDraf (char *namafolder);
+
+boolean MASUK();
 

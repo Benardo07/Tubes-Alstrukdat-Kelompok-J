@@ -106,3 +106,14 @@ boolean isStrEqual(char *str1, char *str2){
 
     return equal;
 }
+
+boolean isWeton(char *weton){
+    boolean sukses=false;
+    char* temp = strLower(weton);
+
+    if (isStrEqual("pahing",temp) || isStrEqual("kliwon",temp) || isStrEqual("wage",temp) || isStrEqual("pon",temp) || isStrEqual("legi",temp)){
+        sukses = true;
+    }
+
+    return sukses;
+}

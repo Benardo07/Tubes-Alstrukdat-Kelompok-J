@@ -3,6 +3,7 @@
 
 #include "../boolean.h"
 #include "listpengguna.h"
+#include "../../primitif/primitif.h"
 
 /* ********** KONSTRUKTOR ********** */
 
@@ -26,7 +27,7 @@ void CreateListPengguna(ListPengguna *l) {
 
 /* ********** SELEKTOR (TAMBAHAN) ********** */
 /* *** Banyaknya elemen *** */
-int listLength(ListPengguna l) {
+int listLengthP(ListPengguna l) {
 /* Mengirimkan banyaknya elemen efektif List */
 /* Mengirimkan nol jika List kosong */
     return NEFF(l);
@@ -42,7 +43,7 @@ IdxType getFirstIdx(ListPengguna l) {
 IdxType getLastIdx(ListPengguna l) {
 /* Prekondisi : List l tidak kosong */
 /* Mengirimkan indeks elemen l terakhir */
-    return (listLength(l)-1);
+    return (listLengthP(l)-1);
 }
 
 /* ********** Test Indeks yang valid ********** */
@@ -52,26 +53,41 @@ boolean isIdxValid(ListPengguna l, IdxType i) {
     return (i >= 0 && i < CAPACITY);
 }
 
-boolean isIdxEff(ListPengguna l, IdxType i) {
+boolean isIdxEffP(ListPengguna l, IdxType i) {
 /* Mengirimkan true jika i adalah indeks yang terdefinisi utk List l */
 /* yaitu antara 0..length(l)-1 */
-    return (i >= 0 && i <= listLength(l)-1);
+    return (i >= 0 && i <= listLengthP(l)-1);
 }
 
 /* ********** TEST KOSONG/PENUH ********** */
 /* *** Test List kosong *** */
-boolean isEmpty(ListPengguna l) {
+boolean isEmptyP(ListPengguna l) {
 /* Mengirimkan true jika List l kosong, mengirimkan false jika tidak */
-    return listLength(l)==0;
+    return listLengthP(l)==0;
 }
 
 /* *** Test List penuh *** */
-boolean isFull(ListPengguna l) {
+boolean isFullP(ListPengguna l) {
 /* Mengirimkan true jika List l penuh, mengirimkan false jika tidak */
-    return (listLength(l)==CAPACITY);
+    return (listLengthP(l)==CAPACITY);
 }
 
-void printList(ListPengguna l) {
+void printPengguna(Pengguna p) {
+    IdxType j;
+
+    printf("%s\n",NAMA(p));
+    printf("%s\n",PASSWORD(p));
+    printf("%s\n",BIO(p));
+    printf("%s\n",HP(p));
+    printf("%s\n",WETON(p));
+    printf("%s\n",JENIS(p));
+
+    for (j=0;j<5;j++) {
+        printf("%s\n",FOTO(p)[j]);
+    }
+}
+
+void printListP(ListPengguna l) {
 /* Proses : Menuliskan isi List dengan traversal, List ditulis di antara kurung
    siku; antara dua elemen dipisahkan dengan separator "koma", tanpa tambahan
    karakter di depan, di tengah, atau di belakang, termasuk spasi dan enter */
@@ -79,20 +95,10 @@ void printList(ListPengguna l) {
 /* F.S. Jika l tidak kosong: [e1,e2,...,en] */
 /* Contoh : jika ada tiga elemen bernilai 1, 20, 30 akan dicetak: [1,20,30] */
 /* Jika List kosong : menulis [] */
-    IdxType i,j;
+    IdxType i;
 
-    for (i=0;i<listLength(l);i++){
-        Pengguna p = ELMT(l,i);
-        printf("%s\n",NAMA(p));
-        printf("%s\n",PASSWORD(p));
-        printf("%s\n",BIO(p));
-        printf("%s\n",HP(p));
-        printf("%s\n",WETON(p));
-        printf("%s\n",JENIS(p));
-
-        for (j=0;j<5;j++) {
-            printf("%s\n",FOTO(p)[j]);
-        }
+    for (i=0;i<listLengthP(l);i++){
+        printPengguna(ELMT(l,i));
     }
 }
 
@@ -114,43 +120,43 @@ void printList(ListPengguna l) {
 
 /* ********** MENAMBAH ELEMEN ********** */
 /* *** Menambahkan elemen terakhir *** */
-void insertFirst(ListPengguna *l, ElType val) {
+void insertFirstP(ListPengguna *l, ElType val) {
 /* Proses: Menambahkan val sebagai elemen pertama List */
 /* I.S. List l boleh kosong, tetapi tidak penuh */
 /* F.S. val adalah elemen pertama l yang baru */
 /* *** Menambahkan elemen pada index tertentu *** */
     int i;
-    for(i=listLength(*l);i>0;i--){
+    for(i=listLengthP(*l);i>0;i--){
         ELMT(*l,i) = ELMT(*l,i-1);
     }
     ELMT(*l,0) = val;
     NEFF(*l)++;
 }
 
-void insertAt(ListPengguna *l, ElType val, IdxType idx) {
+void insertAtP(ListPengguna *l, ElType val, IdxType idx) {
 /* Proses: Menambahkan val sebagai elemen pada index idx List */
 /* I.S. List l tidak kosong dan tidak penuh, idx merupakan index yang valid di l */
 /* F.S. val adalah elemen yang disisipkan pada index idx l */
 /* *** Menambahkan elemen terakhir *** */
     int i;
-    for(i=listLength(*l);i>idx;i--){
+    for(i=listLengthP(*l);i>idx;i--){
         ELMT(*l,i) = ELMT(*l,i-1);
     }
     ELMT(*l,idx) = val;
     NEFF(*l)++;
 }
 
-void insertLast(ListPengguna *l, ElType val) {
+void insertLastP(ListPengguna *l, ElType val) {
 /* Proses: Menambahkan val sebagai elemen terakhir List */
 /* I.S. List l boleh kosong, tetapi tidak penuh */
 /* F.S. val adalah elemen terakhir l yang baru */
-    ELMT(*l,listLength(*l)) = val;
+    ELMT(*l,listLengthP(*l)) = val;
     NEFF(*l)++;
 }
 
 /* ********** MENGHAPUS ELEMEN ********** */
 /* *** Menghapus elemen pertama *** */
-void deleteFirst(ListPengguna *l, ElType *val) {
+void deleteFirstP(ListPengguna *l, ElType *val) {
 /* Proses : Menghapus elemen pertama List */
 /* I.S. List tidak kosong */
 /* F.S. val adalah nilai elemen pertama l sebelum penghapusan, */
@@ -159,14 +165,14 @@ void deleteFirst(ListPengguna *l, ElType *val) {
     *val = ELMT(*l,0);
 
     int i;
-    for(i=0;i<listLength(*l)-1;i++){
+    for(i=0;i<listLengthP(*l)-1;i++){
         ELMT(*l,i) = ELMT(*l,i+1);
     }
     NEFF(*l)--;
 }
 
 /* *** Menghapus elemen pada index tertentu *** */
-void deleteAt(ListPengguna *l, ElType *val, IdxType idx) {
+void deleteAtP(ListPengguna *l, ElType *val, IdxType idx) {
 /* Proses : Menghapus elemen pada index idx List */
 /* I.S. List tidak kosong, idx adalah index yang valid di l */
 /* F.S. val adalah nilai elemen pada index idx l sebelum penghapusan, */
@@ -175,14 +181,14 @@ void deleteAt(ListPengguna *l, ElType *val, IdxType idx) {
     *val = ELMT(*l,idx);
 
     int i;
-    for(i=idx;i<listLength(*l)-1;i++){
+    for(i=idx;i<listLengthP(*l)-1;i++){
         ELMT(*l,i) = ELMT(*l,i+1);
     }
     NEFF(*l)--;
 }
 
 /* *** Menghapus elemen terakhir *** */
-void deleteLast(ListPengguna *l, ElType *val) {
+void deleteLastP(ListPengguna *l, ElType *val) {
 /* Proses : Menghapus elemen terakhir List */
 /* I.S. List tidak kosong */
 /* F.S. val adalah nilai elemen terakhir l sebelum penghapusan, */
@@ -190,4 +196,26 @@ void deleteLast(ListPengguna *l, ElType *val) {
 /*      List l mungkin menjadi kosong */
     *val = ELMT(*l,getLastIdx(*l));
     NEFF(*l)--;
+}
+
+int searchNama(ListPengguna l, char *nama){
+    //returns index if found, IDX_UNDEF if not
+    int i=0;
+    boolean found = false;
+
+    while (i < listLengthP(l) && !found){
+        if (isStrEqual(NAMA(ELMT(l,i)),nama)){
+            found = true;
+        } else {
+            i++;
+        }
+    }
+
+    if (!found) i = IDX_UNDEF;
+
+    return i;
+};
+
+boolean checkSandi(ListPengguna l, int idx, char *sandi){
+    return isStrEqual(PASSWORD(ELMT(l,idx)),sandi);
 }
