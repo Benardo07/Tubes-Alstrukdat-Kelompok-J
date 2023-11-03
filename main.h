@@ -10,6 +10,4 @@
 #include "data/data.h"
 #include <stdio.h>
 
-void DAFTAR();
-
 #endif // MAIN_H_INCLUDED

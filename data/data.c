@@ -273,7 +273,7 @@ boolean MASUK() {
         } else {
             loop = false;
             currentUser = ELMT(LPengguna,idx);
-            IdCurrentUser = idx;
+            IdCurrentUser = idx + 1;
             printf("\nAnda telah berhasil masuk dengan nama pengguna %s. Mari menjelajahi BurBir bersama Ande-Ande Lumut!\n", NAMA(currentUser));
         }
     }
@@ -296,6 +296,8 @@ boolean MASUK() {
         } else if (isStrEqual(operasi, "KELUAR")){
             printf("\nAnda berhasil logout. Sampai jumpa di pertemuan berikutnya!\n");
             loop = false;
+        } else if (isStrEqual(operasi, "DAFTAR")){
+            printf("\nAnda sudah masuk. Keluar terlebih dahulu untuk melakukan daftar.\n");
         } else if (isStrEqual(operasi, "TUTUP_PROGRAM")){
             printf("\nAnda telah keluar dari program BurBir. Sampai jumpa di penjelajahan berikutnya.\n");
             loop = false;
@@ -306,4 +308,36 @@ boolean MASUK() {
         }
     }
     return keluar;
+}
+
+void DAFTAR(){
+    boolean loop = true;
+
+    // terima nama
+    char nama[21];
+    while (loop) {
+        printf("\nMasukkan nama:\n");
+        StartSentence();
+        strCpy(currentWord.TabWord,nama);
+
+        if (searchNama(LPengguna, nama) != IDX_UNDEF) {
+            printf("\nWah, sayang sekali nama tersebut telah diambil. \n");
+        } else {
+            loop = false;
+        }
+    }
+
+    // terima sandi
+    char sandi[21];
+    printf("\nMasukkan kata sandi:\n");
+    StartSentence();
+    strCpy(currentWord.TabWord,sandi);
+
+    Pengguna p;
+    strCpy(nama, NAMA(p));
+    strCpy(sandi, PASSWORD(p));
+
+    insertLastP(&LPengguna,p);
+
+    printf("\nPengguna telah berhasil terdaftar. Masuk untuk menikmati fitur-fitur BurBir.\n");
 }

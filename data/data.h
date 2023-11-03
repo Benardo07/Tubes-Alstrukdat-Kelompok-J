@@ -32,3 +32,5 @@ boolean MuatDraf (char *namafolder);
 
 boolean MASUK();
 
+void DAFTAR();
+

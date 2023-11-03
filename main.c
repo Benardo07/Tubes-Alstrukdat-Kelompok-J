@@ -53,7 +53,7 @@ int main()
         operasi = currentWord.TabWord;
 
         if (isStrEqual(operasi, "DAFTAR")){
-            //DAFTAR();
+            DAFTAR();
         } else if (isStrEqual(operasi, "MASUK")){
             if (MASUK()) {
                 loop = false;
@@ -347,33 +347,3 @@ int main()
 //     fclose(fDraf);
 //     return sukses;
 // }
-
-void DAFTAR(){ //WIP
-    boolean loop = true;
-
-    // terima nama
-    Word nama;
-    while (loop) {
-        printf("\nMasukkan nama:\n");
-        StartSentence();
-        nama = currentWord;
-        printf("%s\n", nama);
-
-        // if (unik) {
-            loop = false;
-        //} else {
-            printf("\nWah, sayang sekali nama tersebut telah diambil. \n");
-        //}
-    }
-
-    // terima sandi
-    Word sandi;
-    printf("\nMasukkan kata sandi:\n");
-    StartSentence();
-    sandi = currentWord;
-    printf("%s\n", sandi);
-
-    // masukkan data
-
-    printf("\nPengguna telah berhasil terdaftar. Masuk untuk menikmati fitur-fitur BurBir.\n");
-}
