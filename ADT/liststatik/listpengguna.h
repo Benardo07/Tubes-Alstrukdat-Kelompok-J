@@ -6,8 +6,8 @@
 #ifndef LISTSTATIK_H
 #define LISTSTATIK_H
 
-#include "foto.h"
-#include "prioqueue.h"
+#include "../matriks/foto.h"
+#include "../queue/prioqueue.h"
 #include "../boolean.h"
 
 /*  Kamus Umum */

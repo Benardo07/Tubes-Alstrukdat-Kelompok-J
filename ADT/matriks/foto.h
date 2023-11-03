@@ -14,7 +14,7 @@ typedef struct{
 
 #define ROW_EFF(M) (M).row
 #define COL_EFF(M) (M).col
-#define ELMT(M,i,j) (M).matriks[(i)][(j)]
+#define Element(M,i,j) (M).matriks[(i)][(j)]
 
 void CreatePhotoMatrix(foto *F);
 

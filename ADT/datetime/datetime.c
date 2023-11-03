@@ -2,9 +2,10 @@
 /* Tanggal: 30 Agustus 2023 */
 /* Definisi ADT DATETIME */
 
-#include<stdio.h>
+#include <stdio.h>
 #include "../boolean.h"
 #include "../datetime/time.h"
+#include <time.h>
 
 /* *** Definisi TYPE DATETIME <DD/MM/YY HH:MM:SS> *** */
 typedef struct
@@ -309,3 +310,21 @@ long int DATETIMEDurasi(DATETIME DAw, DATETIME DAkh){
 }
 /* Mengirim DAkh-DAw dlm Detik, dengan kalkulasi */
 /* Prekondisi: DAkh > DAw */
+
+
+DATETIME getLocalTime(){
+    time_t currentTime;
+    struct tm *localTime;
+
+    currentTime = time(NULL);
+    localTime = localtime(&currentTime);
+    int day = localTime->tm_mday;
+    int month = localTime->tm_mon + 1; 
+    int year = localTime->tm_year + 1900;
+    int hour = localTime->tm_hour;
+    int minute = localTime->tm_min;
+    int second = localTime->tm_sec;
+    DATETIME d;
+    CreateDATETIME(&d,day,month,year,hour,minute,second);
+    return d;
+}

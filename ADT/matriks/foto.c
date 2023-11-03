@@ -8,14 +8,14 @@ void CreatePhotoMatrix(foto *F) {
     
     for (int i = 0; i < CAP; ++i) {
         for (int j = 0; j < 10; ++j) {
-            ELMT(*F, i, j) = (j % 2 == 0) ? 'R' : '*';
+            Element(*F, i, j) = (j % 2 == 0) ? 'R' : '*';
         }
     }
 }
 
 void ChangePhotoMatrix(foto *F, int i, int j, int newVal) {
     if (i < ROW_EFF(*F) && j < COL_EFF(*F)) {
-        ELMT(*F,i,j) = newVal;
+        Element(*F,i,j) = newVal;
     }
 }
 
@@ -25,14 +25,14 @@ void PrintPhotoMatrix(foto F) {
         for (int j = 0; j < COL_EFF(F); ++j) {
             // Print 'R' if the element is 1, '*' if 0
             if (j % 2 == 0){
-                temp = ELMT(F,i,j);
+                temp = Element(F,i,j);
             }else{
                 if(temp == 'R'){
-                    print_red(ELMT(F,i,j));
+                    print_red(Element(F,i,j));
                 }else if(temp == 'G'){
-                    print_green(ELMT(F,i,j));
+                    print_green(Element(F,i,j));
                 }else{
-                    print_blue(ELMT(F,i,j));
+                    print_blue(Element(F,i,j));
                 }
             }
             
@@ -42,14 +42,14 @@ void PrintPhotoMatrix(foto F) {
 }
 
 // Example usage in your main.c
-int main() {
-    foto myFoto;
-    CreatePhotoMatrix(&myFoto);
-    PrintPhotoMatrix(myFoto);
+// int main() {
+//     foto myFoto;
+//     CreatePhotoMatrix(&myFoto);
+//     PrintPhotoMatrix(myFoto);
     
-    // // Example of changing a value
-    // ChangePhotoMatrix(&myFoto, 2, 2, 0); // This would change the central 'R' to '*'
-    // PrintPhotoMatrix(&myFoto);
+//     // // Example of changing a value
+//     // ChangePhotoMatrix(&myFoto, 2, 2, 0); // This would change the central 'R' to '*'
+//     // PrintPhotoMatrix(&myFoto);
 
-    return 0;
-}
+//     return 0;
+// }
