@@ -3,15 +3,16 @@
 #include "../ADT/listlinier/listlinier.h"
 #include "../kicauan/kicauan.h"
 #include "utas.h"
-#include "../kicauan/charmachine.h"
-#include "../kicauan/wordmachine.h" // ini masih pake punyaku dulu
+#include "../ADT/mesinkata/wordmachine.h"
+#include "../ADT/mesinkarakter/charmachine.h"
+#include "../primitif/primitif.h"
 
-void buatUtas(List *l,Kicau *k, int *IdUtas,int IdKicau, Word author){
-    if(!isEqual((*k).author,author)){
+void buatUtas(List *l,Kicau *k, int *IdUtas,int IdKicau, char *author){
+    if(!isStrEqual((*k).author,author)){
         printf("Utas ini bukan milik anda!\n");
     }
     else{
-        if(indexOf(*l,IdKicau)!=IDX_UNDEF){
+        if(indexOf(*l,IdKicau)!=IDXUNDEF){
             printf("Kicau ini sudah berupa utas!\n");
         }
         else{
@@ -52,7 +53,7 @@ void insertUtas(Kicau *k,int idUtas){
         }
         }
         len = length((*k).Utas);
-        if (len==IDX_UNDEF){
+        if (len==IDXUNDEF){
             id = 1;
         } else{
             id = len+1;
@@ -74,16 +75,23 @@ void insertUtas(Kicau *k,int idUtas){
         insertLastKicau(&((*k).Utas),k2);
         
         printf("Apakah Anda ingin melanjutkan utas ini? (YA/TIDAK)\n");
-        readWord(&input);
+        char *operasi;
+        STARTWORD();
+        operasi = currentWord.TabWord;
         printf("\n");
 
-        char yes[2] = "YA";
 
-        if (!isCharSame(yes,input.TabWord)){
+        while (!(isStrEqual(operasi,"YA")) && !(isStrEqual(operasi,"TIDAK")) ){
+            printf("Perintah Tidak Dikenali\n");
+            printf("Apakah Anda ingin melanjutkan utas ini? (YA/TIDAK)\n");
+            STARTWORD();
+            operasi = currentWord.TabWord;
+            printf("\n");
+        }
+        if (isStrEqual(operasi,"TIDAK")){
             lanjut = false;
         }
     }
-
     printf("Utas selesai!\n");
 }
 
@@ -103,8 +111,7 @@ void utas(List l){
     while (p!=NULL){
         printf("     | INDEKS = %d\n",i);
         printf("     | ");
-        printWord(author(p));
-        printf("\n");
+        printf("%s\n",author(p));
         printf("     | ");
         TulisDATETIME(waktu(p));
         printf("\n");
@@ -120,8 +127,7 @@ void utas(List l){
 void perutasan(Kicau k){ 
     printf("| ID = %d\n",k.id);
     printf("| ");
-    printWord(k.author);
-    printf("\n");
+    printf("%s\n",k.author);
     printf("| ");
     TulisDATETIME(k.waktu);
     printf("\n");
@@ -132,7 +138,7 @@ void perutasan(Kicau k){
     utas(k.Utas);
 }
 
-void sambungUtas(Kicau *k,int idx,int IdUtas,List *ListUtas, Word aut){
+void sambungUtas(Kicau *k,int idx,int IdUtas,List *ListUtas, char *aut){
     Word input,text;
     int id,len;
     time_t currentTime;
@@ -140,7 +146,7 @@ void sambungUtas(Kicau *k,int idx,int IdUtas,List *ListUtas, Word aut){
 
     len = length((*k).Utas);
     if (idx<=len){
-        if(isEqual((*k).author,aut)){
+        if(isStrEqual((*k).author,aut)){
             boolean space = true;
             Word text;
             printf("Masukkan kicauan:\n");
@@ -174,7 +180,7 @@ void sambungUtas(Kicau *k,int idx,int IdUtas,List *ListUtas, Word aut){
             CreateKicau(&k2,id,0,text,(*k).author,d);
             insertAt(&((*k).Utas),k2,idx-1);
 
-            utas((*k).Utas);
+            //utas((*k).Utas);
             setElmt(ListUtas, IdUtas-1,*k);
             
         }
@@ -187,15 +193,15 @@ void sambungUtas(Kicau *k,int idx,int IdUtas,List *ListUtas, Word aut){
     }
 }
 
-void hapusUtas(Kicau *k,int idx,int IdUtas,List ListUtas, Word aut){
+void hapusUtas(Kicau *k,int idx, char *aut){
     Word input,text;
     int id,len;
     time_t currentTime;
     struct tm *localTime;
 
     len = length((*k).Utas);
-    if (idx<=len || indexOf((*k).Utas,idx)!=IDX_UNDEF){
-        if(isEqual((*k).author,aut)){
+    if (idx<=len){
+        if(isStrEqual((*k).author,aut)){
             if(idx==0){
                 printf("Anda tidak bisa menghapus kicauan utama!\n");
             }

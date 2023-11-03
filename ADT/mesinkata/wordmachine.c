@@ -133,6 +133,7 @@ void readKicau(Word *input){
     (*input).Length = i;
 }
 
+
 // cek apakah hanya berisi spasi atau tidak
 boolean allSpace(Word input){
     boolean space = true;

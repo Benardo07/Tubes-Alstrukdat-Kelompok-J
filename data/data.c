@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include "data.h"
+#include "../ADT/mesinkata/wordmachine.h"
+#include "../ADT/mesinkarakter/charmachine.h"
 
 ListPengguna LPengguna;
 ListPengguna users[20];
@@ -28,6 +30,7 @@ boolean Muat(){
         printf("\nFolder ditemukan\n");
         sukses = MuatPengguna(namafolder);
         sukses = MuatKicauan(namafolder);
+        sukses = MuatUtas(namafolder);
         sukses = MuatDraf(namafolder);
         //dilanjutkan sukses = MuatTeman, etc
     }
@@ -125,9 +128,9 @@ boolean MuatKicauan(char *namafolder){
             fgets(line,280,fKicauan);
             p.like = like;
 
-            fgets(p.author.TabWord, sizeof(p.author.TabWord), fKicauan);
-            p.author.Length = strlength(p.text.TabWord);
-            p.author.TabWord[strlength(p.author.TabWord)] = '\0';
+            fgets(line,280,fKicauan);
+            strCpy(line,p.author);
+
 
             int h,m,s,d,b,y;
             fscanf(fKicauan, "%d/%d/%d %d:%d:%d", &d, &b, &y, &h, &m, &s);
@@ -136,10 +139,10 @@ boolean MuatKicauan(char *namafolder){
             p.waktu = date;
 
             insertLastKicau(&LKicau,p);
+            p.Utas = NULL;
             IdKicau+=1;
         }
     }
-
     fclose(fKicauan);
     return sukses;
 }
@@ -206,35 +209,31 @@ boolean MuatUtas(char *namafolder){
         for (i=0;i<n;i++){
             int id;
             fscanf(fUtas,"%d",&id);
-            fgets(line,280,fUtas);
+            fgets(line,50,fUtas);
             insertLastKicau(&LUtas,getElmt(LKicau,id-1));
 
             fscanf(fUtas,"%d",&m);
             fgets(line,280,fUtas);
-            Kicau p;
+            Kicau utas = getElmt(LKicau,id-1);
+            utas.Utas = NULL;
             for (j=0;j<m;j++){
-                int idx,like;
-                fscanf(fUtas,"%d",&idx);
-                fgets(line,280,fUtas);
-                p.id = idx;
-
+                Kicau p;
                 fgets(p.text.TabWord, sizeof(p.text.TabWord), fUtas);
                 p.text.Length = strlength(p.text.TabWord);
 
-                fgets(p.author.TabWord, sizeof(p.author.TabWord), fUtas);
-                p.author.Length = strlength(p.text.TabWord);
-                p.author.TabWord[strlength(p.author.TabWord)] = '\0';
+                fgets(line,280,fUtas);
+                strCpy(line,p.author);
 
                 int h,m,s,d,b,y;
                 fscanf(fUtas, "%d/%d/%d %d:%d:%d", &d, &b, &y, &h, &m, &s);
                 fgets(line,280,fUtas);
                 CreateDATETIME(&date,d,b,y,h,m,s);
                 p.waktu = date;
-                Kicau k;
-                k= getElmt(LUtas,i);
-                insertLastKicau(&(k.Utas),p);
+                insertLastKicau(&(utas.Utas),p);
+                
+
             }
-            setElmt(&LUtas,IdUtas-1,p);
+            setElmt(&LUtas,i,utas);
             IdUtas+=1;
         }
     }
@@ -242,6 +241,7 @@ boolean MuatUtas(char *namafolder){
     fclose(fUtas);
     return sukses;
 }
+
 
 boolean MASUK() {
     //return true jika tutup program
@@ -302,7 +302,28 @@ boolean MASUK() {
             printf("\nAnda telah keluar dari program BurBir. Sampai jumpa di penjelajahan berikutnya.\n");
             loop = false;
             keluar = true;
-        } //else if (isStrEqual(operasi, "_____")) { } <--- dilanjutkan
+        } else if (isStrEqual(operasi, "KICAU")) { 
+            insertKicau(&LKicau,currentUser.nama,&IdKicau);
+        }
+        else if (isStrEqual(operasi, "KICAUAN")) { 
+            kicauan(LKicau);
+        }
+        else if (isStrEqual(operasi, "SUKA_KICAUAN")) { 
+            int id; // INI MASIH KEPISAH BENTAR
+            scanf("%d",&id);
+            sukaKicau(&LKicau,id);
+        }
+        else if (isStrEqual(operasi, "UBAH_KICAUAN")) { 
+            int id; // INI MASIH KEPISAH BENTAR
+            scanf("%d",&id);
+            editKicau(&LKicau,id,currentUser.nama);
+        }
+        else if (isStrEqual(operasi, "CETAK_UTAS")) { 
+            int id; // INI MASIH KEPISAH BENTAR
+            scanf("%d",&id);
+            perutasan((getElmt(LUtas,id-1)));
+        }
+        //else if (isStrEqual(operasi, "_____")) { } <--- dilanjutkan
         else {
             printf("\nPerintah invalid.\n");
         }

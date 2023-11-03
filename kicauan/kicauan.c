@@ -2,20 +2,21 @@
 #include <stdlib.h>
 #include "../ADT/listlinier/listlinier.h"
 #include "kicauan.h"
-#include "charmachine.h"
-#include "wordmachine.h" // ini masih pake punyaku dulu
+#include "../ADT/mesinkarakter/charmachine.h"
+#include "../ADT/mesinkata/wordmachine.h" // ini masih pake punyaku dulu
+#include "../primitif/primitif.h"
 
-void CreateKicau(Kicau *k,int id, int like, Word text, Word aut, DATETIME waktu){
+void CreateKicau(Kicau *k,int id, int like, Word text, char *aut, DATETIME waktu){
     (*k).id = id;
     (*k).like = like;
     (*k).text = text;
-    (*k).author = aut;
+    strCpy(aut,(*k).author);
     (*k).waktu = waktu;
     CreateList(&(*k).Utas);
 }
 
 // nambah kicauan inputnya author
-void insertKicau(List *l, Word val, int *id){ //val ini buat authornya terus idnya jadi disimpen di main.
+void insertKicau(List *l, char *val, int *id){ //val ini buat authornya terus idnya jadi disimpen di main.
     boolean space = true;
     Word text;
     printf("Masukkan kicauan:\n");
@@ -60,15 +61,15 @@ void insertKicau(List *l, Word val, int *id){ //val ini buat authornya terus idn
     *id+=1; //id next tambah 1
 }
 
-void editKicau(List *l, int id, Word auth){
-    if (indexOf(*l,id)==IDX_UNDEF){
+void editKicau(List *l, int id, char *auth){
+    if (indexOf(*l,id)==IDXUNDEF){
         printf("Tidak ditemukan kicauan dengan ID = %d!\n",id);
         printf("\n");
     }
     else{
         Kicau el;
         el = getElmt(*l,id-1);
-        if(!isEqual(el.author,auth)){
+        if(!isStrEqual( el.author, auth)){
             printf("Kicauan dengan ID = %d bukan milikmu!\n",id);
             printf("\n");
         }
@@ -101,8 +102,8 @@ void editKicau(List *l, int id, Word auth){
     }
 }
 
-void sukaKicau(List *l, int id, Word auth){
-    if (indexOf(*l,id)==IDX_UNDEF){
+void sukaKicau(List *l, int id){
+    if (indexOf(*l,id)==IDXUNDEF){
         printf("Tidak ditemukan kicauan dengan ID = %d!\n",id);
         printf("\n");
     }
@@ -124,8 +125,7 @@ void printKicau(List l,int id){ // print kicau satuan
     printf("Detil kicauan:\n");
     printf("| ID = %d\n",el.id);
     printf("| ");
-    printWord(el.author);
-    printf("\n");
+    printf("%s\n",el.author);
     printf("| ");
     TulisDATETIME(el.waktu);
     printf("\n");
@@ -144,8 +144,7 @@ void kicauan(List l){
     while (p!=NULL){
         printf("| ID = %d\n",id(p));
         printf("| ");
-        printWord(author(p));
-        printf("\n");
+        printf("%s\n",p->info.author);
         printf("| ");
         TulisDATETIME(waktu(p));
         printf("\n");

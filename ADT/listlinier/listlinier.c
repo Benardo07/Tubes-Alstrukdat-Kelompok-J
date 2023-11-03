@@ -76,7 +76,7 @@ int indexOf(List l, int id){
         return(idx);
     }
     else{
-        return(IDX_UNDEF);
+        return(IDXUNDEF);
     }
 }
 /* I.S. l, val terdefinisi */

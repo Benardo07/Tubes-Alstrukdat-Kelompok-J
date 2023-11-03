@@ -6,10 +6,13 @@
 #include "adt/liststatik/listpengguna.h"
 #include "adt/listlinier/listlinier.h"
 #include "kicauan/kicauan.h"
+#include "utas/utas.h"
 // #include "ADT\graf\graf.h"
 #include "adt/boolean.h"
 #include "main.h"
 #include "adt/stack/drafStack.h"
+
+//gcc -o p main.c data/data.c primitif/primitif.c adt/mesinkarakter/charmachine.c adt/mesinkata/wordmachine.c adt/liststatik/listpengguna.c adt/listlinier/listlinier.c kicauan/kicauan.c adt/stack/drafstack.c adt/datetime/datetime.c adt/datetime/time.c utas/utas.c
 
 //inisialisasi variabel di luar supaya bisa langsung diakses semua function (gk usah oper parameter), tapi! lokalisasi buruk
 // extern ListPengguna LPengguna;

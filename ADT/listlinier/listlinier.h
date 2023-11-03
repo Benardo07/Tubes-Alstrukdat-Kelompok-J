@@ -4,8 +4,8 @@
 
 #include "../boolean.h"
 #include "../datetime/datetime.h"
-#include "../../kicauan/charmachine.h"
-#include "../../kicauan/wordmachine.h"
+#include "../mesinkata/wordmachine.h"
+#include "../mesinkarakter/charmachine.h"
 
 /* Definisi Node : */
 typedef struct node* Address;
@@ -15,7 +15,7 @@ typedef struct {
     int id;
     int like;
     Word text;
-    Word author; // ini authornya nunggu profil nanti disesuaikan
+    char author[20]; 
     DATETIME waktu;
     List Utas;
 } Kicau;
@@ -40,7 +40,7 @@ typedef struct node {
 /* Elemen terakhir list: jika addressnya Last, maka NEXT(Last)=NULL */
 
 
-#define IDX_UNDEF (-1)
+#define IDXUNDEF (-1)
 #define FIRST(l) (l)
 
 /* PROTOTYPE */

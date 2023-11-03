@@ -5,7 +5,10 @@
 #include "../ADT/boolean.h"
 #include "../ADT/stack/drafStack.h"
 #include "../primitif/primitif.h"
+#include "../utas/utas.h"
 #include "../ADT/listlinier/listlinier.h"
+#include "../ADT/mesinkata/wordmachine.h"
+#include "../ADT/mesinkarakter/charmachine.h"
 
 extern ListPengguna LPengguna;
 extern ListPengguna users[20];
@@ -27,6 +30,8 @@ boolean Muat();
 boolean MuatPengguna(char *namafolder);
 
 boolean MuatKicauan(char *namafolder);
+
+boolean MuatUtas(char *namafolder);
 
 boolean MuatDraf (char *namafolder);
 
