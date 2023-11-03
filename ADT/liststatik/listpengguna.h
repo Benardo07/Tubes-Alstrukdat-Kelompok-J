@@ -58,7 +58,10 @@ typedef struct {
 #define ELMT(l, i) (l).contents[i]
 
 /* ********** KONSTRUKTOR ********** */
-/* Konstruktor : create List kosong  */
+/* Konstruktor :*/
+void newPengguna(Pengguna *p, char *nama, char *sandi);
+
+//create List kosong
 void CreateListPengguna(ListPengguna *l);
 /* I.S. l sembarang */
 /* F.S. Terbentuk List l kosong dengan kapasitas CAPACITY */

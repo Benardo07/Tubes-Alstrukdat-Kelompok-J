@@ -17,7 +17,24 @@
     p -> fotoProfil = "";
 }*/
 
-/* Konstruktor : create List kosong  */
+/* Konstruktor : */
+void newPengguna(Pengguna *p, char *nama, char *sandi) {
+    int i;
+
+    strCpy(nama, NAMA(*p));
+    strCpy(sandi, PASSWORD(*p));
+    strCpy("Publik", JENIS(*p));
+    strCpy("", BIO(*p));
+    strCpy("", HP(*p));
+    strCpy("", WETON(*p));
+    for (i=0;i<5;i++){
+        strCpy("R * R * R * R * R *",FOTO(*p)[i]);
+    }
+
+    //printPengguna(*p);
+}
+
+//create List kosong
 void CreateListPengguna(ListPengguna *l) {
 /* I.S. l sembarang */
 /* F.S. Terbentuk List l kosong dengan kapasitas CAPACITY */

@@ -334,8 +334,7 @@ void DAFTAR(){
     strCpy(currentWord.TabWord,sandi);
 
     Pengguna p;
-    strCpy(nama, NAMA(p));
-    strCpy(sandi, PASSWORD(p));
+    newPengguna(&p, nama, sandi);
 
     insertLastP(&LPengguna,p);
 
