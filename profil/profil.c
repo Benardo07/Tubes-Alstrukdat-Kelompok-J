@@ -81,9 +81,9 @@ void aturjenisakun (){
     printf("(YA/TIDAK) ");
     STARTWORD();
     printf("\n");
-    char choice[10];
+    char *choice;
     strCpy(currentWord.TabWord, choice);
-    if(choice == "Privat"){
+    if(isStrEqual(choice,"Privat")){
         strCpy("Publik",JENIS(currentUser));
         printf("Akun anda telah diubah menjadi akun Privat.\n");
     }else{
@@ -92,7 +92,12 @@ void aturjenisakun (){
     }
 }
 
-void UbahfotoProfil( currentuser){
-    printf("Foto profil anda saat ini ")
-}
+void UbahfotoProfil(currentuser){
+    printf("Foto profil anda saat ini \n");
+    PrintPhotoMatrix(FOTO(currentUser));
+
+    printf("Masukkan foto profil yang baru: \n");
+
+    printf("Foto Profil Anda sudah berhasil diganti!\n");
+    }
 

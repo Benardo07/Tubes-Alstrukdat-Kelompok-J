@@ -6,6 +6,8 @@
 #ifndef LISTSTATIK_H
 #define LISTSTATIK_H
 
+#include "foto.h"
+#include "prioqueue.h"
 #include "../boolean.h"
 
 /*  Kamus Umum */
@@ -21,13 +23,15 @@ typedef int IdxType;
 typedef struct
 {
     int id;
+    int totalfriends;
     char nama[20];
     char password[20];
     char bio[135];
     char noHp[100]; //to do: ubah noHP ke int
     char weton[10];
     char jenisAkun[10];
-    char fotoProfil[5][20];
+    PrioQueue friendRequest;
+    foto fotoProfil;
 } Pengguna;
 typedef Pengguna ElType;
 typedef struct {
@@ -52,6 +56,8 @@ typedef struct {
 #define WETON(p) (p).weton
 #define JENIS(p) (p).jenisAkun
 #define FOTO(p) (p).fotoProfil
+#define FREQ(p) (p).friendRequest
+#define TOTALFRIENDS(p) (p).totalfriends
 
 #define NEFF(l) (l).nEff
 #define BUFFER(l) (l).contents

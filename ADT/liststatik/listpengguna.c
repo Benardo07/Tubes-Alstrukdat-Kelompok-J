@@ -27,9 +27,7 @@ void newPengguna(Pengguna *p, char *nama, char *sandi) {
     strCpy("", BIO(*p));
     strCpy("", HP(*p));
     strCpy("", WETON(*p));
-    for (i=0;i<5;i++){
-        strCpy("R * R * R * R * R *",FOTO(*p)[i]);
-    }
+    CreatePhotoMatrix(&FOTO(*p));
 
     //printPengguna(*p);
 }
@@ -98,10 +96,7 @@ void printPengguna(Pengguna p) {
     printf("%s\n",HP(p));
     printf("%s\n",WETON(p));
     printf("%s\n",JENIS(p));
-
-    for (j=0;j<5;j++) {
-        printf("%s\n",FOTO(p)[j]);
-    }
+    PrintPhotoMatrix(FOTO(p));
 }
 
 void printListP(ListPengguna l) {
