@@ -117,3 +117,21 @@ boolean isWeton(char *weton){
 
     return sukses;
 }
+
+void strCpyTwoElmt(char *str1,char *dest1 , int *dest2){
+    int i = strlength(str1) - 1;
+    int z = 0;
+    *dest2 = 0;
+    int multiplier = 1;
+    while (i >= 0 && str1[i] != ' '){
+        *dest2 += ((str1[i]-'0') * multiplier);
+        multiplier *= 10;
+        i--;
+    }
+    z = 0;
+    while(z < i){
+        dest1[z] = str1[z];
+        z++;
+    }
+    dest1[z] = '\0';
+}

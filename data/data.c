@@ -61,6 +61,7 @@ boolean MuatPengguna(char *namafolder){
 
         for (i=0;i<n;i++){
             Pengguna p;
+            createPengguna(&p);
             fgets(line,135,fPengguna);
             strCpy(line,NAMA(p));
 
@@ -81,7 +82,7 @@ boolean MuatPengguna(char *namafolder){
 
             for (j=0;j<5;j++) {
                 fgets(line,135,fPengguna);
-                strCpy(line,FOTO(p)[j]);
+                // strCpy(line,FOTO);
             }
 
             insertLastP(&LPengguna,p);
@@ -166,20 +167,29 @@ boolean MuatDraf (char *namafolder){
         fscanf(fDraf,"%d\n",&n);
         int i ;
         for(i = 0 ; i < n ; i++){
-            Draf d;
-            fscanf(fDraf,"%d\n",&Id(d));
-
+            DrafStack tempStack;
+            CreateEmptyDrafStack(&tempStack);
             fgets(line,280,fDraf);
-            strCpy(line,DrafTweet(d));
+            char username[20];
+            int tempJumlah;
+            strCpyTwoElmt(line,username,&tempJumlah);
+            int index = searchNama(LPengguna,username);
+            JMLHDRAF(ELMT(LPengguna,index)) = tempJumlah;
+            // setJumlahDraf(&LPengguna,username,tempJumlah);
+            int k;
+            for (k = 0; k < tempJumlah;k++){
+                Draf d;
+                fgets(line, 280, fDraf);
+                strCpy(line,DrafTweet(d));
 
-            fgets(line,280,fDraf);
-            strCpy(line,Author(d));
+                fscanf(fDraf, "%d/%d/%d %d:%d:%d", &Day(DateTime(d)), &Month(DateTime(d)), &Year(DateTime(d)), &Hour(Time(DateTime(d))) ,&Minute(Time(DateTime(d))) , &Second(Time(DateTime(d))));
+                fgets(line,280,fDraf);
 
-            fgets(line,280,fDraf);
-            int temp = sscanf(line, "%d/%d/%d %d:%d:%d", &Day(DateTime(d)), &Month(DateTime(d)), &Year(DateTime(d)), &Hour(Time(DateTime(d))) ,&Minute(Time(DateTime(d))) , &Second(Time(DateTime(d))));
-            Push(&sDraf,d);
+                PushDrafStack(&tempStack,d);
+            }
+
+            copyReverse(tempStack,&DRAF(ELMT(LPengguna,searchNama(LPengguna,username))));          
         }
-
     }
     fclose(fDraf);
     return sukses;

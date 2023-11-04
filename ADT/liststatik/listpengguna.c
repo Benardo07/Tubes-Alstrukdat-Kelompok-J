@@ -28,10 +28,22 @@ void newPengguna(Pengguna *p, char *nama, char *sandi) {
     strCpy("", HP(*p));
     strCpy("", WETON(*p));
     CreatePhotoMatrix(&FOTO(*p));
-
+    JMLHDRAF(*p) = 0;
+    CreateEmptyDrafStack(&DRAF(*p));
     //printPengguna(*p);
 }
 
+void createPengguna(Pengguna *p){
+    strCpy("", NAMA(*p));
+    strCpy("", PASSWORD(*p));
+    strCpy("", JENIS(*p));
+    strCpy("", BIO(*p));
+    strCpy("", HP(*p));
+    strCpy("", WETON(*p));
+    CreatePhotoMatrix(&FOTO(*p));
+    JMLHDRAF(*p) = 0;
+    CreateEmptyDrafStack(&DRAF(*p));
+}
 //create List kosong
 void CreateListPengguna(ListPengguna *l) {
 /* I.S. l sembarang */
@@ -212,6 +224,7 @@ void deleteLastP(ListPengguna *l, ElType *val) {
 
 int searchNama(ListPengguna l, char *nama){
     //returns index if found, IDX_UNDEF if not
+
     int i=0;
     boolean found = false;
 
@@ -223,11 +236,20 @@ int searchNama(ListPengguna l, char *nama){
         }
     }
 
-    if (!found) i = IDX_UNDEF;
+    if (!found) {i = IDX_UNDEF;}
 
     return i;
-};
+}
 
 boolean checkSandi(ListPengguna l, int idx, char *sandi){
     return isStrEqual(PASSWORD(ELMT(l,idx)),sandi);
+}
+
+void setJumlahDraf(ListPengguna *l, char *nama , int jumlah){
+    int idx = searchNama(*l,nama);
+    if (idx != -1) { // assuming searchNama returns -1 if not found
+        JMLHDRAF(ELMT(*l, idx)) = jumlah;
+    } else {
+        printf("Nama pengguna tidak ditemukan: %s\n", nama);
+    }
 }

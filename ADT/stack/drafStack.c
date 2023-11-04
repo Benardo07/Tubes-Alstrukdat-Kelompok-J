@@ -23,7 +23,7 @@ boolean IsFullDrafStack(DrafStack S){
 /* Mengirim true jika tabel penampung nilai elemen DrafStack penuh */
 
 /* ************ Menambahkan sebuah elemen ke DrafStack ************ */
-void PushDrafStack(DrafStack * S, Eltype X){
+void PushDrafStack(DrafStack * S, ElDraftype X){
     Top(*S)++;
     InfoTop(*S) = X;
 }
@@ -32,7 +32,7 @@ void PushDrafStack(DrafStack * S, Eltype X){
 /* F.S. X menjadi TOP yang baru,TOP bertambah 1 */
 
 /* ************ Menghapus sebuah elemen DrafStack ************ */
-void PopDrafStack(DrafStack * S, Eltype* X){
+void PopDrafStack(DrafStack * S, ElDraftype* X){
     *X = InfoTop(*S);
     Top(*S)--;
 }
@@ -45,10 +45,8 @@ void DisplayDraf(Draf D){
     printf("| %s\n", DrafTweet(D));
 }
 
-void CreateDraf(Draf *D, int id, char * tweet, char *author , DATETIME waktu){
-    Id(*D) = id;
+void CreateDraf(Draf *D,char * tweet,DATETIME waktu){
     strCpy(tweet,DrafTweet(*D));
-    strCpy(author,Author(*D));
     DateTime(*D) = waktu;
 
 }
@@ -57,80 +55,49 @@ void printDraf(Draf D){
     printf("| ");
     TulisDATETIME(DateTime(D));
     printf("\n");
+    printf("| ");
     printf("%s\n",DrafTweet(D));
 }
 
-boolean findDraf(DrafStack S, int id){
-    Draf temp;
-    while (!IsEmptyDrafStack(S)){
-        PopDrafStack(&S,&temp);
-        if(Id(temp) == id){
-            return true;
-        }
-    }
-    return false;
-}
+// boolean findDraf(DrafStack S, int id){
+//     Draf temp;
+//     while (!IsEmptyDrafStack(S)){
+//         PopDrafStack(&S,&temp);
+//         if(Id(temp) == id){
+//             return true;
+//         }
+//     }
+//     return false;
+// }
 
-Draf printLastDraf(DrafStack S, int id){
+Draf printLastDraf(DrafStack S){
     Draf temp;
-    boolean found = false;
-    while (!IsEmptyDrafStack(S) && found == false)
-    {
-        PopDrafStack(&S,&temp);
-        if(Id(temp) == id){
-            DisplayDraf(temp);
-            found = true;
-        }
-    }
+    PopDrafStack(&S,&temp);
+    printDraf(temp);
+
     return temp;
     
 }
 
-void DeleteDrafAt(DrafStack *S, int id){
-    DrafStack temp;
-    CreateEmptyDrafStack(&temp);
-    boolean found = false;
-    Draf draftemp;
-    while (!IsEmptyDrafStack(*S) && found == false)
-    {
-        PopDrafStack(S,&draftemp);
-        if(Id(draftemp) == id){
-            found = true;
-        }else{
-            PushDrafStack(&temp, draftemp);
-        }
-        
-    }
-
-    while (!IsEmptyDrafStack(temp))
-    {
-        PopDrafStack(&temp,&draftemp);
-        PushDrafStack(S, draftemp);
-    }
+void DeleteLastDraf(DrafStack *S){
+    Draf temp;
+    PopDrafStack(S,&temp);
 }
 
-void EditDrafAt(DrafStack *S , int id, char *tweet){
-    DrafStack temp;
-    CreateEmptyDrafStack(&temp);
-    boolean found = false;
-    Draf draftemp;
-    while (!IsEmptyDrafStack(*S) && found == false)
+void EditLastDraf(DrafStack *S , char *tweet){
+    Draf temp;
+    PopDrafStack(S,&temp);
+    strCpy(tweet,DrafTweet(temp));
+    PushDrafStack(S,temp);
+}
+
+void copyReverse(DrafStack S1 , DrafStack *S2){
+    Draf temp;
+    CreateEmptyDrafStack(S2);
+    while (!IsEmptyDrafStack(S1))
     {
-        PopDrafStack(S,&draftemp);
-        if(Id(draftemp) == id){
-            found = true;
-        }else{
-            PushDrafStack(&temp, draftemp);
-        }
-        
+        PopDrafStack(&S1,&temp);
+        PushDrafStack(S2,temp);
     }
-    strCpy(tweet,DrafTweet(draftemp));
-    DATETIME d = getLocalTime();
-    DateTime(draftemp) = d;
-    PushDrafStack(S, draftemp);
-    while (!IsEmptyDrafStack(temp))
-    {
-        PopDrafStack(&temp,&draftemp);
-        PushDrafStack(S, draftemp);
-    }
+    
 }

@@ -9,6 +9,7 @@
 #include "../matriks/foto.h"
 #include "../queue/prioqueue.h"
 #include "../boolean.h"
+#include "../stack/drafStack.h"
 
 /*  Kamus Umum */
 #define CAPACITY 20
@@ -32,6 +33,8 @@ typedef struct
     char jenisAkun[10];
     PrioQueue friendRequest;
     foto fotoProfil;
+    int jumlahDraf;
+    DrafStack userDraf;
 } Pengguna;
 typedef Pengguna ElType;
 typedef struct {
@@ -58,6 +61,8 @@ typedef struct {
 #define FOTO(p) (p).fotoProfil
 #define FREQ(p) (p).friendRequest
 #define TOTALFRIENDS(p) (p).totalfriends
+#define JMLHDRAF(p) (p).jumlahDraf
+#define DRAF(p) (p).userDraf
 
 #define NEFF(l) (l).nEff
 #define BUFFER(l) (l).contents
@@ -66,6 +71,8 @@ typedef struct {
 /* ********** KONSTRUKTOR ********** */
 /* Konstruktor :*/
 void newPengguna(Pengguna *p, char *nama, char *sandi);
+
+void createPengguna(Pengguna *p);
 
 //create List kosong
 void CreateListPengguna(ListPengguna *l);
@@ -162,4 +169,6 @@ void deleteLastP(ListPengguna *l, ElType *val);
 /*      List l mungkin menjadi kosong */
 int searchNama(ListPengguna l, char *nama);
 boolean checkSandi(ListPengguna l, int idx, char *sandi);
+
+void setJumlahDraf(ListPengguna *l, char *nama , int jumlah);
 #endif

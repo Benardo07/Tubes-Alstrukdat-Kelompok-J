@@ -5,8 +5,6 @@ void makingDraf (){
     printf("\nMasukkan draf:\n");
     Word text;
     readKicau(&text);
-    
-    printWord(text);
     // Ambil waktu lokal
     time_t currentTime;
     struct tm *localTime;
@@ -14,7 +12,7 @@ void makingDraf (){
     
     DATETIME d = getLocalTime();
     Draf tempDraf;
-    CreateDraf(&tempDraf,currentUser.id,text.TabWord,currentUser.nama,d);
+    CreateDraf(&tempDraf,text.TabWord,d);
     printf("\nApakah anda ingin menghapus, menyimpan, atau menerbitkan draf ini?\n");
     
     while(true){
@@ -24,7 +22,9 @@ void makingDraf (){
         
         
         if(isStrEqual(pilihan,"SIMPAN")){
-            PushDrafStack(&sDraf,tempDraf);
+            int index = searchNama(LPengguna,currentUser.nama);
+            PushDrafStack(&DRAF(ELMT(LPengguna,index)),tempDraf);
+            JMLHDRAF(ELMT(LPengguna,index))++;
             printf("\nDraf telah berhasil disimpan!\n\n");
             break;
         }else if(isStrEqual(pilihan,"TERBIT")){
@@ -48,11 +48,12 @@ void makingDraf (){
 }
 
 void seeDraf(){
-    if(!findDraf(sDraf, currentUser.id)){
+    int index = searchNama(LPengguna,currentUser.nama);
+    if(IsEmptyDrafStack(DRAF(ELMT(LPengguna,index)))){
         printf("\nYahh, anda belum memilki draf apapun! buat dulu ya :D\n");
     }else{
         printf("\nIni draf terakhir anda: \n");
-        Draf stemp = printLastDraf(sDraf, currentUser.id);
+        Draf stemp = printLastDraf(DRAF(ELMT(LPengguna,index)));
         printf("\nApakah anda ingin mengubah, menghapus, atau menerbitkan draf ini? (KEMBALI jika ingin kembali)\n");
         DATETIME d1 = getLocalTime();
         while (true)
@@ -75,14 +76,14 @@ void seeDraf(){
                 TulisDATETIME(d1);
                 CreateKicau(&k,IdKicau,0,tweet,currentUser.nama,d1);
                 insertLastKicau(&LKicau,k);
-                DeleteDrafAt(&sDraf,currentUser.id);
+                DeleteLastDraf(&DRAF(ELMT(LPengguna,index)));
                 // print hasil kicau
                 printf("\nSelamat! kicauan telah diterbitkan!\n");
                 printKicau(LKicau,IdKicau);
                 IdKicau++;
                 break;
             }else if(isStrEqual(pilihan,"HAPUS")){
-                DeleteDrafAt(&sDraf,currentUser.id);   
+                DeleteLastDraf(&DRAF(ELMT(LPengguna,index)));
                 printf("\nDraf telah dihapus!\n\n");
                 break;
 
@@ -102,7 +103,7 @@ void seeDraf(){
                     
                     
                     if(isStrEqual(pilihan1,"SIMPAN")){
-                        EditDrafAt(&sDraf, currentUser.id, text.TabWord);
+                        EditLastDraf(&DRAF(ELMT(LPengguna,index)),text.TabWord);
                         printf("\nDraf telah berhasil disimpan!\n\n");
                         break;
                     }else if(isStrEqual(pilihan1,"TERBIT")){
@@ -112,7 +113,7 @@ void seeDraf(){
                         CreateKicau(&k,IdKicau,0,text,currentUser.nama,d);
                         insertLastKicau(&LKicau,k);
                         
-                        DeleteDrafAt(&sDraf,currentUser.id);
+                        DeleteLastDraf(&DRAF(ELMT(LPengguna,index)));
                         // print hasil kicau
                         printf("\nSelamat! kicauan telah diterbitkan!\n");
                         printKicau(LKicau,IdKicau);

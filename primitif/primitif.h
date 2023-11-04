@@ -16,3 +16,6 @@ boolean strIsInt(char *str);
 boolean isStrEqual(char *str1, char *str2);
 
 boolean isWeton(char *weton);
+
+
+void strCpyTwoElmt(char *str1,char *dest1 , int *dest2);

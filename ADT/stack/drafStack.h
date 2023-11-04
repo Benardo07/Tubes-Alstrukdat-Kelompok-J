@@ -10,18 +10,16 @@
 
 typedef struct 
 {
-    int id;
     char drafTweet[280];
-    char author[20];
     DATETIME timeDraf;
 } Draf;
 
-typedef Draf Eltype;
+typedef Draf ElDraftype;
 typedef int address;
 
 typedef struct 
 {
-    Eltype T[MaxEL];
+    ElDraftype T[MaxEL];
     address TOP;
 } DrafStack;
 
@@ -48,29 +46,31 @@ boolean IsFullDrafStack(DrafStack S);
 /* Mengirim true jika tabel penampung nilai elemen DrafStack penuh */
 
 /* ************ Menambahkan sebuah elemen ke DrafStack ************ */
-void PushDrafStack(DrafStack * S, Eltype X);
+void PushDrafStack(DrafStack * S, ElDraftype X);
 /* Menambahkan X sebagai elemen DrafStack S. */
 /* I.S. S mungkin kosong, tabel penampung elemen DrafStack TIDAK penuh */
 /* F.S. X menjadi TOP yang baru,TOP bertambah 1 */
 
 /* ************ Menghapus sebuah elemen DrafStack ************ */
-void PopDrafStack(DrafStack * S, Eltype* X);
+void PopDrafStack(DrafStack * S, ElDraftype* X);
 /* Menghapus X dari Stack S. */
 /* I.S. S  tidak mungkin kosong */
 /* F.S. X adalah nilai elemen TOP yang lama, TOP berkurang 1 */
 
 void DisplayDraf(Draf D);
 
-void CreateDraf(Draf *D, int id, char * tweet, char *author , DATETIME waktu);
+void CreateDraf(Draf *D,char * tweet, DATETIME waktu);
 
 void printDraf(Draf D);
 
 boolean findDraf(DrafStack S, int id);
 
-Draf printLastDraf(DrafStack S, int id);
+Draf printLastDraf(DrafStack S);
 
-void DeleteDrafAt(DrafStack *S, int id);
+void DeleteLastDraf(DrafStack *S);
 
-void EditDrafAt(DrafStack *S , int id, char *tweet);
+void EditLastDraf(DrafStack *S ,char *tweet);
+
+void copyReverse(DrafStack S1 , DrafStack *S2);
 
 #endif
