@@ -3,17 +3,17 @@
 #include "../queue/queue.h"
 
 /* ********** Predikat ********** */
-boolean IsEmpty(Graf g) {
+boolean isGraphEmpty(Graf g) {
 /* I.S. Graf g terdefinisi */
 /* F.S. Mengembalikan true jika graf kosong, yaitu jumlah busur nol */
     return BUSUR(g) == 0;
 }
 
 boolean isDirectlyConnected(Graf g, int idx1, int idx2) {
-/* I.S. Graf g terdefinisi */
+/* I.S. Graf g terdefinisi, idx1 dan idx2 merupakan indeks yang valid pada graf */
 /* F.S. Mengembalikan true jika terdapat busur yang menghubungkan langsung */
 /*      simpul 1 dengan simpul 2, false jika tidak */
-    return ELMT(g, idx1, idx2) == 1;
+    return ELMT_GRAPH(g, idx1, idx2) == 1;
 }
 
 boolean isIndirectlyConnected(Graf g, int idx1, int idx2) {
@@ -36,7 +36,7 @@ boolean isIndirectlyConnected(Graf g, int idx1, int idx2) {
         dequeue(&q, &val);
 
         for(int i=0; i<SIMPUL(g); ++i) {
-            if (ELMT(g, cur, i) == 1) {
+            if (ELMT_GRAPH(g, cur, i) == 1) {
                 if (i == idx2) return true;
 
                 if (!visited[i]) {
@@ -56,9 +56,9 @@ void createGraph(Graf *g) {
 /* F.S. Graf kosong g terbentuk, dengan kondisi semua simpul tidak terhubung */
 /*      satu sama lain dan jumlah busur adalan nol */
     IdxType i, j;
-    for (i=0; i<CAPACITY; ++i) {
-        for (j=0; j<CAPACITY; ++j) {
-            ELMT(*g, i, j) == 0;
+    for (i=0; i<CAPACITY_GRAPH; ++i) {
+        for (j=0; j<CAPACITY_GRAPH; ++j) {
+            ELMT_GRAPH(*g, i, j) = 0;
         }
     }
 
@@ -70,22 +70,23 @@ void createGraph(Graf *g) {
 void addNode(Graf *g) {
 /* I.S. Graf g terdefinisi */
 /* F.S. Jumlah node pada graf bertambah satu */
+    ELMT_GRAPH(*g, SIMPUL(*g), SIMPUL(*g)) = 1;
     SIMPUL(*g)++;
 }
 
 void connectNode(Graf *g, int idx1, int idx2) {
-/* I.S. Graf g terdefinisi */
+/* I.S. Graf g terdefinisi, idx1 dan idx2 merupakan indeks yang valid pada graf */
 /* F.S. Simpul 1 dengan simpul 2 terhubung */
-    ELMT(*g, idx1, idx2) = 1;
-    ELMT(*g, idx2, idx1) = 1;
+    ELMT_GRAPH(*g, idx1, idx2) = 1;
+    ELMT_GRAPH(*g, idx2, idx1) = 1;
     BUSUR(*g)++;
 }
 
 void deleteEdge(Graf *g, int idx1, int idx2) {
-/* I.S. Graf g terdefinisi */
+/* I.S. Graf g terdefinisi, idx1 dan idx2 merupakan indeks yang valid pada graf matriks */
 /* F.S. Menghapus busur yang menghubungkan simpul 1 dengan simpul 2 */
-    ELMT(*g, idx1, idx2) = 0;
-    ELMT(*g, idx2, idx1) = 0;
+    ELMT_GRAPH(*g, idx1, idx2) = 0;
+    ELMT_GRAPH(*g, idx2, idx1) = 0;
     BUSUR(*g)++;
 }
 
@@ -96,7 +97,7 @@ void displayGraph(Graf g) {
     IdxType i, j;
     for (i=0; i<SIMPUL(g); ++i) {
         for (j=0; j<SIMPUL(g); ++j) {
-            printf("%d ", ELMT(g, i, j));
+            printf("%d ", ELMT_GRAPH(g, i, j));
         }
         printf("\n");
     }

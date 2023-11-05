@@ -1,8 +1,9 @@
 #include <stdio.h>
-#include "ADT/graf/graf.h"
-#include "ADT/queue/queue.h"
-#include "ADT/boolean.h"
-#include "main.h"
+#include "../ADT/graf/graf.h"
+#include "../ADT/queue/queue.h"
+#include "../ADT/boolean.h"
+#include "../data/data.h"
+#include "../main.h"
 
 boolean isTeman(int id_1, int id_2) {
     return isDirectlyConnected(Teman, id_1-1, id_2-1);
@@ -15,11 +16,11 @@ void daftarTeman(int idUser) {
         if (i != idUser-1 && isTeman(idUser-1, i)) enqueue(&q, i);
     }
 
-    if (isEmpty(q)) printf("%s belum mempunyai teman\n", NAMA(currentUser));
+    if (isQueueEmpty(q)) printf("%s belum mempunyai teman\n", NAMA(currentUser));
     else {
-        printf("%s mempunyai %d teman\n", NAMA(currentUser), length(q));
+        printf("%s mempunyai %d teman\n", NAMA(currentUser), lengthQueue(q));
         int temp;
-        while (!isEmpty(q)) {
+        while (!isQueueEmpty(q)) {
             printf("| %s\n", NAMA(ELMT(LPengguna, HEAD(q))));
             dequeue(&q, &temp);
         }
@@ -28,23 +29,23 @@ void daftarTeman(int idUser) {
 
 void hapusTeman() {
     printf("Masukkan nama pengguna: ");
+    char nama[21];
     StartSentence();
-    Word nama = currentWord;
+    strCpy(currentWord.TabWord, nama);
 
-    boolean foundUser = true; // sementara
-    if (foundUser) {
-        int id_1 = ID(currentUser) , id_2 = 1; // ntar ganti id_2 = idUser(nama)
-        if (isTeman(id_1, id_2)) {
+    int id_target = searchNama(LPengguna, nama);
+    if (id_target != IDX_UNDEF) {
+        if (isTeman(ID(currentUser), id_target)) {
             printf("Apakah anda yakin ingin menghapus %s dari daftar teman Anda? (YA/TIDAK): ", nama);
             boolean inputValid = false;
             while(!inputValid) {
                 StartSentence();
-                if (isStrEqual(&currentWord, "YA")) {
-                    deleteEdge(&Teman, id_1-1, id_2-1);
+                if (isStrEqual(currentWord.TabWord, "YA")) {
+                    deleteEdge(&Teman, ID(currentUser)-1, id_target-1);
                     printf("%s berhasil dihapus dari daftar teman Anda.\n", nama);
                     inputValid = true;
                 }
-                else if (isStrEqual(&currentWord, "TIDAK")) {
+                else if (isStrEqual(currentWord.TabWord, "TIDAK")) {
                     printf("Penghapusan teman dibatalkan.\n");
                     inputValid = true;
                 }

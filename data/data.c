@@ -2,10 +2,11 @@
 #include "data.h"
 #include "../ADT/mesinkata/wordmachine.h"
 #include "../ADT/mesinkarakter/charmachine.h"
+#include "../ADT/graf/graf.h"
 
 ListPengguna LPengguna;
 ListPengguna users[20];
-// extern Graf Teman;
+Graf Teman;
 List LKicau;
 List LUtas;
 DrafStack sDraf;
@@ -82,10 +83,18 @@ boolean MuatPengguna(char *namafolder){
 
             for (j=0;j<5;j++) {
                 fgets(line,135,fPengguna);
-                // strCpy(line,FOTO);
+                strCpy(line,FOTO(p).matriks[j]);
             }
 
             insertLastP(&LPengguna,p);
+        }
+
+        int edge = 0;
+        for(i=0; i<n; ++i) {
+            for(j=0; j<n; ++j) {
+                fscanf(fPengguna, "%d", &edge);
+                ELMT_GRAPH(Teman, i, j) = edge;
+            }
         }
     }
 

@@ -31,15 +31,15 @@ typedef struct {
 
 void CreatePrioQueue(PrioQueue *Q);
 
-boolean IsEmpty (PrioQueue Q);
+boolean IsPrioQueueEmpty (PrioQueue Q);
 
-boolean IsFull (PrioQueue Q);
+boolean IsPrioQueueFull (PrioQueue Q);
 
-int lengthQueue (PrioQueue Q);
+int lengthPrioQueue (PrioQueue Q);
 
-void Enqueue (PrioQueue * Q, infotype X);
+void EnqueuePrio (PrioQueue * Q, infotype X);
 
-void Dequeue (PrioQueue * Q, infotype * X);
+void DequeuePrio (PrioQueue * Q, infotype * X);
 
 void DisplayPrioQueue (PrioQueue Q);
 

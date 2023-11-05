@@ -8,13 +8,12 @@
 #include "../boolean.h"
 
 /* Jumlah maksimum user yang terdaftar */
-#define CAPACITY 20
+#define CAPACITY_GRAPH 20
 
 /* Definisi TYPE Graf dengan representasi matriks */
-typedef int ElType;
 typedef int IdxType;
 typedef struct {
-    ElType m[CAPACITY][CAPACITY];
+    int m[CAPACITY_GRAPH][CAPACITY_GRAPH];
     int nodes; // Jumlah simpul pada graf
     int edges; // Jumlah busur pada graf
 } Graf;
@@ -22,12 +21,12 @@ typedef struct {
 
 /* ********** AKSES (Selektor) ********** */
 #define MATRIKS(g) (g).m
-#define ELMT(g, i, j) (MATRIKS(g))[i][j]
+#define ELMT_GRAPH(g, i, j) (MATRIKS(g))[i][j]
 #define SIMPUL(g) (g).nodes
 #define BUSUR(g) (g).edges
 
 /* ********** Predikat ********** */
-boolean IsEmpty(Graf g);
+boolean isGraphEmpty(Graf g);
 /* I.S. Graf g terdefinisi */
 /* F.S. Mengembalikan true jika graf kosong, yaitu jumlah busur nol */
 

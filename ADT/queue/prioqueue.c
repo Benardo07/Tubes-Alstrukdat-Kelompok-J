@@ -6,16 +6,16 @@ void CreatePrioQueue(PrioQueue *Q){
     Tail(*Q) = Nil;
 }
 
-boolean IsEmpty (PrioQueue Q){
+boolean IsPrioQueueEmpty (PrioQueue Q){
     return (Head(Q) == Nil & Tail(Q) == Nil);
 };
 
-boolean IsFull (PrioQueue Q){
-    return (lengthQueue(Q) == MaxEl(Q));
+boolean IsPrioQueueFull (PrioQueue Q){
+    return (lengthPrioQueue(Q) == MaxEl(Q));
 };
 
-int lengthQueue (PrioQueue Q){
-     if(IsEmpty(Q)){
+int lengthPrioQueue (PrioQueue Q){
+     if(IsPrioQueueEmpty(Q)){
         return 0;
     }else{
         if(Head(Q)<=Tail(Q)){
@@ -26,8 +26,8 @@ int lengthQueue (PrioQueue Q){
     }
 };
 
-void Enqueue (PrioQueue * Q, infotype X){
-    if(IsEmpty(*Q)){
+void EnqueuePrio (PrioQueue * Q, infotype X){
+    if(IsPrioQueueEmpty(*Q)){
         Head(*Q) = 0;
         Tail(*Q) = 0;
         InfoHead(*Q) =  X;
@@ -35,7 +35,7 @@ void Enqueue (PrioQueue * Q, infotype X){
         Tail(*Q) = (Tail(*Q)+1) % MaxEl(*Q);
         InfoTail(*Q) = X;
 
-        int len = lengthQueue(*Q);
+        int len = lengthPrioQueue(*Q);
         int i;
         int current, next;
         infotype temp;
@@ -64,9 +64,9 @@ void Enqueue (PrioQueue * Q, infotype X){
     }
 };
 
-void Dequeue (PrioQueue * Q, infotype * X){
+void DequeuePrio (PrioQueue * Q, infotype * X){
     * X = InfoHead(*Q);
-    if(lengthQueue(*Q)==1){
+    if(lengthPrioQueue(*Q)==1){
         Head(*Q) =  -1;
         Tail(*Q) =  -1;
     }else{
@@ -76,7 +76,7 @@ void Dequeue (PrioQueue * Q, infotype * X){
 
 void DisplayPrioQueue(PrioQueue Q) {
     int i = Head(Q);
-    int count = lengthQueue(Q);
+    int count = lengthPrioQueue(Q);
 
     printf("[");
     for (int j = 0; j < count; j++) {
