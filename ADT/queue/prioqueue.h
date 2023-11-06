@@ -6,8 +6,8 @@
 # define Nil -1
 
 typedef struct {
-    int prio;  /* [1..100], prioritas dengan nilai 1..100 (1 adalah prioritas adalah tertinggi) */
-    int info;  /* elemen karakter */
+    int prio;  /* [1..100], prioritas dengan nilai 1..100 (100 adalah prioritas adalah tertinggi) */
+    int userId;  /* elemen karakter */
 } infotype;
 
 typedef int address;   /* indeks tabel */
@@ -21,7 +21,7 @@ typedef struct {
 } PrioQueue;
 
 #define Prio(e)     (e).prio
-#define Info(e)     (e).info
+#define Info(e)     (e).userId
 #define Head(Q)     (Q).HEAD
 #define Tail(Q)     (Q).TAIL
 #define InfoHead(Q) (Q).T[(Q).HEAD]
@@ -42,5 +42,7 @@ void EnqueuePrio (PrioQueue * Q, infotype X);
 void DequeuePrio (PrioQueue * Q, infotype * X);
 
 void DisplayPrioQueue (PrioQueue Q);
+
+void SearchByUserId(PrioQueue * Q, int searchValue);
 
 #endif

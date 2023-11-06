@@ -4,6 +4,7 @@
 void CreatePrioQueue(PrioQueue *Q){
     Head(*Q) = Nil;
     Tail(*Q) = Nil;
+    MaxEl(*Q) = 20;
 }
 
 boolean IsPrioQueueEmpty (PrioQueue Q){
@@ -88,3 +89,24 @@ void DisplayPrioQueue(PrioQueue Q) {
     }
     printf("]\n");
 }
+
+void SearchByUserId(PrioQueue * Q, int searchValue){
+    boolean found = false;
+    int popularity;
+    int i;
+    int len = lengthPrioQueue(*Q);
+    for(i=Head(*Q);i<Tail(*Q);i++){
+        popularity = Prio(Elmt(*Q, i));
+        int id = Info(Elmt(*Q,i));
+        if(id == searchValue){
+            printf("Element with user ID '16': Priority = %d, User ID = %d\n", popularity, id);
+            printf("index =  %d\n",i);
+            printf("\n");
+            found = true;
+            break;
+        }
+    }
+    if(!found){
+        printf("User ID '%d' not found in the queue.\n", searchValue);
+    }
+};

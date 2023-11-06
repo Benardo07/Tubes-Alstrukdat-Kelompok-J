@@ -168,7 +168,11 @@ void deleteLastP(ListPengguna *l, ElType *val);
 /*      Banyaknya elemen List berkurang satu */
 /*      List l mungkin menjadi kosong */
 int searchNama(ListPengguna l, char *nama);
+
 boolean checkSandi(ListPengguna l, int idx, char *sandi);
 
 void setJumlahDraf(ListPengguna *l, char *nama , int jumlah);
+
+char searchNamabyId(ListPengguna l, int id);
+
 #endif

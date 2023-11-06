@@ -253,3 +253,13 @@ void setJumlahDraf(ListPengguna *l, char *nama , int jumlah){
         printf("Nama pengguna tidak ditemukan: %s\n", nama);
     }
 }
+
+char searchNamabyId(ListPengguna l, int id){
+    int i;
+    for(i=0;i,listLengthP(l);i++){
+        if(ID(ELMT(l,i)) == id){
+            return NAMA(ELMT(l,i));
+        }
+    }
+    return NULL;
+}
