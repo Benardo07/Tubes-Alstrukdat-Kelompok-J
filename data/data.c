@@ -32,7 +32,8 @@ boolean Muat(){
         sukses = MuatPengguna(namafolder);
         sukses = MuatKicauan(namafolder);
         sukses = MuatUtas(namafolder);
-        // sukses = MuatDraf(namafolder);
+        sukses = MuatDraf(namafolder);
+        sukses = MuatBalasan(namafolder);
         //dilanjutkan sukses = MuatTeman, etc
     }
 
