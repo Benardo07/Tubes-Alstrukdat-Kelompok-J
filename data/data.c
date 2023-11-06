@@ -424,3 +424,57 @@ void DAFTAR(){
 
     printf("\nPengguna telah berhasil terdaftar. Masuk untuk menikmati fitur-fitur BurBir.\n");
 }
+
+boolean MuatBalasan (char *namafolder){
+    FILE *fBalas;
+    boolean sukses = true;
+    char namafile[100]; //asumsi batasan strlength
+
+    strCat(namafolder,"/balasan.config", namafile);
+    fBalas = fopen(namafile,"r");
+
+    if(fBalas == NULL){
+        printf("Tidak ada file konfigurasi balasan.\n");
+        sukses = false;
+    }else{
+        printf("File konfigurasi balasan berhasil ditemukan.\n");
+    }
+
+    char line[280];
+    int n;
+
+    fscanf(fBalas,"%d\n",&n);
+
+    int i;
+    for (i = 0; i < n ; i++){
+        int idkic;
+        fscanf(fBalas,"%d\n",&idkic);
+        int z,j;
+        fscanf(fBalas,"%d\n",&z);
+        for(j = 0; j < z; j++){
+            int yangDiBalas , yangBalas; 
+            fscanf(fBalas,"%d %d\n",&yangDiBalas,&yangBalas);
+            char tweetBalasan[280];
+            fgets(line,280,fBalas);
+            strCpy(line,tweetBalasan);
+            char penulis[20];
+            fgets(line,280,fBalas);
+            strCpy(line,penulis);
+            int h,m,s,d,b,y;
+            fscanf(fBalas, "%d/%d/%d %d:%d:%d", &d, &b, &y, &h, &m, &s);
+            fgets(line,280,fBalas);
+            DATETIME date;
+            CreateDATETIME(&date,d,b,y,h,m,s);
+            Balasan B;
+            CreateBalasan(&B,yangBalas,tweetBalasan,penulis,date);
+            Tree T = newTree(B,1000);
+            if(yangDiBalas == -1){
+                AddBalasanKicauAt(&LKicau,idkic,T);
+            }else{
+                Kicau tempKicau = getElmt(LKicau,indexOf(LKicau,idkic));
+                insertLastDinTree(&CHILDREN(findBalasanInTree(tempKicau.Balas,yangDiBalas)),T);
+            }
+        }
+    }
+    return sukses;
+}

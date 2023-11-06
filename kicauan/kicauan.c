@@ -13,6 +13,7 @@ void CreateKicau(Kicau *k,int id, int like, Word text, char *aut, DATETIME waktu
     strCpy(aut,(*k).author);
     (*k).waktu = waktu;
     CreateList(&(*k).Utas);
+    (*k).Balas = newTree(CreateRootBalasan(),1000);
 }
 
 // nambah kicauan inputnya author

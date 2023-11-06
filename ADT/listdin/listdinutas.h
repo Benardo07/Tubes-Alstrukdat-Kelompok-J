@@ -4,8 +4,8 @@
 /* Versi II : dengan banyaknya elemen didefinisikan secara eksplisit,
    memori list dinamik */
 
-#ifndef LISTDIN_H
-#define LISTDIN_H
+#ifndef LISTDINUTAS_H
+#define LISTDINUTAS_H
 
 #include "../boolean.h"
 #include "../datetime/datetime.h"

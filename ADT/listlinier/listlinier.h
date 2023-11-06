@@ -6,6 +6,8 @@
 #include "../datetime/datetime.h"
 #include "../mesinkata/wordmachine.h"
 #include "../mesinkarakter/charmachine.h"
+#include "../tree/tree.h"
+
 
 /* Definisi Node : */
 typedef struct node* Address;
@@ -18,6 +20,7 @@ typedef struct {
     char author[20]; 
     DATETIME waktu;
     List Utas;
+    Tree Balas;
 } Kicau;
 
 typedef struct node {
@@ -32,7 +35,7 @@ typedef struct node {
 #define text(p) (((p)->info).text)
 #define author(p) (((p)->info).author)
 #define waktu(p) (((p)->info).waktu)
-
+#define Balas(p) (((p)->info).Balas)
 
 /* Definisi List : */
 /* List kosong : FIRST(l) = NULL */
@@ -67,6 +70,8 @@ int indexOf(List l, int id);
 /* F.S. Mencari apakah ada elemen list l yang bernilai val */
 /* Jika ada, mengembalikan indeks elemen pertama l yang bernilai val */
 /* Mengembalikan IDX_UNDEF jika tidak ditemukan */
+
+void AddBalasanKicauAt(List *l, int id,Tree T);
 
 /****************** PRIMITIF BERDASARKAN NILAI ******************/
 /*** PENAMBAHAN ELEMEN ***/
