@@ -7,27 +7,27 @@
 #include "../ADT/mesinkarakter/charmachine.h"
 #include "../primitif/primitif.h"
 
-void buatUtas(List *l,Kicau *k, int *IdUtas,int IdKicau, char *author){
+void buatUtas(ListDin *l,Kicau *k, int *IdUtas,int IdKicau, char *author){
     if(!isStrEqual((*k).author,author)){
         printf("Utas ini bukan milik anda!\n");
     }
     else{
-        if(indexOf(*l,IdKicau)!=IDXUNDEF){
+        if(indexOfDin(*l,IdKicau)!=IDXUNDEFDIN){
             printf("Kicau ini sudah berupa utas!\n");
         }
         else{
-            insertLastKicau(l,*k);
+            insertLastDin(l,*k);
             printf("Utas berhasil dibuat!\n");
             List lUtas = (*k).Utas;
-            insertUtas(k,*IdUtas);
-            setElmt(l,*IdUtas-1,*k);
+            insertUtas(k);
+            ELMTDIN(*l,*IdUtas-1) = *k; 
             *IdUtas+=1;
         }
     }
 }
 
 
-void insertUtas(Kicau *k,int idUtas){
+void insertUtas(Kicau *k){
     Word input,text;
     int id,len;
     boolean lanjut = true;
@@ -138,7 +138,7 @@ void perutasan(Kicau k){
     utas(k.Utas);
 }
 
-void sambungUtas(Kicau *k,int idx,int IdUtas,List *ListUtas, char *aut){
+void sambungUtas(Kicau *k,int idx,int IdUtas,ListDin *ListUtas, char *aut){
     Word input,text;
     int id,len;
     time_t currentTime;
@@ -180,13 +180,14 @@ void sambungUtas(Kicau *k,int idx,int IdUtas,List *ListUtas, char *aut){
             CreateKicau(&k2,id,0,text,(*k).author,d);
             insertAt(&((*k).Utas),k2,idx-1);
 
-            //utas((*k).Utas);
-            setElmt(ListUtas, IdUtas-1,*k);
-            
+            // utas((*k).Utas);
+            ELMTDIN(*ListUtas,IdUtas-1) = *k;
         }
         else{
             printf("Anda tidak bisa menyambung utas ini!\n");
         }
+        // ELMTDIN(*ListUtas,IdUtas-1) = *k;
+        // utas(ELMTDIN(*ListUtas,IdUtas-1).Utas);
     }
     else{
         printf("Indeks Terlalu Tinggi!\n");

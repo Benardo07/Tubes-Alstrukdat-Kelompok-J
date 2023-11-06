@@ -8,7 +8,7 @@ ListPengguna LPengguna;
 ListPengguna users[20];
 Graf Teman;
 List LKicau;
-List LUtas;
+ListDin LUtas;
 DrafStack sDraf;
 Pengguna currentUser;
 int IdCurrentUser;
@@ -18,7 +18,7 @@ int IdUtas=1;
 boolean Muat(){
     char namafolder[100];
     boolean sukses = true;
-
+    CreateListDinUtas(&LUtas,20);
     printf("\nSilahkan masukan folder konfigurasi untuk dimuat: ");
     StartSentence();
     strCat("./",currentWord.TabWord,namafolder); //menggunakan relative path
@@ -32,7 +32,7 @@ boolean Muat(){
         sukses = MuatPengguna(namafolder);
         sukses = MuatKicauan(namafolder);
         sukses = MuatUtas(namafolder);
-        sukses = MuatDraf(namafolder);
+        // sukses = MuatDraf(namafolder);
         //dilanjutkan sukses = MuatTeman, etc
     }
 
@@ -229,7 +229,7 @@ boolean MuatUtas(char *namafolder){
             int id;
             fscanf(fUtas,"%d",&id);
             fgets(line,50,fUtas);
-            insertLastKicau(&LUtas,getElmt(LKicau,id-1));
+            insertLastDin(&LUtas,getElmt(LKicau,id-1));
 
             fscanf(fUtas,"%d",&m);
             fgets(line,280,fUtas);
@@ -252,11 +252,12 @@ boolean MuatUtas(char *namafolder){
                 
 
             }
-            setElmt(&LUtas,i,utas);
+            ELMTDIN(LUtas,i)=utas;
             IdUtas+=1;
         }
     }
-
+    Kicau val;
+    deleteLastDin(&LUtas,&val);
     fclose(fUtas);
     return sukses;
 }
@@ -328,19 +329,62 @@ boolean MASUK() {
             kicauan(LKicau);
         }
         else if (isStrEqual(operasi, "SUKA_KICAUAN")) { 
-            int id; // INI MASIH KEPISAH BENTAR
-            scanf("%d",&id);
+            int id; 
+            id = ambilangka(operasi);
             sukaKicau(&LKicau,id);
         }
         else if (isStrEqual(operasi, "UBAH_KICAUAN")) { 
-            int id; // INI MASIH KEPISAH BENTAR
-            scanf("%d",&id);
+            int id;
+            id = ambilangka(operasi);
             editKicau(&LKicau,id,currentUser.nama);
         }
+        else if (isStrEqual(operasi, "UTAS")) { 
+            int id;
+            Kicau k1;
+            id = ambilangka(operasi);            
+            if(id>IdKicau-1){
+                printf("Kicauan Tidak Ditemukan!\n");
+            }
+            else{
+                k1 = getElmt(LKicau,id-1);
+                buatUtas(&LUtas,&k1,&IdUtas,id,k1.author);
+            }
+        }
+        else if (isStrEqual(operasi, "SAMBUNG_UTAS")) { 
+            int id,id2;
+            Kicau k1;
+            id = ambilangka(operasi);
+            id2 = ambilangka2(operasi);
+            if(id>IdUtas-1){
+                printf("Utas Tidak Ditemukan!\n");
+            }
+            else{
+                k1 = ELMTDIN(LUtas,id);
+                sambungUtas(&k1,id2,id,&LUtas,k1.author);
+            }
+        }
+        else if (isStrEqual(operasi, "HAPUS_UTAS")) { 
+            int id,id2;
+            Kicau k1;
+            id = ambilangka(operasi);
+            id2 = ambilangka2(operasi);
+            if(id>IdUtas-1){
+                printf("Utas Tidak Ditemukan!\n");
+            }
+            else{
+                k1 = ELMTDIN(LUtas,id);
+                hapusUtas(&k1,id2,k1.author);
+            }
+        }
         else if (isStrEqual(operasi, "CETAK_UTAS")) { 
-            int id; // INI MASIH KEPISAH BENTAR
-            scanf("%d",&id);
-            perutasan((getElmt(LUtas,id-1)));
+            int id;
+            id = ambilangka(operasi);
+            if(id>IdUtas-1){
+                printf("Utas Tidak Ditemukan!\n");
+            }
+            else{
+                perutasan((ELMTDIN(LUtas,id-1)));
+            }
         }
         //else if (isStrEqual(operasi, "_____")) { } <--- dilanjutkan
         else {

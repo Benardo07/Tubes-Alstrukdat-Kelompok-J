@@ -1,29 +1,32 @@
 
 #include <stdio.h>
+#include <stdlib.h>
 #include "../ADT/mesinkata/wordmachine.h"
 #include "kicauan.h"
 #include "../utas/utas.h"
 #include "../ADT/listlinier/listlinier.h"
-// #include "../utas/utas.h"
+#include "../ADT/listdin/listdinutas.h"
 
 List l;
-List LUtas;
+ListDin LUtas;
+
 int JumlahId = 1;
 int IdUtas = 1;
 
 boolean MuatKicauan(char *namafolder);
 boolean MuatUtas(char *namafolder);
-// gcc -o q kicauan/driver.c adt/datetime/datetime.c kicauan/kicauan.c adt/datetime/time.c adt/mesinkata/wordmachine.c adt/mesinkarakter/charmachine.c adt/listlinier/listlinier.c primitif/primitif.c utas/utas.c
+// gcc -o q kicauan/driver.c adt/datetime/datetime.c kicauan/kicauan.c adt/datetime/time.c adt/mesinkata/wordmachine.c adt/mesinkarakter/charmachine.c adt/listlinier/listlinier.c primitif/primitif.c utas/utas.c adt/listdin/listdinutas.c
 
 int main() {
+    CreateListDinUtas(&LUtas,3);
     boolean loop = true;
     while (loop) {
         loop = !MuatKicauan("configs");
         loop = !MuatUtas("configs");
     }
     kicauan(l);
-    perutasan(getElmt(LUtas,0));
-    perutasan(getElmt(LUtas,1));
+    perutasan(ELMTDIN(LUtas,0));
+    perutasan(ELMTDIN(LUtas,1));
     printf("\nFile konfigurasi berhasil dimuat! Selamat berkicau!\n");
     // Create a Word to store the author's name
     printf("masukkan author: ");
@@ -66,18 +69,20 @@ int main() {
 
     printf("mau cetak utas id berapa: ");
     scanf("%d",&idx);
-    perutasan(getElmt(LUtas,idx-1));
+    perutasan(ELMTDIN(LUtas,idx-1));
 
-    k1 = getElmt(LUtas,2);
+    k1 = ELMTDIN(LUtas,2);
     printf("mau SAMBUNG utas idx berapa: ");
     scanf("%d",&idx);
     sambungUtas(&k1,idx,1,&LUtas,k1.author);
-    perutasan(getElmt(LUtas,2));
+    utas(ELMTDIN(LUtas,2).Utas);
+    perutasan(ELMTDIN(LUtas,2));
 
     printf("mau hapus utas idx berapa: ");
     scanf("%d",&idx);
     hapusUtas(&k1,idx,k1.author);
-    perutasan(getElmt(LUtas,2));
+    utas(ELMTDIN(LUtas,2).Utas);
+    perutasan(ELMTDIN(LUtas,2));
 
     printf("done");
     return 0;
@@ -163,7 +168,7 @@ boolean MuatUtas(char *namafolder){
             int id;
             fscanf(fUtas,"%d",&id);
             fgets(line,50,fUtas);
-            insertLastKicau(&LUtas,getElmt(l,id-1));
+            insertLastDin(&LUtas,getElmt(l,id-1));
 
             fscanf(fUtas,"%d",&m);
             fgets(line,280,fUtas);
@@ -173,7 +178,6 @@ boolean MuatUtas(char *namafolder){
                 Kicau p;
                 fgets(p.text.TabWord, sizeof(p.text.TabWord), fUtas);
                 p.text.Length = strlength(p.text.TabWord);
-
                 fgets(line,280,fUtas);
                 strCpy(line,p.author);
 
@@ -186,7 +190,7 @@ boolean MuatUtas(char *namafolder){
                 
 
             }
-            setElmt(&LUtas,i,utas);
+            ELMTDIN(LUtas,i) = utas;
             IdUtas+=1;
         }
     }

@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "../ADT/liststatik/listpengguna.h"
 #include "../kicauan/kicauan.h"
 #include "../ADT/graf/graf.h"
@@ -6,6 +7,7 @@
 #include "../ADT/stack/drafStack.h"
 #include "../primitif/primitif.h"
 #include "../utas/utas.h"
+#include "../ADT/listdin/listdinutas.h"
 #include "../ADT/listlinier/listlinier.h"
 #include "../ADT/mesinkata/wordmachine.h"
 #include "../ADT/mesinkarakter/charmachine.h"

@@ -15,6 +15,10 @@ boolean strIsInt(char *str);
 
 boolean isStrEqual(char *str1, char *str2);
 
+int ambilangka(char *str1);
+
+int ambilangka2(char *str1);
+
 boolean isWeton(char *weton);
 
 

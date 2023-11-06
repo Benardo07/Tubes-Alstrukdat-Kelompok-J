@@ -94,17 +94,52 @@ boolean isStrEqual(char *str1, char *str2){
     boolean equal = true;
     int i=0;
 
-    while ((str1[i] != '\0' || str2[i] != '\0') && equal) {
+    while ((i<strlength(str2)) && equal) {
         if (str1[i] != str2[i]) {
             equal = false;
         } else {
             i++;
         }
     }
-
-    if((str1[i]!='\0' && str2[i]=='\0') || (str1[i]=='\0' && str2[i]!='\0')) equal = false;
+    if(str1[i]!=' '){
+        if((str1[i]!='\0' && str2[i]=='\0') || (str1[i]=='\0' && str2[i]!='\0')){ 
+                equal = false;}
+    }
 
     return equal;
+}
+
+
+int ambilangka(char *str1){
+    int id=0;
+    int i = 0;
+    while (str1[i] != ' ' ) {
+            i++;
+    }
+    i++;
+    while (str1[i] != '\0') {
+        id = id * 10 + (str1[i] - '0');
+        i++;
+    }
+    return id;
+}
+
+int ambilangka2(char *str1){
+    int id=0;
+    int i = 0;
+    while (str1[i] != ' ' ) {
+            i++;
+    }
+    i++;
+    while (str1[i] != ' ' ) {
+            i++;
+    }
+    i++;
+    while (str1[i] != '\0') {
+        id = id * 10 + (str1[i] - '0');
+        i++;
+    }
+    return id;
 }
 
 boolean isWeton(char *weton){

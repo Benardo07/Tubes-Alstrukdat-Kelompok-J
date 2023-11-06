@@ -27,7 +27,7 @@ void newPengguna(Pengguna *p, char *nama, char *sandi) {
     strCpy("", BIO(*p));
     strCpy("", HP(*p));
     strCpy("", WETON(*p));
-    CreatePhotoMatrix(&FOTO(*p));
+    // CreatePhotoMatrix(&FOTO(*p));
     JMLHDRAF(*p) = 0;
     CreateEmptyDrafStack(&DRAF(*p));
     //printPengguna(*p);
@@ -40,7 +40,7 @@ void createPengguna(Pengguna *p){
     strCpy("", BIO(*p));
     strCpy("", HP(*p));
     strCpy("", WETON(*p));
-    CreatePhotoMatrix(&FOTO(*p));
+    //CreatePhotoMatrix(&FOTO(*p));
     JMLHDRAF(*p) = 0;
     CreateEmptyDrafStack(&DRAF(*p));
 }
@@ -108,7 +108,7 @@ void printPengguna(Pengguna p) {
     printf("%s\n",HP(p));
     printf("%s\n",WETON(p));
     printf("%s\n",JENIS(p));
-    PrintPhotoMatrix(FOTO(p));
+    // PrintPhotoMatrix(FOTO(p));
 }
 
 void printListP(ListPengguna l) {

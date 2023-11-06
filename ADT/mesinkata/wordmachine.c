@@ -28,7 +28,6 @@ void STARTWORD()
     START();
     //Word currentWord;
 
-    IgnoreBlanks();
     if (currentChar == MARK) {
         EndWord = true;
     } else {
@@ -63,7 +62,7 @@ void CopyWord()
             i++;
         }
         ADV();
-    } while (currentChar != MARK && currentChar != BLANK);
+    } while (currentChar != MARK);
     currentWord.Length = i;
 }
 
