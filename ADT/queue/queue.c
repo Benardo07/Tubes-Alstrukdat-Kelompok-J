@@ -18,7 +18,7 @@ boolean isQueueEmpty(Queue q){
 };
 /* Mengirim true jika q kosong: lihat definisi di atas */
 boolean isQueueFull(Queue q){
-    return (((IDX_TAIL(q)+1) % CAPACITY == IDX_HEAD(q)));
+    return (((IDX_TAIL(q)+1) % CAPACITYQ == IDX_HEAD(q)));
 };
 /* Mengirim true jika tabel penampung elemen q sudah penuh */
 /* yaitu IDX_TAIL akan selalu di belakang IDX_HEAD dalam buffer melingkar*/
@@ -27,12 +27,12 @@ int lengthQueue(Queue q){
     if (isQueueEmpty(q)){
         return 0;
     }else if(isQueueFull(q)){
-        return CAPACITY;
+        return CAPACITYQ;
     }else{
         if(IDX_HEAD(q)<=IDX_TAIL(q)){
             return (IDX_TAIL(q)- IDX_HEAD(q) + 1);
         }else{
-            return(CAPACITY+(IDX_TAIL(q)- IDX_HEAD(q) + 1));
+            return(CAPACITYQ+(IDX_TAIL(q)- IDX_HEAD(q) + 1));
         }
     }
 };
@@ -40,12 +40,12 @@ int lengthQueue(Queue q){
 
 /* *** Primitif Add/Delete *** */
 void enqueue(Queue *q, int val){
-    if(isEmpty(*q)){
+    if(isQueueEmpty(*q)){
         IDX_HEAD(*q) = 0;
         IDX_TAIL(*q) = 0;
         TAIL(*q) = val;
     }else{
-        IDX_TAIL(*q) = (IDX_TAIL(*q)+1) % CAPACITY;
+        IDX_TAIL(*q) = (IDX_TAIL(*q)+1) % CAPACITYQ;
         TAIL(*q) = val;
     }
 };
@@ -55,11 +55,11 @@ void enqueue(Queue *q, int val){
 
 void dequeue(Queue *q, int *val){
     *val = HEAD(*q);
-    if (length(*q) - 1 == 0){
+    if (lengthQueue(*q) - 1 == 0){
         IDX_HEAD(*q) = -1;
         IDX_TAIL(*q) = -1;
     }else{
-        IDX_HEAD(*q) = (IDX_HEAD(*q)+1) % CAPACITY;
+        IDX_HEAD(*q) = (IDX_HEAD(*q)+1) % CAPACITYQ;
     }
 };
 /* Proses: Menghapus val pada q dengan aturan FIFO */
@@ -71,10 +71,10 @@ void dequeue(Queue *q, int *val){
 void displayQueue(Queue q){
     int i,val;
     printf("[");
-    if(!isEmpty(q)){
-        for (i = IDX_HEAD(q); i != IDX_TAIL(q); i = (i+1)%CAPACITY){
+    if(!isQueueEmpty(q)){
+        for (i = IDX_HEAD(q); i != IDX_TAIL(q); i = (i+1)%CAPACITYQ){
             printf("%d", q.buffer[i]);
-            if(!isEmpty(q)){
+            if(!isQueueEmpty(q)){
                 printf(",");
             }     
         }

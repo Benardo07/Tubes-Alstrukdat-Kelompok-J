@@ -30,8 +30,8 @@ boolean isIndirectlyConnected(Graf g, int idx1, int idx2) {
     enqueue(&q, idx1);
     visited[idx1] = true;
 
-    ElType val;
-    while(!isEmpty(q)) {
+    int val;
+    while(!isQueueEmpty(q)) {
         int cur = HEAD(q);
         dequeue(&q, &val);
 

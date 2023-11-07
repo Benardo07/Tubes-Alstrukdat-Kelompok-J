@@ -21,6 +21,7 @@ typedef struct {
     DATETIME waktu;
     List Utas;
     Tree Balas;
+    int lastIDBalas;
 } Kicau;
 
 typedef struct node {
@@ -36,6 +37,7 @@ typedef struct node {
 #define author(p) (((p)->info).author)
 #define waktu(p) (((p)->info).waktu)
 #define Balas(p) (((p)->info).Balas)
+#define lastId(p) (((p)->info).lastIDBalas)
 
 /* Definisi List : */
 /* List kosong : FIRST(l) = NULL */
@@ -72,6 +74,8 @@ int indexOf(List l, int id);
 /* Mengembalikan IDX_UNDEF jika tidak ditemukan */
 
 void AddBalasanKicauAt(List *l, int id,Tree T);
+
+void setLastId(List *l, int id, int lastId);
 
 /****************** PRIMITIF BERDASARKAN NILAI ******************/
 /*** PENAMBAHAN ELEMEN ***/

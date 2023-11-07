@@ -254,12 +254,47 @@ void setJumlahDraf(ListPengguna *l, char *nama , int jumlah){
     }
 }
 
-char searchNamabyId(ListPengguna l, int id){
+char* searchNamabyId(ListPengguna l, int id){
     int i;
     for(i=0;i,listLengthP(l);i++){
         if(ID(ELMT(l,i)) == id){
-            return NAMA(ELMT(l,i));
+            char * temp;
+            strCpy(NAMA(ELMT(l,i)),temp);
+            return temp;
         }
     }
     return NULL;
+}
+
+int searchPenggunaByName(ListPengguna l, char *nama ){
+    int i = 0;
+    for(i = 0; i < listLengthP(l) ; i++){
+        if(isStrEqual(NAMA(ELMT(l,i)),nama)){
+            return i;
+        }
+    }
+    return IDX_UNDEF;
+}
+
+int findIDPenggunaByName(ListPengguna l, char *nama ){
+    int i = 0;
+    for(i = 0; i < listLengthP(l) ; i++){
+        if(isStrEqual(NAMA(ELMT(l,i)),nama)){
+            return ELMT(l,i).id;
+        }
+    }
+    return IDX_UNDEF;
+}
+boolean isPenggunaPrivate(ListPengguna *l, char *nama){
+    int i = 0;
+    for ( i =0 ; i < listLengthP(*l) ; i++){
+        if(isStrEqual(NAMA(ELMT(*l,i)),nama)){
+            if(isStrEqual(JENIS(ELMT(*l,i)),"Privat") ){
+                return true;
+            }else{
+                return false;
+            }
+        }
+    }
+    return false;
 }

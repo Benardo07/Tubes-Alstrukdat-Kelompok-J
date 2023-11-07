@@ -173,6 +173,12 @@ boolean checkSandi(ListPengguna l, int idx, char *sandi);
 
 void setJumlahDraf(ListPengguna *l, char *nama , int jumlah);
 
-char searchNamabyId(ListPengguna l, int id);
+char* searchNamabyId(ListPengguna l, int id);
+
+int searchPenggunaByName(ListPengguna l, char *nama );
+
+int findIDPenggunaByName(ListPengguna l, char *nama );
+
+boolean isPenggunaPrivate(ListPengguna *l, char *nama);
 
 #endif

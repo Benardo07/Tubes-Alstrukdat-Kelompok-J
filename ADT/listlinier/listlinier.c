@@ -94,6 +94,21 @@ void AddBalasanKicauAt(List *l, int id,Tree T){
     }   
 }
 
+
+void setLastId(List *l, int id, int lastID){
+    Address p = *l;
+    boolean found = false;
+    while (p != NULL && !found)
+    {
+        if(id(p) == id){
+            found = true;
+            lastId(p) = lastID;
+        }else{
+            p = NEXT(p);
+        }
+    }
+    
+}
 /* I.S. l, val terdefinisi */
 /* F.S. Mencari apakah ada elemen list l yang bernilai val */
 /* Jika ada, mengembalikan indeks elemen pertama l yang bernilai val */
