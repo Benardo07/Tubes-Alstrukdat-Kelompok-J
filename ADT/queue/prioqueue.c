@@ -110,3 +110,12 @@ void SearchByUserId(PrioQueue * Q, int searchValue){
         printf("User ID '%d' not found in the queue.\n", searchValue);
     }
 };
+
+void UpdatePrioQueue(PrioQueue *Q, int userId) {
+    for (int i = Head(*Q); i != Tail(*Q); i = (i + 1) % MaxEl(*Q)) {
+        if (Info(Elmt(*Q, i)) == userId) {
+            Prio(Elmt(*Q, i))++;
+            break;
+        }
+    }
+}
