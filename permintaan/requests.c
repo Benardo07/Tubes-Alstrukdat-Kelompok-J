@@ -1,6 +1,7 @@
 # include "ADT\queue\prioqueue.h"
 # include "ADT\liststatik\listpengguna.h"
-# include "main.h"
+# include "ADT\graf\graf.h"
+# include "../data/data.h"
 
 void TambahTeman(){
     printf("Masukkan nama pengguna: \n");
@@ -50,20 +51,39 @@ void DaftarPermintaanTeman(){
     }
 }
 
-void SetujuiTeman(){
-    if(isEmptyPrio(FREQ(currentUser))){
+void SetujuiTeman(ListPengguna *LPengguna, Pengguna *currentUser) {
+    if (IsPrioQueueEmpty(FREQ(*currentUser))) {
         printf("Tidak ada yang mengajukan pertemanan dengan Anda.\n");
-    }else{
-        int topID = Info(Elmt(FREQ(currentUser), Head(FREQ(currentUser))));
-        int jlhTeman = Prio(Elmt(FREQ(currentUser), Head(FREQ(currentUser))));
-        char* topName = searchNamabyId(LPengguna, topID);
+    } else {
+        infotype topRequest;
+        DequeuePrio(&FREQ(*currentUser), &topRequest);
+        int topID = Info(topRequest);
+        int jlhTeman = Prio(topRequest);
+        char* topName = searchNamabyId(*LPengguna, topID);
+
         if (topName != NULL) {
-            printf("Permintaan teratas dari %c\n", topName);
-            printf(" | %c\n",topName);
-            printf(" | Jumlah Teman: %d\n",jlhTeman);
+            printf("Permintaan teratas dari %s\n", topName);
+            printf(" | %s\n", topName);
+            printf(" | Jumlah Teman: %d\n", jlhTeman);
             
-            printf("Apakah Anda ingin menyetujui permintaan pertemanan ini? \n");
-            
+            printf("Apakah Anda ingin menyetujui permintaan pertemanan ini? (ya/tidak)\n");
+            STARTWORD();
+            char* answer = currentWord.TabWord;
+            if (isStrEqual(answer, "ya")) {
+                TOTALFRIENDS(*currentUser)++; 
+                
+                for (int i = 0; i < NEFF(*LPengguna); i++) {
+                    if (ID(ELMT(*LPengguna, i)) == topID) {
+                        TOTALFRIENDS(ELMT(*LPengguna, i))++; 
+                        UpdatePrioQueue(&FREQ(ELMT(*LPengguna, i)), ID(*currentUser)); 
+                        break;
+                    }
+                }
+                
+                printf("Permintaan pertemanan dari %s telah disetujui.\n", topName);
+            } else {
+                printf("Permintaan pertemanan dari %s tidak disetujui.\n", topName);
+            }
         } else {
             printf("Nama pengguna tidak ditemukan.\n");
         }

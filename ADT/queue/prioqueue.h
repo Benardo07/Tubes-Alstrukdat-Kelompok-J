@@ -45,4 +45,6 @@ void DisplayPrioQueue (PrioQueue Q);
 
 void SearchByUserId(PrioQueue * Q, int searchValue);
 
+void UpdatePrioQueue(PrioQueue *Q, int userId);
+
 #endif
