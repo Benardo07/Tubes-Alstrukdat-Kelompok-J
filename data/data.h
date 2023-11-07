@@ -14,6 +14,7 @@
 #include "../ADT/tree/tree.h"
 #include "../ADT/listdin/listdin.h"
 
+
 extern ListPengguna LPengguna;
 extern ListPengguna users[20];
 extern Graf Teman;

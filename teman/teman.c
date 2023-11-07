@@ -1,9 +1,5 @@
 #include <stdio.h>
-#include "../ADT/graf/graf.h"
-#include "../ADT/queue/queue.h"
-#include "../ADT/boolean.h"
-#include "../data/data.h"
-#include "../main.h"
+#include "teman.h"
 
 boolean isTeman(int id_1, int id_2) {
     return isDirectlyConnected(Teman, id_1-1, id_2-1);
