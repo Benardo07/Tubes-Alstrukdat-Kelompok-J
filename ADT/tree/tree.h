@@ -41,7 +41,13 @@ Balasan CreateBalasan(Balasan *B, int id, char *tweet ,char *writer , DATETIME d
 Balasan CreateRootBalasan();
 
 AddressTree findBalasanInTree(Tree T,int id);
+AddressTree findBalasanParentInTree(Tree T,int id,AddressTree parent);
 
 void printBalasan(Balasan B);
+
+// void printBalasanWithIndent(Balasan B, int depth);
+
+// void printAllBalasanWithIndent(Tree T, int depth);
+
 
 #endif

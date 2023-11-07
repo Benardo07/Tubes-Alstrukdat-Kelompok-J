@@ -173,5 +173,6 @@ void compressListDinTree(ListDinTree *l);
 /* Proses : Mengubah capacity sehingga capacity = nEff */
 /* I.S. List tidak kosong */
 /* F.S. Ukuran capacity = nEff */
+void deleteListDinAt(ListDinTree *l , int idx);
 
 #endif

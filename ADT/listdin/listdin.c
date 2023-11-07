@@ -143,6 +143,24 @@ void copyListDinTree(ListDinTree lIn, ListDinTree *lOut){
     }
     NEFFDINTREE(*lOut)=NEFFDINTREE(lIn);
 };
+
+void deleteListDinAt(ListDinTree *l , int idx){
+    if (idx < IDX_MIN_B || idx >= NEFFDINTREE(*l)) {
+        printf("Index out of bounds\n");
+        return;
+    }
+
+    // If necessary, free the memory of the node at the specified index
+    // free(ELMTDINTREE(*l, idx));
+
+    // Shift elements to the left to fill the gap
+    for (int i = idx; i < NEFFDINTREE(*l) - 1; i++) {
+        ELMTDINTREE(*l, i) = ELMTDINTREE(*l, i + 1);
+    }
+
+    // Decrease the effective number of elements
+    NEFFDINTREE(*l)--;
+}
 /* I.S. lIn terdefinisi tidak kosong, lOut sembarang */
 /* F.S. lOut berisi salinan dari lIn (identik, NEFFDINTREE dan CAPACITYDINTREE sama) */
 /* Proses : Menyalin isi lIn ke lOut */ 

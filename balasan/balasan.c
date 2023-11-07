@@ -5,7 +5,7 @@ void balasKicauan(int idkic,int idbal){
         printf("\nWah, tidak terdapat kicauan yang ingin Anda balas!\n");
     }else if(idbal != -1 && findBalasanInTree(getElmt(LKicau,indexOf(LKicau,idkic)).Balas,idbal) == NULL){
         printf("\nWah, tidak terdapat balasan yang ingin Anda balas!\n");
-    }else if(isPenggunaPrivate(&LPengguna, getElmt(LKicau,indexOf(LKicau,idkic)).author) && !isTeman(currentUser.id,findIDPenggunaByName(LPengguna,getElmt(LKicau,indexOf(LKicau,idkic)).author))){
+    }else if(isPenggunaPrivate(&LPengguna, getElmt(LKicau,indexOf(LKicau,idkic)).author) || isPenggunaPrivate(&LPengguna,BALASAN(findBalasanInTree(getElmt(LKicau,indexOf(LKicau,idkic)).Balas,idbal)).writer)){
         printf("\nWah, akun tersebut merupakan akun private dan anda belum berteman dengan akun tersebut!\n");
     }else{
         printf("\nMasukkan balasan : \n");
@@ -29,6 +29,7 @@ void balasKicauan(int idkic,int idbal){
         printf("\n");
     }
 }
+
 
 void printSemuaBalasan(int idKicau){
     printAllBalasanWithIndent(getElmt(LKicau,indexOf(LKicau,idKicau)).Balas,0);
@@ -101,6 +102,22 @@ void printBalasanWithIndent(Balasan B, int depth){
         printf("    ");
     }
     printf("| %s\n", TweetBalasan(B));
+}
+
+void hapusBalasan(int idkic , int idbal){
+    if(indexOf(LKicau,idkic) == IDXUNDEF){
+        printf("Tidak anda kicauan dengan id tersebut.\n");
+    }else if(findBalasanInTree(getElmt(LKicau,indexOf(LKicau,idkic)).Balas,idbal) == NULL){
+        printf("Balasan tidak ditemukan. \n");
+    }else if(!isStrEqual(findBalasanInTree(getElmt(LKicau,indexOf(LKicau,idkic)).Balas,idbal)->B.writer,currentUser.nama)){
+        printf("Hei, ini balasan punya siapa? Jangan dihapus ya!\n");
+    }else{
+        Tree temp = findBalasanInTree(getElmt(LKicau,indexOf(LKicau,idkic)).Balas,idbal);
+        Tree parentTemp = findBalasanParentInTree(getElmt(LKicau,indexOf(LKicau,idkic)).Balas,idbal,NULL);
+        printAllBalasanWithIndent(parentTemp,0);
+        deleteListDinAt(&CHILDREN(parentTemp),indexOfDinTree(CHILDREN(parentTemp),temp));
+        printf("Balasan berhasil di hapus!\n");
+    }
 }
 
 
