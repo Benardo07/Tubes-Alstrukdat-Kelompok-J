@@ -142,6 +142,7 @@ int ambilangka2(char *str1){
     return id;
 }
 
+
 boolean isWeton(char *weton){
     boolean sukses=false;
     char* temp = strLower(weton);
@@ -169,4 +170,43 @@ void strCpyTwoElmt(char *str1,char *dest1 , int *dest2){
         z++;
     }
     dest1[z] = '\0';
+}
+
+void takeTwovalue(char *str1 , int* yangDiBalas, int* yangBalas){
+    int i =0;
+    while (str1[i] != ' ')
+    {
+        i++;
+    }
+    i++;
+    int z = 10;
+    boolean negatif = false;
+    while (str1[i] != ' ')
+    {
+        if(str1[i] == '-'){
+            negatif = true;
+        }else{
+            *yangDiBalas = (*yangDiBalas)*z +  (str1[i] - '0');
+        }
+        i++;
+    }
+    if(negatif){
+        *yangDiBalas = -1* (*yangDiBalas);
+        negatif = false;
+    }
+    i++;
+    while (str1[i] != '\0')
+    {
+        if(str1[i] == '-'){
+            negatif = true;
+        }else{
+            *yangBalas = (*yangBalas)*z +  (str1[i] - '0');
+        }
+        i++;
+    }
+    if(negatif){
+        *yangBalas = (*yangBalas) * -1;
+        negatif = false;
+    }
+
 }
