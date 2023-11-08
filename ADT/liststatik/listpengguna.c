@@ -254,16 +254,19 @@ void setJumlahDraf(ListPengguna *l, char *nama , int jumlah){
     }
 }
 
-char* searchNamabyId(ListPengguna l, int id){
+char* searchNamabyId(ListPengguna l, int id) {
     int i;
-    for(i=0;i,listLengthP(l);i++){
-        if(ID(ELMT(l,i)) == id){
-            char * temp;
-            strCpy(NAMA(ELMT(l,i)),temp);
-            return temp;
+    for (i = 0; i < listLengthP(l); i++) {
+        if (ID(ELMT(l, i)) == id) {
+            char* nameCopy = malloc(strlen(NAMA(ELMT(l, i))) + 1);
+            if (nameCopy != NULL) {
+                strCpy(NAMA(ELMT(l, i)), nameCopy); 
+                return nameCopy; 
+            }
+            break;
         }
     }
-    return NULL;
+    return NULL; 
 }
 
 int searchPenggunaByName(ListPengguna l, char *nama ){

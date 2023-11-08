@@ -56,7 +56,7 @@ void EnqueuePrio (PrioQueue * Q, infotype X){
                 next = next;
             }
 
-            if(Prio(Elmt(*Q,current)) < Prio(Elmt(*Q,next))){
+            if(Prio(Elmt(*Q,current)) > Prio(Elmt(*Q,next))){
                 temp = Elmt(*Q,current);
                 Elmt(*Q,current) = Elmt(*Q,next);
                 Elmt(*Q,next) = temp;
