@@ -3,7 +3,12 @@
 #include "../ADT/mesinkata/wordmachine.h"
 #include "../ADT/mesinkarakter/charmachine.h"
 #include "../ADT/listlinier/listlinier.h"
+#include "../ADT/matriks/foto.h"
 #include "../ADT/graf/graf.h"
+#include "../kicauan/kicauan.h"
+#include "../ADT/datetime/datetime.h"
+#include "../ADT/datetime/time.h"
+#include "../teman/teman.h"
 
 ListPengguna LPengguna;
 ListPengguna users[20];
@@ -55,7 +60,7 @@ boolean MuatPengguna(char *namafolder){
         printf("File pengguna ditemukan\n");
 
         char line[135];
-        int n, i, j;
+        int n, i, j, k;
 
         fscanf(fPengguna,"%d",&n);
         fgets(line,135,fPengguna);
@@ -81,19 +86,27 @@ boolean MuatPengguna(char *namafolder){
             fgets(line,135,fPengguna);
             strCpy(line,JENIS(p));
 
+            char *temp;
             for (j=0;j<5;j++) {
-                fgets(line,135,fPengguna);
-                strCpy(line,FOTO(p).matriks[j]);
+                for (k=0; k<10; ++k) {
+                    fscanf(fPengguna, "%c ", &FOTO(p).matriks[j][k]);
+                }
+                fscanf(fPengguna, "\n", temp);
             }
+            ROW_EFF(FOTO(p)) = CAP;
+            COL_EFF(FOTO(p)) =  2*CAP;
 
             insertLastP(&LPengguna,p);
         }
 
-        int edge = 0;
+        createGraph(&Teman);
+        Teman.nodes = n;
+        int edge;
         for(i=0; i<n; ++i) {
             for(j=0; j<n; ++j) {
                 fscanf(fPengguna, "%d", &edge);
                 ELMT_GRAPH(Teman, i, j) = edge;
+                if (edge == 1) Teman.edges++;
             }
         }
     }
@@ -261,6 +274,106 @@ boolean MuatUtas(char *namafolder){
     return sukses;
 }
 
+void SimpanPengguna(char* namaFolder) {
+    FILE *fPengguna;
+    char pathPengguna[100];
+    strCat(namaFolder, "/pengguna.config", pathPengguna);
+
+    fPengguna = fopen(pathPengguna, "w");
+    fprintf(fPengguna, "%d\n", listLengthP(LPengguna));
+
+    int i, j, k;
+    for(i=0; i<listLengthP(LPengguna); ++i) {
+        Pengguna p = ELMT(LPengguna, i);
+        fprintf(fPengguna, "%s\n", NAMA(p));
+        fprintf(fPengguna, "%s\n", PASSWORD(p));
+        fprintf(fPengguna, "%s\n", BIO(p));
+        fprintf(fPengguna, "%s\n", HP(p));
+        fprintf(fPengguna, "%s\n", WETON(p));
+        fprintf(fPengguna, "%s\n", JENIS(p));
+        for(j=0; j<5; ++j) {
+            for(k=0; k<10; ++k) fprintf(fPengguna, "%c ", FOTO(p).matriks[j][k]);
+            fprintf(fPengguna, "\n");
+        }
+    }
+    for(i=0; i<SIMPUL(Teman); ++i) {
+        for(j=0; j<SIMPUL(Teman); ++j) {
+            fprintf(fPengguna, "%d ", ELMT_GRAPH(Teman, i, j));
+        }
+        fprintf(fPengguna, "\n");
+    }
+
+    // tinggal permintaan pertemanan
+
+    fclose(fPengguna);
+}
+
+void SimpanKicauan(char* namaFolder) {
+    FILE *fKicauan;
+    char pathKicauan[100];
+    strCat(namaFolder, "/kicauan.config", pathKicauan);
+
+    fKicauan = fopen(pathKicauan, "w");
+    fprintf(fKicauan, "%d\n", length(LKicau));
+    
+    for(int i=0; i<length(LKicau); ++i) {
+        Kicau k = getElmt(LKicau, i);
+        fprintf(fKicauan, "%d\n", k.id);
+        fprintf(fKicauan, "%s", k.text);
+        if (k.text.Length >= 280 && k.text.TabWord[280] != '\n') fprintf(fKicauan, "\n");
+        fprintf(fKicauan, "%d\n", k.like);
+        fprintf(fKicauan, "%s\n", k.author);
+        
+        fprintf(fKicauan, "%d/", Day(k.waktu));
+        fprintf(fKicauan, "%d/", Month(k.waktu));
+        fprintf(fKicauan, "%d ", Year(k.waktu));
+        fprintf(fKicauan, "%d:", Hour(Time(k.waktu)));
+        fprintf(fKicauan, "%d:", Minute(Time(k.waktu)));
+        fprintf(fKicauan, "%d\n", Second(Time(k.waktu)));
+    }
+
+    fclose(fKicauan);
+}
+
+void SimpanUtas(char* namaFolder) {
+    return;
+}
+
+boolean Simpan() {
+    boolean sukses = true;
+    
+    char namaFolder[100];
+    printf("\nMasukkan nama folder penyimpanan: ");
+    StartSentence();
+    strCat("./configs/", currentWord.TabWord, namaFolder);
+
+    if (isDirectoryExist(namaFolder)) {
+        printf("Anda akan melakukan penyimpanan di %s.\n", namaFolder);
+    }
+    else {
+        printf("Tidak ditemukan folder %s. Membuat folder baru bernama %s...\n", namaFolder, namaFolder);
+        printf("Mohon tunggu...\n");
+        printf("1...\n2...\n3...\n");
+        int check = mkdir(namaFolder);
+        if (check == 0) printf("Folder berhasil dibuat!\n");
+        else {
+            printf("Folder gagal dibuat.\n");
+            sukses = false;
+        }
+    }
+
+    if (sukses) {
+        SimpanPengguna(namaFolder);
+        SimpanKicauan(namaFolder);
+        // SimpanBalasan(namaFolder);
+        // SimpanDraf(namaFolder);
+        // SimpanUtas(namaFolder);
+
+        printf("File config berhasil disimpan.\n");
+    }
+
+    return sukses;
+}
 
 boolean MASUK() {
     //return true jika tutup program
@@ -292,7 +405,7 @@ boolean MASUK() {
         } else {
             loop = false;
             currentUser = ELMT(LPengguna,idx);
-            IdCurrentUser = idx + 1;
+            ID(currentUser) = idx + 1;
             printf("\nAnda telah berhasil masuk dengan nama pengguna %s. Mari menjelajahi BurBir bersama Ande-Ande Lumut!\n", NAMA(currentUser));
         }
     }
@@ -321,7 +434,12 @@ boolean MASUK() {
             printf("\nAnda telah keluar dari program BurBir. Sampai jumpa di penjelajahan berikutnya.\n");
             loop = false;
             keluar = true;
-        } else if (isStrEqual(operasi, "KICAU")) { 
+        } else if (isStrEqual(operasi, "DAFTAR_TEMAN")) {
+            daftarTeman(currentUser.id);
+        } else if (isStrEqual(operasi, "HAPUS_TEMAN")) {
+            hapusTeman(currentUser.id);
+        }
+        else if (isStrEqual(operasi, "KICAU")) { 
             insertKicau(&LKicau,currentUser.nama,&IdKicau);
         }
         else if (isStrEqual(operasi, "KICAUAN")) { 
@@ -391,6 +509,9 @@ boolean MASUK() {
                 k1 = getElmt(LKicau,idkic);
                 perutasan(k1);
             }
+        }
+        else if (isStrEqual(operasi, "SIMPAN")) {
+            Simpan();
         }
         //else if (isStrEqual(operasi, "_____")) { } <--- dilanjutkan
         else {

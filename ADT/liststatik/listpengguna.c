@@ -27,7 +27,7 @@ void newPengguna(Pengguna *p, char *nama, char *sandi) {
     strCpy("", BIO(*p));
     strCpy("", HP(*p));
     strCpy("", WETON(*p));
-    // CreatePhotoMatrix(&FOTO(*p));
+    CreatePhotoMatrix(&FOTO(*p));
     JMLHDRAF(*p) = 0;
     CreateEmptyDrafStack(&DRAF(*p));
     //printPengguna(*p);

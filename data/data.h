@@ -32,6 +32,12 @@ extern boolean EOP;
 
 boolean Muat();
 
+boolean Simpan();
+
+void SimpanPengguna(char *namaFolder);
+
+void SimpanKicauan(char *namaFolder);
+
 boolean MuatPengguna(char *namafolder);
 
 boolean MuatKicauan(char *namafolder);

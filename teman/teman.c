@@ -1,26 +1,41 @@
 #include <stdio.h>
 #include "teman.h"
+#include "../ADT/liststatik/listpengguna.h"
 
 boolean isTeman(int id_1, int id_2) {
-    return isDirectlyConnected(Teman, id_1-1, id_2-1);
+    return isAdjacent(Teman, id_1-1, id_2-1);
 }
 
 void daftarTeman(int idUser) {
-    Queue q; CreateQueue(&q);
+    PrioQueue q; CreatePrioQueue(&q);
 
     for (int i=0; i<SIMPUL(Teman); ++i) {
-        if (i != idUser-1 && isTeman(idUser-1, i)) enqueue(&q, i);
-    }
-
-    if (isQueueEmpty(q)) printf("%s belum mempunyai teman\n", NAMA(currentUser));
-    else {
-        printf("%s mempunyai %d teman\n", NAMA(currentUser), lengthQueue(q));
-        int temp;
-        while (!isQueueEmpty(q)) {
-            printf("| %s\n", NAMA(ELMT(LPengguna, HEAD(q))));
-            dequeue(&q, &temp);
+        if (i != idUser-1 && isTeman(idUser, i+1)) {
+            infotype node;
+            node.userId = i; node.prio = 1;
+            EnqueuePrio(&q, node);
         }
     }
+
+    if (IsPrioQueueEmpty(q)) printf("%s belum mempunyai teman.\n", NAMA(currentUser));
+    else {
+        printf("%s mempunyai %d teman\n", NAMA(currentUser), lengthPrioQueue(q));
+        infotype temp;
+        while (!IsPrioQueueEmpty(q)) {
+            printf("| %s\n", NAMA(ELMT(LPengguna, Info(InfoHead(q)))));
+            DequeuePrio(&q, &temp);
+        }
+    }
+}
+
+int searchNamaP(ListPengguna l, char *nama){
+    int i=0; boolean found = false;
+    while (i < NEFF(l) && !found){
+        if (isStrEqual(NAMA(ELMT(l,i)),nama)) found = true;
+        else i++;
+    }
+    if (!found) {i = IDX_UNDEF;}
+    return i;
 }
 
 void hapusTeman() {
@@ -29,9 +44,13 @@ void hapusTeman() {
     StartSentence();
     strCpy(currentWord.TabWord, nama);
 
-    int id_target = searchNama(LPengguna, nama);
+    int id_target = searchNamaP(LPengguna, nama);
     if (id_target != IDX_UNDEF) {
-        if (isTeman(ID(currentUser), id_target)) {
+        id_target++;
+        if (id_target == ID(currentUser)) {
+            printf("Anda tidak dapat meng-unfriend diri sendiri!\n");
+        }
+        else if (isTeman(ID(currentUser), id_target)) {
             printf("Apakah anda yakin ingin menghapus %s dari daftar teman Anda? (YA/TIDAK): ", nama);
             boolean inputValid = false;
             while(!inputValid) {
@@ -47,6 +66,8 @@ void hapusTeman() {
                 }
                 else printf("Mohon masukkan input yang valid (YA/TIDAK).\n");
             }
-        } 
+        }
+        else printf("%s bukan teman Anda!\n", nama);
     }
+    else printf("Tidak ada user dengan nama %s!\n", nama);
 }

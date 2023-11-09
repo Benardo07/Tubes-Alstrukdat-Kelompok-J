@@ -30,12 +30,11 @@ boolean isGraphEmpty(Graf g);
 /* I.S. Graf g terdefinisi */
 /* F.S. Mengembalikan true jika graf kosong, yaitu jumlah busur nol */
 
-boolean isDirectlyConnected(Graf g, int idx1, int idx2);
+boolean isAdjacent(Graf g, int idx1, int idx2);
 /* I.S. Graf g terdefinisi */
-/* F.S. Mengembalikan true jika terdapat busur yang menghubungkan langsung */
-/*      simpul 1 dengan simpul 2, false jika tidak */
+/* F.S. Mengembalikan true jika simpul 1 bertetanggaan dengan simpul 2, false jika tidak */
 
-boolean isIndirectlyConnected(Graf g, int idx1, int idx2);
+boolean isConnected(Graf g, int idx1, int idx2);
 /* I.S. Graf g terdefinisi */
 /* F.S. Mengembalikan true jika simpul 1 dengan simpul 2 terhubung, */
 /*      yaitu terdapat jalan (path) yang menghubungkan simpul 1 dengan simpul 2 */
