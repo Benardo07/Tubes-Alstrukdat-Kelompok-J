@@ -3,13 +3,15 @@
 #include "../ADT/listlinier/listlinier.h"
 #include "kicauan.h"
 #include "../ADT/mesinkarakter/charmachine.h"
-#include "../ADT/mesinkata/wordmachine.h" // ini masih pake punyaku dulu
+#include "../ADT/mesinkata/wordmachine.h" 
 #include "../primitif/primitif.h"
+#include "../ADT/liststatik/listpengguna.h"
 
 void CreateKicau(Kicau *k,int id, int like, Word text, char *aut, DATETIME waktu){
     (*k).id = id;
     (*k).like = like;
     (*k).text = text;
+    (*k).idutas = -999;
     strCpy(aut,(*k).author);
     (*k).waktu = waktu;
     CreateList(&(*k).Utas);
@@ -104,7 +106,7 @@ void editKicau(List *l, int id, char *auth){
     }
 }
 
-void sukaKicau(List *l, int id){
+void sukaKicau(List *l, ListPengguna l2, int id){
     if (indexOf(*l,id)==IDXUNDEF){
         printf("Tidak ditemukan kicauan dengan ID = %d!\n",id);
         printf("\n");
@@ -112,12 +114,16 @@ void sukaKicau(List *l, int id){
     else{
         Kicau el;
         el = getElmt(*l,id-1);
+        if(!isPenggunaPrivate(&l2,el.author)){
+            el.like += 1;
+            setElmt(l,id-1,el); // set element dengan text baru
 
-        el.like += 1;
-        setElmt(l,id-1,el); // set element dengan text baru
-
-        printf("Selamat! kicauan telah disukai!\n");
-        printKicau(*l,id);
+            printf("Selamat! kicauan telah disukai!\n");
+            printKicau(*l,id);
+        }
+        else{
+            printf("Wah, kicauan tersebut dibuat oleh akun privat! Ikuti akun itu dulu ya\n");
+        }
     }
 }
 
@@ -140,21 +146,23 @@ void printKicau(List l,int id){ // print kicau satuan
 /****************** PROSES SEMUA ELEMEN LIST ******************/
 
 // print semua kicauan (ini belum cek temenan apa ngga)
-void kicauan(List l){ 
+void kicauan(List l, ListPengguna l2){ 
     inverseList(&l); // di invers dulu biar ngeprint yang terbaru
     Address p = l;
     while (p!=NULL){
-        printf("| ID = %d\n",id(p));
-        printf("| ");
-        printf("%s\n",p->info.author);
-        printf("| ");
-        TulisDATETIME(waktu(p));
-        printf("\n");
-        printf("| ");
-        printWord(text(p));
-        printf("\n");
-        printf("| Disukai: %d\n",like(p));
-        printf("\n");
+        if(!isPenggunaPrivate(&l2,p->info.author)){
+            printf("| ID = %d\n",id(p));
+            printf("| ");
+            printf("%s\n",p->info.author);
+            printf("| ");
+            TulisDATETIME(waktu(p));
+            printf("\n");
+            printf("| ");
+            printWord(text(p));
+            printf("\n");
+            printf("| Disukai: %d\n",like(p));
+            printf("\n");
+        }
         p = NEXT(p);
     }
    inverseList(&l); // balikin jadi list awal lagi

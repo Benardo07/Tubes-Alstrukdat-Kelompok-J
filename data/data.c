@@ -2,13 +2,13 @@
 #include "data.h"
 #include "../ADT/mesinkata/wordmachine.h"
 #include "../ADT/mesinkarakter/charmachine.h"
+#include "../ADT/listlinier/listlinier.h"
 #include "../ADT/graf/graf.h"
 
 ListPengguna LPengguna;
 ListPengguna users[20];
 Graf Teman;
 List LKicau;
-ListDin LUtas;
 DrafStack sDraf;
 Pengguna currentUser;
 int IdCurrentUser;
@@ -18,7 +18,6 @@ int IdUtas=1;
 boolean Muat(){
     char namafolder[100];
     boolean sukses = true;
-    CreateListDinUtas(&LUtas,20);
     printf("\nSilahkan masukan folder konfigurasi untuk dimuat: ");
     StartSentence();
     strCat("./",currentWord.TabWord,namafolder); //menggunakan relative path
@@ -32,8 +31,8 @@ boolean Muat(){
         sukses = MuatPengguna(namafolder);
         sukses = MuatKicauan(namafolder);
         sukses = MuatUtas(namafolder);
-        sukses = MuatDraf(namafolder);
-        sukses = MuatBalasan(namafolder);
+        // sukses = MuatDraf(namafolder);
+        // sukses = MuatBalasan(namafolder);
         //dilanjutkan sukses = MuatTeman, etc
     }
 
@@ -148,9 +147,9 @@ boolean MuatKicauan(char *namafolder){
             fgets(line,280,fKicauan);
             CreateDATETIME(&date,d,b,y,h,m,s);
             p.waktu = date;
-
-            insertLastKicau(&LKicau,p);
+            p.idutas = -999;
             p.Utas = NULL;
+            insertLastKicau(&LKicau,p);
             IdKicau+=1;
         }
     }
@@ -230,11 +229,11 @@ boolean MuatUtas(char *namafolder){
             int id;
             fscanf(fUtas,"%d",&id);
             fgets(line,50,fUtas);
-            insertLastDin(&LUtas,getElmt(LKicau,id-1));
 
             fscanf(fUtas,"%d",&m);
             fgets(line,280,fUtas);
             Kicau utas = getElmt(LKicau,id-1);
+            utas.idutas = IdUtas;
             utas.Utas = NULL;
             for (j=0;j<m;j++){
                 Kicau p;
@@ -253,12 +252,11 @@ boolean MuatUtas(char *namafolder){
                 
 
             }
-            ELMTDIN(LUtas,i)=utas;
+            setElmt(&LKicau,id-1,utas);
             IdUtas+=1;
         }
     }
-    Kicau val;
-    deleteLastDin(&LUtas,&val);
+    
     fclose(fUtas);
     return sukses;
 }
@@ -327,12 +325,12 @@ boolean MASUK() {
             insertKicau(&LKicau,currentUser.nama,&IdKicau);
         }
         else if (isStrEqual(operasi, "KICAUAN")) { 
-            kicauan(LKicau);
+            kicauan(LKicau,LPengguna);
         }
         else if (isStrEqual(operasi, "SUKA_KICAUAN")) { 
             int id; 
             id = ambilangka(operasi);
-            sukaKicau(&LKicau,id);
+            sukaKicau(&LKicau,LPengguna,id);
         }
         else if (isStrEqual(operasi, "UBAH_KICAUAN")) { 
             int id;
@@ -348,7 +346,7 @@ boolean MASUK() {
             }
             else{
                 k1 = getElmt(LKicau,id-1);
-                buatUtas(&LUtas,&k1,&IdUtas,id,k1.author);
+                buatUtas(&LKicau,&k1,&IdUtas,id-1,currentUser.nama);
             }
         }
         else if (isStrEqual(operasi, "SAMBUNG_UTAS")) { 
@@ -360,8 +358,10 @@ boolean MASUK() {
                 printf("Utas Tidak Ditemukan!\n");
             }
             else{
-                k1 = ELMTDIN(LUtas,id);
-                sambungUtas(&k1,id2,id,&LUtas,k1.author);
+                int idkic = cekutas(LKicau,id);
+                k1 = getElmt(LKicau,idkic);
+                sambungUtas(&k1,id2,id,&LKicau,currentUser.nama);
+                setElmt(&LKicau,idkic,k1);
             }
         }
         else if (isStrEqual(operasi, "HAPUS_UTAS")) { 
@@ -373,8 +373,10 @@ boolean MASUK() {
                 printf("Utas Tidak Ditemukan!\n");
             }
             else{
-                k1 = ELMTDIN(LUtas,id);
-                hapusUtas(&k1,id2,k1.author);
+                int idkic = cekutas(LKicau,id);
+                k1 = getElmt(LKicau,idkic);
+                hapusUtas(&k1,id2,currentUser.nama);
+                setElmt(&LKicau,idkic,k1);
             }
         }
         else if (isStrEqual(operasi, "CETAK_UTAS")) { 
@@ -384,7 +386,10 @@ boolean MASUK() {
                 printf("Utas Tidak Ditemukan!\n");
             }
             else{
-                perutasan((ELMTDIN(LUtas,id-1)));
+                Kicau k1;
+                int idkic = cekutas(LKicau,id);
+                k1 = getElmt(LKicau,idkic);
+                perutasan(k1);
             }
         }
         //else if (isStrEqual(operasi, "_____")) { } <--- dilanjutkan

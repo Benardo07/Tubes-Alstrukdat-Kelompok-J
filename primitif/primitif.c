@@ -117,7 +117,7 @@ int ambilangka(char *str1){
             i++;
     }
     i++;
-    while (str1[i] != '\0') {
+    while (str1[i] != '\0' && str1[i] != ' ' ) {
         id = id * 10 + (str1[i] - '0');
         i++;
     }
@@ -131,8 +131,8 @@ int ambilangka2(char *str1){
             i++;
     }
     i++;
-    while (str1[i] != ' ' ) {
-            i++;
+    while (str1[i] != '\0' && str1[i] != ' ' ) {
+        i++;
     }
     i++;
     while (str1[i] != '\0') {

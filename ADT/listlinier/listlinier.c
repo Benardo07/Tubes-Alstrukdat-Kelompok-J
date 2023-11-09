@@ -80,6 +80,27 @@ int indexOf(List l, int id){
     }
 }
 
+int cekutas(List l, int id){
+    int idx = 0;
+    Address p = l;
+    boolean found = false;
+    while (p!=NULL && !found){
+        if (idutas(p)==id){
+            found = true;
+        }
+        else{
+            idx +=1;
+            p = NEXT(p);
+        }
+    }
+    if (found){
+        return(idx);
+    }
+    else{
+        return(IDXUNDEF);
+    }
+}
+
 void AddBalasanKicauAt(List *l, int id,Tree T){
     Address p = *l;
     boolean found = false;

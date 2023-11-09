@@ -7,7 +7,6 @@
 #include "../ADT/stack/drafStack.h"
 #include "../primitif/primitif.h"
 #include "../utas/utas.h"
-#include "../ADT/listdin/listdinutas.h"
 #include "../ADT/listlinier/listlinier.h"
 #include "../ADT/mesinkata/wordmachine.h"
 #include "../ADT/mesinkarakter/charmachine.h"
@@ -23,6 +22,7 @@ extern DrafStack sDraf;
 extern Pengguna currentUser;
 extern int IdCurrentUser;
 extern int IdKicau;
+extern int IdUtas;
 
 extern char currentChar;
 extern boolean EOP;

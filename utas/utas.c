@@ -7,20 +7,19 @@
 #include "../ADT/mesinkarakter/charmachine.h"
 #include "../primitif/primitif.h"
 
-void buatUtas(ListDin *l,Kicau *k, int *IdUtas,int IdKicau, char *author){
-    if(!isStrEqual((*k).author,author)){
+void buatUtas(List *l,Kicau *k, int *IdUtas,int IdKicau, char *author){
+    if(!isStrEqual((*k).author, author)){
         printf("Utas ini bukan milik anda!\n");
     }
     else{
-        if(indexOfDin(*l,IdKicau)!=IDXUNDEFDIN){
+        if((*k).idutas != -999){
             printf("Kicau ini sudah berupa utas!\n");
         }
         else{
-            insertLastDin(l,*k);
             printf("Utas berhasil dibuat!\n");
-            List lUtas = (*k).Utas;
             insertUtas(k);
-            ELMTDIN(*l,*IdUtas-1) = *k; 
+            k->idutas = *IdUtas;
+            setElmt(l,IdKicau,*k); 
             *IdUtas+=1;
         }
     }
@@ -95,15 +94,6 @@ void insertUtas(Kicau *k){
     printf("Utas selesai!\n");
 }
 
-boolean isCharSame(char *s1,char *s2){
-    boolean sama = true;
-    for(int i=0;i<2;i++){
-        if(s1[i]!=s2[i]){
-            sama = false;
-        }
-    }
-    return sama; 
-}
 
 void utas(List l){ 
     Address p = l;
@@ -138,7 +128,7 @@ void perutasan(Kicau k){
     utas(k.Utas);
 }
 
-void sambungUtas(Kicau *k,int idx,int IdUtas,ListDin *ListUtas, char *aut){
+void sambungUtas(Kicau *k,int idx,int IdUtas,List *ListUtas, char *aut){
     Word input,text;
     int id,len;
     time_t currentTime;
@@ -178,10 +168,15 @@ void sambungUtas(Kicau *k,int idx,int IdUtas,ListDin *ListUtas, char *aut){
 
             Kicau k2;
             CreateKicau(&k2,id,0,text,(*k).author,d);
-            insertAt(&((*k).Utas),k2,idx-1);
-
-            // utas((*k).Utas);
-            ELMTDIN(*ListUtas,IdUtas-1) = *k;
+            if(idx==1){
+                insertFirst(&((*k).Utas),k2);
+            }
+            else{
+                insertAt(&((*k).Utas),k2,idx-1);
+            }
+            int kic = cekutas(*ListUtas,IdUtas);
+            setElmt(ListUtas,kic,*k);
+            printf("Utas berhasil disambung!\n");
         }
         else{
             printf("Anda tidak bisa menyambung utas ini!\n");
@@ -205,6 +200,11 @@ void hapusUtas(Kicau *k,int idx, char *aut){
         if(isStrEqual((*k).author,aut)){
             if(idx==0){
                 printf("Anda tidak bisa menghapus kicauan utama!\n");
+            }
+            else if(idx==1){
+                Kicau val;
+                deleteFirst(&((*k).Utas),&val);
+                printf("Kicauan sambungan berhasil dihapus!\n");
             }
             else{
                 deleteAt(&((*k).Utas),idx-1,k);

@@ -7,7 +7,6 @@
 #include "kicauan/kicauan.h"
 #include "adt/stack/drafStack.h"
 #include "adt/boolean.h"
-#include "adt/listdin/listdinutas.h"
 #include "utas/utas.h"
 #include "data/data.h"
 #include <stdio.h>

@@ -6,6 +6,7 @@
 #include "../datetime/datetime.h"
 #include "../mesinkata/wordmachine.h"
 #include "../mesinkarakter/charmachine.h"
+#include "../listdin/listdin.h"
 #include "../tree/tree.h"
 
 
@@ -15,6 +16,7 @@ typedef Address List;
 
 typedef struct {
     int id;
+    int idutas;
     int like;
     Word text;
     char author[20]; 
@@ -32,6 +34,7 @@ typedef struct node {
 #define INFO(p) ((p)->info)
 #define NEXT(p) ((p)->next)
 #define id(p) (((p)->info).id)
+#define idutas(p) (((p)->info).idutas)
 #define like(p) (((p)->info).like)
 #define text(p) (((p)->info).text)
 #define author(p) (((p)->info).author)
@@ -72,6 +75,8 @@ int indexOf(List l, int id);
 /* F.S. Mencari apakah ada elemen list l yang bernilai val */
 /* Jika ada, mengembalikan indeks elemen pertama l yang bernilai val */
 /* Mengembalikan IDX_UNDEF jika tidak ditemukan */
+
+int cekutas(List l, int id);
 
 void AddBalasanKicauAt(List *l, int id,Tree T);
 

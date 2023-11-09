@@ -12,7 +12,7 @@
 #include "main.h"
 #include "adt/stack/drafStack.h"
 
-//gcc -o p main.c data/data.c primitif/primitif.c adt/mesinkarakter/charmachine.c adt/mesinkata/wordmachine.c adt/liststatik/listpengguna.c adt/listlinier/listlinier.c kicauan/kicauan.c adt/stack/drafstack.c adt/datetime/datetime.c adt/datetime/time.c utas/utas.c adt/listdin/listdinutas.c
+//gcc -o p main.c data/data.c primitif/primitif.c adt/mesinkarakter/charmachine.c adt/mesinkata/wordmachine.c adt/liststatik/listpengguna.c adt/listlinier/listlinier.c kicauan/kicauan.c adt/stack/drafstack.c adt/datetime/datetime.c adt/datetime/time.c utas/utas.c adt/listdin/listdin.c adt/tree/tree.c
 
 //inisialisasi variabel di luar supaya bisa langsung diakses semua function (gk usah oper parameter), tapi! lokalisasi buruk
 // extern ListPengguna LPengguna;
