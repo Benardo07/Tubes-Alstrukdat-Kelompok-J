@@ -1,6 +1,14 @@
 # include "prioqueue.h"
 # include <stdio.h>
 
+infotype newPrioElmt(int userId, int prio) {
+    infotype elmt;
+    elmt.userId = userId;
+    elmt.prio = prio;
+    
+    return elmt;
+}
+
 void CreatePrioQueue(PrioQueue *Q){
     Head(*Q) = Nil;
     Tail(*Q) = Nil;

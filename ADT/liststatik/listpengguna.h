@@ -181,4 +181,6 @@ int findIDPenggunaByName(ListPengguna l, char *nama );
 
 boolean isPenggunaPrivate(ListPengguna *l, char *nama);
 
+void printPengguna(Pengguna p);
+
 #endif

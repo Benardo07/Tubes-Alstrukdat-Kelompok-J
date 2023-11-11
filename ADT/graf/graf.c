@@ -26,8 +26,7 @@ boolean isConnected(Graf g, int idx1, int idx2) {
     for (int i=0; i<SIMPUL(g); ++i) visited[i] = false;
 
     PrioQueue q; CreatePrioQueue(&q);
-    infotype node;
-    node.prio = 1; node.userId = idx1;
+    infotype node = newPrioElmt(idx1, 1);
     EnqueuePrio(&q, node);
     visited[idx1] = true;
 
@@ -42,8 +41,7 @@ boolean isConnected(Graf g, int idx1, int idx2) {
 
                 if (!visited[i]) {
                     visited[i] = true;
-                    infotype node;
-                    node.prio = 1; node.userId = i;
+                    infotype node = newPrioElmt(i, 1);
                     EnqueuePrio(&q, node);
                 }
             }

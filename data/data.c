@@ -36,9 +36,8 @@ boolean Muat(){
         sukses = MuatPengguna(namafolder);
         sukses = MuatKicauan(namafolder);
         sukses = MuatUtas(namafolder);
-        // sukses = MuatDraf(namafolder);
+        sukses = MuatDraf(namafolder);
         // sukses = MuatBalasan(namafolder);
-        //dilanjutkan sukses = MuatTeman, etc
     }
 
     return sukses;
@@ -68,6 +67,8 @@ boolean MuatPengguna(char *namafolder){
         for (i=0;i<n;i++){
             Pengguna p;
             createPengguna(&p);
+            ID(p) = i+1;
+
             fgets(line,135,fPengguna);
             strCpy(line,NAMA(p));
 
@@ -108,6 +109,14 @@ boolean MuatPengguna(char *namafolder){
                 ELMT_GRAPH(Teman, i, j) = edge;
                 if (edge == 1) Teman.edges++;
             }
+        }
+
+        fscanf(fPengguna, "%d", &n);
+        while(n--) {
+            int id_1, id_2, teman;
+            fscanf(fPengguna, "%d %d %d", &id_1, &id_2, &teman);
+            infotype request = newPrioElmt(id_1, teman);
+            EnqueuePrio(&FREQ(ELMT(LPengguna, id_2-1)), request);
         }
     }
 
@@ -184,10 +193,9 @@ boolean MuatDraf (char *namafolder){
     }else{
         printf("File draf ditemukan.\n");
         char line[280];
-        int n, j;
+        int n, i, j;
 
         fscanf(fDraf,"%d\n",&n);
-        int i ;
         for(i = 0 ; i < n ; i++){
             DrafStack tempStack;
             CreateEmptyDrafStack(&tempStack);
@@ -197,7 +205,6 @@ boolean MuatDraf (char *namafolder){
             strCpyTwoElmt(line,username,&tempJumlah);
             int index = searchNama(LPengguna,username);
             JMLHDRAF(ELMT(LPengguna,index)) = tempJumlah;
-            // setJumlahDraf(&LPengguna,username,tempJumlah);
             int k;
             for (k = 0; k < tempJumlah;k++){
                 Draf d;
@@ -282,7 +289,9 @@ void SimpanPengguna(char* namaFolder) {
     fPengguna = fopen(pathPengguna, "w");
     fprintf(fPengguna, "%d\n", listLengthP(LPengguna));
 
-    int i, j, k;
+    int i, j, k, requestCount = 0;
+    
+    PrioQueue q; CreatePrioQueue(&q);
     for(i=0; i<listLengthP(LPengguna); ++i) {
         Pengguna p = ELMT(LPengguna, i);
         fprintf(fPengguna, "%s\n", NAMA(p));
@@ -295,7 +304,13 @@ void SimpanPengguna(char* namaFolder) {
             for(k=0; k<10; ++k) fprintf(fPengguna, "%c ", FOTO(p).matriks[j][k]);
             fprintf(fPengguna, "\n");
         }
+        if (!IsPrioQueueEmpty(FREQ(p))) {
+            infotype temp = newPrioElmt(i, 1);
+            requestCount += lengthPrioQueue(FREQ(p));
+            EnqueuePrio(&q, temp);
+        }
     }
+
     for(i=0; i<SIMPUL(Teman); ++i) {
         for(j=0; j<SIMPUL(Teman); ++j) {
             fprintf(fPengguna, "%d ", ELMT_GRAPH(Teman, i, j));
@@ -303,7 +318,17 @@ void SimpanPengguna(char* namaFolder) {
         fprintf(fPengguna, "\n");
     }
 
-    // tinggal permintaan pertemanan
+    fprintf(fPengguna, "%d\n", requestCount);
+    while (!IsPrioQueueEmpty(q)) {
+        infotype idx; DequeuePrio(&q, &idx);
+        Pengguna p = ELMT(LPengguna, idx.userId);
+
+        PrioQueue friendRequests = FREQ(p);
+        while(!IsPrioQueueEmpty(friendRequests)) {
+            infotype temp; DequeuePrio(&friendRequests, &temp);
+            fprintf(fPengguna, "%d %d %d\n", temp.userId, ID(p), temp.prio);
+        }
+    }
 
     fclose(fPengguna);
 }
@@ -327,16 +352,111 @@ void SimpanKicauan(char* namaFolder) {
         fprintf(fKicauan, "%d/", Day(k.waktu));
         fprintf(fKicauan, "%d/", Month(k.waktu));
         fprintf(fKicauan, "%d ", Year(k.waktu));
-        fprintf(fKicauan, "%d:", Hour(Time(k.waktu)));
-        fprintf(fKicauan, "%d:", Minute(Time(k.waktu)));
-        fprintf(fKicauan, "%d\n", Second(Time(k.waktu)));
+        fprintf(fKicauan, "%02d:", Hour(Time(k.waktu)));
+        fprintf(fKicauan, "%02d:", Minute(Time(k.waktu)));
+        fprintf(fKicauan, "%02d\n", Second(Time(k.waktu)));
     }
 
     fclose(fKicauan);
 }
 
+void SimpanDraf(char* namaFolder) {
+    FILE* fDraf;
+    char pathDraf[100];
+    strCat(namaFolder, "/draf.config", pathDraf);
+
+    fDraf = fopen(pathDraf, "w");
+    
+    PrioQueue q; CreatePrioQueue(&q);
+    int n = 0, i;
+    for(i=0; i<listLengthP(LPengguna); ++i) {
+        if (JMLHDRAF(ELMT(LPengguna,i)) > 0) {
+            infotype temp = newPrioElmt(i, 1);
+            EnqueuePrio(&q, temp);        
+            n++;
+        }
+    }
+    fprintf(fDraf, "%d\n", n);
+
+    while(!IsPrioQueueEmpty(q)) {
+        infotype index; DequeuePrio(&q, &index);
+        Pengguna p = ELMT(LPengguna, index.userId);
+        fprintf(fDraf, "%s %d\n", NAMA(p), JMLHDRAF(p));
+
+        DrafStack temp; CreateEmptyDrafStack(&temp);
+        copyReverse(DRAF(p),&temp);
+        DrafStack s; CreateEmptyDrafStack(&s);
+        while(!IsEmptyDrafStack(temp)) {
+            Draf d; PopDrafStack(&temp, &d);
+            PushDrafStack(&s, d);
+        }
+
+        while(!IsEmptyDrafStack(s)) {
+            Draf d; PopDrafStack(&s, &d);
+            fprintf(fDraf, "%s\n", DrafTweet(d));
+            fprintf(fDraf, "%d/", Day(DateTime(d)));
+            fprintf(fDraf, "%d/", Month(DateTime(d)));
+            fprintf(fDraf, "%d ", Year(DateTime(d)));
+            fprintf(fDraf, "%02d:", Hour(Time(DateTime(d))));
+            fprintf(fDraf, "%02d:", Minute(Time(DateTime(d))));
+            fprintf(fDraf, "%02d\n", Second(Time(DateTime(d))));
+        }
+    }
+
+    fclose(fDraf);
+}
+
 void SimpanUtas(char* namaFolder) {
-    return;
+    FILE *fUtas;
+    char pathUtas[100];
+    strCat(namaFolder, "/utas.config", pathUtas);
+
+    fUtas = fopen(pathUtas, "w");
+    inverseList(&LKicau);
+    Address p = LKicau;
+    PrioQueue q; CreatePrioQueue(&q);
+
+    while(p != NULL) {
+        if (FirstUtas(p) != NULL) {
+            int cnt = 0;
+            Address loc = FirstUtas(p);
+            while(loc != NULL) {cnt++; loc = NEXT(loc);}
+
+            infotype jumlahUtas = newPrioElmt(cnt, 1);
+            EnqueuePrio(&q, jumlahUtas);
+        }
+        p = NEXT(p);
+    }
+
+    fprintf(fUtas, "%d\n", lengthPrioQueue(q));
+    p = LKicau;
+    while(p != NULL) {
+        if (FirstUtas(p) != NULL) {
+            infotype temp; DequeuePrio(&q, &temp);
+            fprintf(fUtas, "%d\n", id(p));
+            fprintf(fUtas, "%d\n", temp.userId);
+
+            Address loc = FirstUtas(p);
+            while(loc != NULL) {
+                Kicau k = INFO(loc);
+                fprintf(fUtas, "%s", k.text);
+                if (k.text.Length >= 280 && k.text.TabWord[280] != '\n') fprintf(fUtas, "\n");
+                fprintf(fUtas, "%s\n", k.author);
+                fprintf(fUtas, "%d/", Day(k.waktu));
+                fprintf(fUtas, "%d/", Month(k.waktu));
+                fprintf(fUtas, "%d ", Year(k.waktu));
+                fprintf(fUtas, "%02d:", Hour(Time(k.waktu)));
+                fprintf(fUtas, "%02d:", Minute(Time(k.waktu)));
+                fprintf(fUtas, "%02d\n", Second(Time(k.waktu)));
+
+                loc = NEXT(loc);
+            }
+        }
+        p = NEXT(p);
+    }
+
+    inverseList(&LKicau);
+    fclose(fUtas);
 }
 
 boolean Simpan() {
@@ -366,8 +486,8 @@ boolean Simpan() {
         SimpanPengguna(namaFolder);
         SimpanKicauan(namaFolder);
         // SimpanBalasan(namaFolder);
-        // SimpanDraf(namaFolder);
-        // SimpanUtas(namaFolder);
+        SimpanDraf(namaFolder);
+        SimpanUtas(namaFolder);
 
         printf("File config berhasil disimpan.\n");
     }

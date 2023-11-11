@@ -11,8 +11,7 @@ void daftarTeman(int idUser) {
 
     for (int i=0; i<SIMPUL(Teman); ++i) {
         if (i != idUser-1 && isTeman(idUser, i+1)) {
-            infotype node;
-            node.userId = i; node.prio = 1;
+            infotype node = newPrioElmt(i, 1);
             EnqueuePrio(&q, node);
         }
     }
@@ -39,6 +38,11 @@ int searchNamaP(ListPengguna l, char *nama){
 }
 
 void hapusTeman() {
+    if (TOTALFRIENDS(currentUser) == 0) {
+        printf("Anda belum memiliki teman!\n");
+        return;
+    }
+    
     printf("Masukkan nama pengguna: ");
     char nama[21];
     StartSentence();
@@ -48,7 +52,7 @@ void hapusTeman() {
     if (id_target != IDX_UNDEF) {
         id_target++;
         if (id_target == ID(currentUser)) {
-            printf("Anda tidak dapat meng-unfriend diri sendiri!\n");
+            printf("Anda tidak dapat menghapus diri sendiri!\n");
         }
         else if (isTeman(ID(currentUser), id_target)) {
             printf("Apakah anda yakin ingin menghapus %s dari daftar teman Anda? (YA/TIDAK): ", nama);
@@ -59,6 +63,7 @@ void hapusTeman() {
                     deleteEdge(&Teman, ID(currentUser)-1, id_target-1);
                     printf("%s berhasil dihapus dari daftar teman Anda.\n", nama);
                     inputValid = true;
+                    TOTALFRIENDS(currentUser)--;
                 }
                 else if (isStrEqual(currentWord.TabWord, "TIDAK")) {
                     printf("Penghapusan teman dibatalkan.\n");

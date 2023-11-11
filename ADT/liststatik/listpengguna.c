@@ -41,6 +41,7 @@ void createPengguna(Pengguna *p){
     strCpy("", HP(*p));
     strCpy("", WETON(*p));
     //CreatePhotoMatrix(&FOTO(*p));
+    CreatePrioQueue(&FREQ(*p));
     JMLHDRAF(*p) = 0;
     CreateEmptyDrafStack(&DRAF(*p));
 }
@@ -100,8 +101,6 @@ boolean isFullP(ListPengguna l) {
 }
 
 void printPengguna(Pengguna p) {
-    IdxType j;
-
     printf("%s\n",NAMA(p));
     printf("%s\n",PASSWORD(p));
     printf("%s\n",BIO(p));

@@ -39,6 +39,7 @@ typedef struct node {
 #define text(p) (((p)->info).text)
 #define author(p) (((p)->info).author)
 #define waktu(p) (((p)->info).waktu)
+#define FirstUtas(p) (((p)->info).Utas)
 #define Balas(p) (((p)->info).Balas)
 #define lastId(p) (((p)->info).lastIDBalas)
 

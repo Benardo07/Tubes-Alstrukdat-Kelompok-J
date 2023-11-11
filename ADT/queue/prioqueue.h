@@ -10,6 +10,9 @@ typedef struct {
     int userId;  /* elemen karakter */
 } infotype;
 
+infotype newPrioElmt(int userId, int prio);
+/* Membentuk elemen priority queue baru, dengan INFO(elmt) = userId dan PRIO(elmt) = prio */
+
 typedef int address;   /* indeks tabel */
 /* Contoh deklarasi variabel bertype PrioQueueChar : */
 /* Versi I : tabel dinamik, Head dan Tail eksplisit, ukuran disimpan */
