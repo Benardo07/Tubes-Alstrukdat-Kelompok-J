@@ -633,12 +633,12 @@ boolean MASUK() {
             insertKicau(&LKicau,currentUser.nama,&IdKicau);
         }
         else if (isStrEqual(operasi, "KICAUAN")) { 
-            kicauan(LKicau,LPengguna);
+            kicauan(LKicau,LPengguna,currentUser.nama);
         }
         else if (isStrEqual(operasi, "SUKA_KICAUAN")) { 
             int id; 
             id = ambilangka(operasi);
-            sukaKicau(&LKicau,LPengguna,id);
+            sukaKicau(&LKicau,LPengguna,id,currentUser.nama);
         }
         else if (isStrEqual(operasi, "UBAH_KICAUAN")) { 
             int id;

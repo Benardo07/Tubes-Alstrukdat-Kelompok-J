@@ -11,8 +11,8 @@ void insertKicau(List *l, char *val, int *id);
 
 void editKicau(List *l, int id, char *auth);
 
-void sukaKicau(List *l, ListPengguna l2, int id);
+void sukaKicau(List *l, ListPengguna l2, int id, char *auth);
 
 void printKicau(List l,int id);
 
-void kicauan(List l,ListPengguna l2);
+void kicauan(List l,ListPengguna l2,char *auth);
