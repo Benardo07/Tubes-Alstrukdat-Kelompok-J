@@ -88,7 +88,7 @@ void deleteEdge(Graf *g, int idx1, int idx2) {
 /* F.S. Menghapus busur yang menghubungkan simpul 1 dengan simpul 2 */
     ELMT_GRAPH(*g, idx1, idx2) = 0;
     ELMT_GRAPH(*g, idx2, idx1) = 0;
-    BUSUR(*g)++;
+    BUSUR(*g)--;
 }
 
 /* ********** Primitif Lain ********** */

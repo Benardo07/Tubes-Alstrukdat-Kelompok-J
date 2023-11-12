@@ -6,6 +6,7 @@
 #define DATETIME_H
 
 #include <time.h>
+#include <stdio.h>
 #include "../boolean.h"
 #include "time.h"
 
@@ -95,5 +96,7 @@ long int DATETIMEDurasi(DATETIME DAw, DATETIME DAkh);
 /* Prekondisi: DAkh > DAw */
 
 DATETIME getLocalTime();
+
+void SimpanDATETIME(FILE *f, DATETIME d);
 
 #endif

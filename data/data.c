@@ -37,7 +37,7 @@ boolean Muat(){
         sukses = MuatKicauan(namafolder);
         sukses = MuatUtas(namafolder);
         sukses = MuatDraf(namafolder);
-        // sukses = MuatBalasan(namafolder);
+        sukses = MuatBalasan(namafolder);
     }
 
     return sukses;
@@ -171,6 +171,7 @@ boolean MuatKicauan(char *namafolder){
             p.waktu = date;
             p.idutas = -999;
             p.Utas = NULL;
+            p.Balas = newTree(CreateRootBalasan(),1000);
             insertLastKicau(&LKicau,p);
             IdKicau+=1;
         }
@@ -281,6 +282,50 @@ boolean MuatUtas(char *namafolder){
     return sukses;
 }
 
+boolean MuatBalasan(char* namafolder) {
+    FILE *fBalasan;
+    boolean sukses = true;
+    char namafile[100]; //asumsi batasan strlength
+
+    strCat(namafolder,"/balasan.config", namafile);
+    fBalasan = fopen(namafile,"r");
+
+    if (fBalasan == NULL) {
+        printf("Tidak ada file konfigurasi balasan.\n");
+        sukses = false;
+    } else {
+        printf("File balasan ditemukan\n");
+
+        int n, m, i, j;
+        fscanf(fBalasan,"%d",&n);
+
+        for (i=0;i<n;i++){
+            int idKicau; fscanf(fBalasan,"%d",&idKicau);
+
+            fscanf(fBalasan, "%d", &m);
+            for(j=0; j<m; ++j) {
+                int idParent, idBalasan; fscanf(fBalasan, "%d %d", &idParent, &idBalasan);
+
+                Balasan B;
+                fscanf(fBalasan, "\n");
+                char text[280]; fgets(text,280,fBalasan);
+                char author[20]; fgets(author, 20, fBalasan);
+
+                int h,m,s,d,b,y; fscanf(fBalasan, "%d/%d/%d %d:%d:%d", &d, &b, &y, &h, &m, &s);
+                DATETIME date; CreateDATETIME(&date, d, b, y, h, m, s);
+                CreateBalasan(&B, idBalasan, text, author, date);
+                Tree T = newTree(B, 1000);
+
+                if(idParent == -1) AddBalasanKicauAt(&LKicau,idKicau,T);    
+                else insertLastDinTree(&CHILDREN(findBalasanInTree(getElmt(LKicau, idKicau-1).Balas,idParent)),T);
+            }
+        }
+    }
+    
+    fclose(fBalasan);
+    return sukses;
+}
+
 void SimpanPengguna(char* namaFolder) {
     FILE *fPengguna;
     char pathPengguna[100];
@@ -348,13 +393,7 @@ void SimpanKicauan(char* namaFolder) {
         if (k.text.Length >= 280 && k.text.TabWord[280] != '\n') fprintf(fKicauan, "\n");
         fprintf(fKicauan, "%d\n", k.like);
         fprintf(fKicauan, "%s\n", k.author);
-        
-        fprintf(fKicauan, "%d/", Day(k.waktu));
-        fprintf(fKicauan, "%d/", Month(k.waktu));
-        fprintf(fKicauan, "%d ", Year(k.waktu));
-        fprintf(fKicauan, "%02d:", Hour(Time(k.waktu)));
-        fprintf(fKicauan, "%02d:", Minute(Time(k.waktu)));
-        fprintf(fKicauan, "%02d\n", Second(Time(k.waktu)));
+        SimpanDATETIME(fKicauan, k.waktu);
     }
 
     fclose(fKicauan);
@@ -394,12 +433,7 @@ void SimpanDraf(char* namaFolder) {
         while(!IsEmptyDrafStack(s)) {
             Draf d; PopDrafStack(&s, &d);
             fprintf(fDraf, "%s\n", DrafTweet(d));
-            fprintf(fDraf, "%d/", Day(DateTime(d)));
-            fprintf(fDraf, "%d/", Month(DateTime(d)));
-            fprintf(fDraf, "%d ", Year(DateTime(d)));
-            fprintf(fDraf, "%02d:", Hour(Time(DateTime(d))));
-            fprintf(fDraf, "%02d:", Minute(Time(DateTime(d))));
-            fprintf(fDraf, "%02d\n", Second(Time(DateTime(d))));
+            SimpanDATETIME(fDraf, DateTime(d));
         }
     }
 
@@ -412,7 +446,6 @@ void SimpanUtas(char* namaFolder) {
     strCat(namaFolder, "/utas.config", pathUtas);
 
     fUtas = fopen(pathUtas, "w");
-    inverseList(&LKicau);
     Address p = LKicau;
     PrioQueue q; CreatePrioQueue(&q);
 
@@ -442,12 +475,7 @@ void SimpanUtas(char* namaFolder) {
                 fprintf(fUtas, "%s", k.text);
                 if (k.text.Length >= 280 && k.text.TabWord[280] != '\n') fprintf(fUtas, "\n");
                 fprintf(fUtas, "%s\n", k.author);
-                fprintf(fUtas, "%d/", Day(k.waktu));
-                fprintf(fUtas, "%d/", Month(k.waktu));
-                fprintf(fUtas, "%d ", Year(k.waktu));
-                fprintf(fUtas, "%02d:", Hour(Time(k.waktu)));
-                fprintf(fUtas, "%02d:", Minute(Time(k.waktu)));
-                fprintf(fUtas, "%02d\n", Second(Time(k.waktu)));
+                SimpanDATETIME(fUtas, k.waktu);
 
                 loc = NEXT(loc);
             }
@@ -455,8 +483,50 @@ void SimpanUtas(char* namaFolder) {
         p = NEXT(p);
     }
 
-    inverseList(&LKicau);
     fclose(fUtas);
+}
+
+void SimpanBalasanRekursif(FILE *fBalasan, Tree T, int id) {
+    if (T == NULL) return;
+    
+    for(int i=getFirstIdxDinTree(CHILDREN(T)); i<=getLastIdxDinTree(CHILDREN(T)); ++i) {
+        Balasan B = BALASAN(ELMTDINTREE(CHILDREN(T), i));
+        fprintf(fBalasan, "%d %d\n", id, B.id);
+        fprintf(fBalasan, "%s\n", B.tweet);
+        fprintf(fBalasan, "%s\n", B.writer);
+        SimpanDATETIME(fBalasan, B.d);
+        SimpanBalasanRekursif(fBalasan, ELMTDINTREE(CHILDREN(T), i), B.id);
+    }
+}
+
+void SimpanBalasan(char* namaFolder) {
+    FILE *fBalasan;
+    char pathBalasan[100];
+    strCat(namaFolder, "/balasan.config", pathBalasan);
+
+    fBalasan = fopen(pathBalasan, "w");
+    inverseList(&LKicau);
+    Address p = LKicau;
+    PrioQueue q; CreatePrioQueue(&q);
+
+    int i, j;
+    for(i=0; i<length(LKicau); ++i){
+        if (NEFFDINTREE(CHILDREN(getElmt(LKicau, i).Balas)) > 0) {
+            infotype temp = newPrioElmt(i, 1);
+            EnqueuePrio(&q, temp);
+        }
+    }
+
+    fprintf(fBalasan, "%d\n", lengthPrioQueue(q));
+    while(!IsPrioQueueEmpty(q)) {
+        infotype temp; DequeuePrio(&q, &temp);
+        fprintf(fBalasan, "%d\n", temp.userId+1);
+        Tree T = getElmt(LKicau, temp.userId).Balas;
+        fprintf(fBalasan, "%d\n", nbElmt(T));
+        SimpanBalasanRekursif(fBalasan, T, -1);
+    }
+
+    fclose(fBalasan);
 }
 
 boolean Simpan() {
@@ -485,7 +555,7 @@ boolean Simpan() {
     if (sukses) {
         SimpanPengguna(namaFolder);
         SimpanKicauan(namaFolder);
-        // SimpanBalasan(namaFolder);
+        SimpanBalasan(namaFolder);
         SimpanDraf(namaFolder);
         SimpanUtas(namaFolder);
 
@@ -670,58 +740,4 @@ void DAFTAR(){
     insertLastP(&LPengguna,p);
 
     printf("\nPengguna telah berhasil terdaftar. Masuk untuk menikmati fitur-fitur BurBir.\n");
-}
-
-boolean MuatBalasan (char *namafolder){
-    FILE *fBalas;
-    boolean sukses = true;
-    char namafile[100]; //asumsi batasan strlength
-
-    strCat(namafolder,"/balasan.config", namafile);
-    fBalas = fopen(namafile,"r");
-
-    if(fBalas == NULL){
-        printf("Tidak ada file konfigurasi balasan.\n");
-        sukses = false;
-    }else{
-        printf("File konfigurasi balasan berhasil ditemukan.\n");
-    }
-
-    char line[280];
-    int n;
-
-    fscanf(fBalas,"%d\n",&n);
-
-    int i;
-    for (i = 0; i < n ; i++){
-        int idkic;
-        fscanf(fBalas,"%d\n",&idkic);
-        int z,j;
-        fscanf(fBalas,"%d\n",&z);
-        for(j = 0; j < z; j++){
-            int yangDiBalas , yangBalas; 
-            fscanf(fBalas,"%d %d\n",&yangDiBalas,&yangBalas);
-            char tweetBalasan[280];
-            fgets(line,280,fBalas);
-            strCpy(line,tweetBalasan);
-            char penulis[20];
-            fgets(line,280,fBalas);
-            strCpy(line,penulis);
-            int h,m,s,d,b,y;
-            fscanf(fBalas, "%d/%d/%d %d:%d:%d", &d, &b, &y, &h, &m, &s);
-            fgets(line,280,fBalas);
-            DATETIME date;
-            CreateDATETIME(&date,d,b,y,h,m,s);
-            Balasan B;
-            CreateBalasan(&B,yangBalas,tweetBalasan,penulis,date);
-            Tree T = newTree(B,1000);
-            if(yangDiBalas == -1){
-                AddBalasanKicauAt(&LKicau,idkic,T);
-            }else{
-                Kicau tempKicau = getElmt(LKicau,indexOf(LKicau,idkic));
-                insertLastDinTree(&CHILDREN(findBalasanInTree(tempKicau.Balas,yangDiBalas)),T);
-            }
-        }
-    }
-    return sukses;
 }

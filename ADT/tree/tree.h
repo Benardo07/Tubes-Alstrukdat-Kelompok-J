@@ -36,6 +36,8 @@ typedef AddressTree Tree;
 
 Tree newTree(Balasan B,int childCapacity);
 
+int nbElmt(Tree T);
+
 Balasan CreateBalasan(Balasan *B, int id, char *tweet ,char *writer , DATETIME d);
 
 Balasan CreateRootBalasan();

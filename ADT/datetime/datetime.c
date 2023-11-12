@@ -328,3 +328,12 @@ DATETIME getLocalTime(){
     CreateDATETIME(&d,day,month,year,hour,minute,second);
     return d;
 }
+
+void SimpanDATETIME(FILE *f, DATETIME d) {
+    fprintf(f, "%d/", Day(d));
+    fprintf(f, "%d/", Month(d));
+    fprintf(f, "%d ", Year(d));
+    fprintf(f, "%02d:", Hour(Time(d)));
+    fprintf(f, "%02d:", Minute(Time(d)));
+    fprintf(f, "%02d\n", Second(Time(d)));
+}

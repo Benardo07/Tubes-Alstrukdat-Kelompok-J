@@ -14,6 +14,17 @@ Tree newTree(Balasan B,int childCapacity){
     return a;
 }
 
+int nbElmt(Tree T) {
+    if (T == NULL) return 0;
+
+    int cnt = NEFFDINTREE(CHILDREN(T));
+    for(int i=getFirstIdxDinTree(CHILDREN(T)); i<=getLastIdxDinTree(CHILDREN(T)); ++i) {
+        cnt += nbElmt(ELMTDINTREE(CHILDREN(T), i));
+    }
+
+    return cnt;
+}
+
 Balasan CreateBalasan(Balasan *B, int id, char *tweet ,char *writer , DATETIME d){
     IDBalasan(*B) = id;
     strCpy(tweet,TweetBalasan(*B));
