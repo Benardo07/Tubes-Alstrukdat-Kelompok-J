@@ -118,15 +118,12 @@ void readKicau(Word *input){
     (*input).Length = 0;
     i = 0;
 
-    while ((currentChar != MARK) && (i < 3000)) {
-        if (i<=280){
+    while ((currentChar != MARK)) {
+        if (i<280){
             (*input).TabWord[i] = currentChar;
-        }
-        if(i==280){
-            (*input).TabWord[i] = '\0';
+            i++;
         }
         ADV();
-        i++;
     }
 
     (*input).Length = i;
