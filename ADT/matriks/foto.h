@@ -18,7 +18,7 @@ typedef struct{
 
 void CreatePhotoMatrix(foto *F);
 
-void ChangePhotoMatrix(foto *F, int i, int j, int newVal);
+void ChangePhotoMatrix(foto *F, int i, int j, char newVal);
 
 void PrintPhotoMatrix(foto F);
 
