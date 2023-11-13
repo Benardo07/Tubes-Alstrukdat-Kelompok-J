@@ -147,7 +147,7 @@ boolean isWeton(char *weton){
     boolean sukses=false;
     char* temp = strLower(weton);
 
-    if (isStrEqual("pahing",temp) || isStrEqual("kliwon",temp) || isStrEqual("wage",temp) || isStrEqual("pon",temp) || isStrEqual("legi",temp)){
+    if (isStrEqual("pahing",temp) || isStrEqual("kliwon",temp) || isStrEqual("wage",temp) || isStrEqual("pon",temp) || isStrEqual("legi",temp) || isStrEqual("",temp)){
         sukses = true;
     }
 

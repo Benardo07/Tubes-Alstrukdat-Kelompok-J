@@ -90,6 +90,7 @@ void SetujuiTeman(ListPengguna *LPengguna, Pengguna *currentUser) {
                     if (ID(ELMT(*LPengguna, i)) == topID) {
                         TOTALFRIENDS(ELMT(*LPengguna, i))++; 
                         UpdatePrioQueue(&FREQ(ELMT(*LPengguna, i)), ID(*currentUser)); 
+                        connectNode(&Teman,topID - 1,Id(*currentUser) - 1);
                         break;
                     }
                 }
