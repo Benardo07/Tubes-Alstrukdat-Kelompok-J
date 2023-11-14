@@ -575,7 +575,7 @@ boolean MASUK() {
 
     if (isEmptyP(LPengguna)) {
         printf("\nBelum ada pengguna yang terdaftar.\n");
-        return;
+        return false;
     }
 
     while (loop) {
@@ -709,7 +709,7 @@ boolean MASUK() {
             }
         }
         else if(isStrEqual(operasi,"BUAT_DRAF")){
-            makingDraf();
+            makingDraf(&LPengguna);
         }
         else if(isStrEqual(operasi,"LIHAT_DRAF")){
             seeDraf();
@@ -717,13 +717,13 @@ boolean MASUK() {
         else if(isStrEqual(operasi,"BALAS")){
             int yangDibalas = 0,yangBalas = 0;
             takeTwovalue(operasi,&yangDibalas,&yangBalas);
-            balasKicauan(yangDibalas,yangBalas);
+            balasKicauan(yangDibalas,yangBalas,&LKicau);
         }
-        else if(isStrEqual(operasi,"PRINT")){
+        else if(isStrEqual(operasi,"BALASAN")){
             int idK = ambilangka(operasi);
             printSemuaBalasan(idK);
         }
-        else if(isStrEqual(operasi,"HAPUS")){
+        else if(isStrEqual(operasi,"HAPUS_BALASAN")){
             int kic = 0,bal = 0;
             takeTwovalue(operasi,&kic,&bal);
             hapusBalasan(kic,bal);

@@ -3,9 +3,8 @@
 #include "..\ADT\listlinier\listlinier.h"
 #include "..\kicauan\kicauan.h"
 #include "..\ADT\liststatik\listpengguna.h"
-#include "..\data\data.h"
 
 
-void makingDraf();
+void makingDraf(ListPengguna *LPeng);
 
 void seeDraf();

@@ -240,6 +240,23 @@ int searchNama(ListPengguna l, char *nama){
     return i;
 }
 
+int searchNamabyRef(ListPengguna *l, char *nama){
+    int i=0;
+    boolean found = false;
+
+    while (i < listLengthP(*l) && !found){
+        if (isStrEqual(NAMA(ELMT(*l,i)),nama)){
+            found = true;
+        } else {
+            i++;
+        }
+    }
+
+    if (!found) {i = IDX_UNDEF;}
+
+    return i;
+}
+
 boolean checkSandi(ListPengguna l, int idx, char *sandi){
     return isStrEqual(PASSWORD(ELMT(l,idx)),sandi);
 }

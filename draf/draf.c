@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include "draf.h"
+#include "..\data\data.h"
 
-void makingDraf (){
+void makingDraf (ListPengguna *Lpeng){
     printf("\nMasukkan draf:\n");
     Word text;
     readKicau(&text);
@@ -20,11 +21,10 @@ void makingDraf (){
         char *pilihan;
         pilihan = currentWord.TabWord;
         
-        
         if(isStrEqual(pilihan,"SIMPAN")){
-            int index = searchNama(LPengguna,currentUser.nama);
-            PushDrafStack(&DRAF(ELMT(LPengguna,index)),tempDraf);
-            JMLHDRAF(ELMT(LPengguna,index))++;
+            int index = searchNamabyRef(Lpeng,currentUser.nama);
+            PushDrafStack(&DRAF(ELMT(*Lpeng,index)),tempDraf);
+            JMLHDRAF(ELMT(*Lpeng,index))++;
             printf("\nDraf telah berhasil disimpan!\n\n");
             break;
         }else if(isStrEqual(pilihan,"TERBIT")){
@@ -48,7 +48,7 @@ void makingDraf (){
 }
 
 void seeDraf(){
-    int index = searchNama(LPengguna,currentUser.nama);
+    int index = searchNamabyRef(&LPengguna,currentUser.nama);
     if(IsEmptyDrafStack(DRAF(ELMT(LPengguna,index)))){
         printf("\nYahh, anda belum memilki draf apapun! buat dulu ya :D\n");
     }else{

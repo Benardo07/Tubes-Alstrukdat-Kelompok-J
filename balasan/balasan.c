@@ -1,28 +1,30 @@
 #include "balasan.h"
 
-void balasKicauan(int idkic,int idbal){
-    if(indexOf(LKicau,idkic) == IDXUNDEF){
+void balasKicauan(int idkic,int idbal ,List *l){
+    if(indexOf(*l,idkic) == IDXUNDEF){
         printf("\nWah, tidak terdapat kicauan yang ingin Anda balas!\n");
-    }else if(idbal != -1 && findBalasanInTree(getElmt(LKicau,indexOf(LKicau,idkic)).Balas,idbal) == NULL){
+    }else if(idbal != -1 && findBalasanInTree(getElmt(*l,indexOf(*l,idkic)).Balas,idbal) == NULL){
         printf("\nWah, tidak terdapat balasan yang ingin Anda balas!\n");
-    }else if(isPenggunaPrivate(&LPengguna, getElmt(LKicau,indexOf(LKicau,idkic)).author) || isPenggunaPrivate(&LPengguna,BALASAN(findBalasanInTree(getElmt(LKicau,indexOf(LKicau,idkic)).Balas,idbal)).writer)){
+    }else if(isPenggunaPrivate(&LPengguna, getElmt(*l,indexOf(*l,idkic)).author) ){
+        printf("\nWah, akun tersebut merupakan akun private dan anda belum berteman dengan akun tersebut!\n");
+    }else if(idbal != -1 && isPenggunaPrivate(&LPengguna,BALASAN(findBalasanInTree(getElmt(*l,indexOf(*l,idkic)).Balas,idbal)).writer)){
         printf("\nWah, akun tersebut merupakan akun private dan anda belum berteman dengan akun tersebut!\n");
     }else{
         printf("\nMasukkan balasan : \n");
         Word text;
         readKicau(&text);
         Balasan B;
-        int IdBalasan = getElmt(LKicau,indexOf(LKicau,idkic)).lastIDBalas + 1;
+        int IdBalasan = getElmt(*l,indexOf(*l,idkic)).lastIDBalas + 1;
         DATETIME d = getLocalTime();
         CreateBalasan(&B,IdBalasan,text.TabWord,currentUser.nama,d);
         Tree T = newTree(B,1000);
         if(idbal == -1){
-            AddBalasanKicauAt(&LKicau,idkic,T);
+            AddBalasanKicauAt(l,idkic,T);
         }else{
-            Kicau tempKicau = getElmt(LKicau,indexOf(LKicau,idkic));
+            Kicau tempKicau = getElmt(*l,indexOf(*l,idkic));
             insertLastDinTree(&CHILDREN(findBalasanInTree(tempKicau.Balas,idbal)),T);
         }
-        setLastId(&LKicau,idkic,IdBalasan);
+        setLastId(l,idkic,IdBalasan);
         printf("Selamat! balasan telah diterbitkan\n");
         printf("Detail balasan :\n");
         printBalasan(B);
