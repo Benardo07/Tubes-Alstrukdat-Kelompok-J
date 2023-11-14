@@ -9,6 +9,8 @@
 #include "../ADT/datetime/datetime.h"
 #include "../ADT/datetime/time.h"
 #include "../teman/teman.h"
+#include "../draf/draf.h"
+#include "../balasan/balasan.h"
 
 ListPengguna LPengguna;
 ListPengguna users[20];
@@ -699,6 +701,26 @@ boolean MASUK() {
                 k1 = getElmt(LKicau,idkic);
                 perutasan(k1);
             }
+        }
+        else if(isStrEqual(operasi,"BUAT_DRAF")){
+            makingDraf();
+        }
+        else if(isStrEqual(operasi,"LIHAT_DRAF")){
+            seeDraf();
+        }
+        else if(isStrEqual(operasi,"BALAS")){
+            int yangDibalas = 0,yangBalas = 0;
+            takeTwovalue(operasi,&yangDibalas,&yangBalas);
+            balasKicauan(yangDibalas,yangBalas);
+        }
+        else if(isStrEqual(operasi,"PRINT")){
+            int idK = ambilangka(operasi);
+            printSemuaBalasan(idK);
+        }
+        else if(isStrEqual(operasi,"HAPUS")){
+            int kic = 0,bal = 0;
+            takeTwovalue(operasi,&kic,&bal);
+            hapusBalasan(kic,bal);
         }
         else if (isStrEqual(operasi, "SIMPAN")) {
             Simpan();
