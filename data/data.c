@@ -572,6 +572,12 @@ boolean MASUK() {
     char nama[21];
     boolean loop = true;
     int idx;
+
+    if (isEmptyP(LPengguna)) {
+        printf("\nBelum ada pengguna yang terdaftar.\n");
+        return;
+    }
+
     while (loop) {
         printf("\nMasukkan nama:\n");
         StartSentence();
@@ -597,7 +603,7 @@ boolean MASUK() {
         } else {
             loop = false;
             currentUser = ELMT(LPengguna,idx);
-            ID(currentUser) = idx + 1;
+            IdCurrentUser = idx + 1;
             printf("\nAnda telah berhasil masuk dengan nama pengguna %s. Mari menjelajahi BurBir bersama Ande-Ande Lumut!\n", NAMA(currentUser));
         }
     }
@@ -612,7 +618,7 @@ boolean MASUK() {
         printf("\n>> ");
         char *operasi;
 
-        STARTWORD(); //Operasi hanya 1 kata (jika beberapa huruf, dipisah simbol '_')
+        StartSentence(); //Operasi hanya 1 kata (jika beberapa huruf, dipisah simbol '_')
         operasi = currentWord.TabWord;
 
         if (isStrEqual(operasi, "MASUK")){

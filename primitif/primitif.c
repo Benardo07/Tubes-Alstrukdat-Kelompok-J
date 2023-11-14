@@ -109,6 +109,24 @@ boolean isStrEqual(char *str1, char *str2){
     return equal;
 }
 
+boolean strictIsStrEqual(char *str1, char *str2){
+    boolean equal = true;
+    int i=0;
+
+    if (strlength(str1) != strlength(str2)){
+        equal = false;
+    } else {
+        while ((i<strlength(str2)) && equal) {
+            if (str1[i] != str2[i]) {
+                equal = false;
+            } else {
+                i++;
+            }
+        }
+    }
+
+    return equal;
+}
 
 int ambilangka(char *str1){
     int id=0;
@@ -147,7 +165,8 @@ boolean isWeton(char *weton){
     boolean sukses=false;
     char* temp = strLower(weton);
 
-    if (isStrEqual("pahing",temp) || isStrEqual("kliwon",temp) || isStrEqual("wage",temp) || isStrEqual("pon",temp) || isStrEqual("legi",temp) || isStrEqual("",temp)){
+    if (strictIsStrEqual("pahing",temp) || strictIsStrEqual("kliwon",temp) || strictIsStrEqual("wage",temp) ||
+        strictIsStrEqual("pon",temp) || strictIsStrEqual("legi",temp) || strictIsStrEqual("",temp)){
         sukses = true;
     }
 
