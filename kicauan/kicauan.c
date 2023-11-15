@@ -122,14 +122,15 @@ void sukaKicau(List *l, ListPengguna l2, int id,char *auth){
             printKicau(*l,id);
         }
         else{
-            // is teman masih ga work
-            // if(isTeman(findIDPenggunaByName(l2,el.author),findIDPenggunaByName(l2,auth))){
-            //     el.like += 1;
-            //     setElmt(l,id-1,el); // set element dengan text baru
-            //     printf("Selamat! kicauan telah disukai!\n");
-            //     printKicau(*l,id);
-            // }
-            printf("Wah, kicauan tersebut dibuat oleh akun privat! Ikuti akun itu dulu ya\n");
+            if(!isTeman(findIDPenggunaByName(&l2,el.author),findIDPenggunaByName(&l2,auth))){
+                el.like += 1;
+                setElmt(l,id-1,el); // set element dengan text baru
+                printf("Selamat! kicauan telah disukai!\n");
+                printKicau(*l,id);
+            }
+            else{
+                printf("Wah, kicauan tersebut dibuat oleh akun privat! Ikuti akun itu dulu ya\n");
+            }
         }
     }
 }
@@ -154,7 +155,7 @@ void printKicau(List l,int id){ // print kicau satuan
 
 // print semua kicauan (ini belum cek temenan apa ngga)
 void kicauan(List l, ListPengguna l2, char *auth){ 
-    inverseList(&l); // di invers dulu biar ngeprint yang terbaru
+     inverseList(&l); // di invers dulu biar ngeprint yang terbaru
     Address p = l;
     while (p!=NULL){
         if(!isPenggunaPrivate(&l2,p->info.author)){
@@ -171,23 +172,21 @@ void kicauan(List l, ListPengguna l2, char *auth){
             printf("\n");
         }
         else{
-            // is temannya ga work
-            // if(isTeman(findIDPenggunaByName(l2,p->info.author),findIDPenggunaByName(l2,auth))){
-            //     printf("| ID = %d\n",id(p));
-            //     printf("| ");
-            //     printf("%s\n",p->info.author);
-            //     printf("| ");
-            //     TulisDATETIME(waktu(p));
-            //     printf("\n");
-            //     printf("| ");
-            //     printWord(text(p));
-            //     printf("\n");
-            //     printf("| Disukai: %d\n",like(p));
-            //     printf("\n");
-            // }
+            if(!isTeman(findIDPenggunaByName(&l2,p->info.author),findIDPenggunaByName(&l2,auth))){
+                printf("| ID = %d\n",id(p));
+                printf("| ");
+                printf("%s\n",p->info.author);
+                printf("| ");
+                TulisDATETIME(waktu(p));
+                printf("\n");
+                printf("| ");
+                printWord(text(p));
+                printf("\n");
+                printf("| Disukai: %d\n",like(p));
+                printf("\n");
+            }
         }
         p = NEXT(p);
     }
    inverseList(&l); // balikin jadi list awal lagi
 }
-

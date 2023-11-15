@@ -6,6 +6,7 @@
 #include "../../primitif/primitif.h"
 
 /* ********** KONSTRUKTOR ********** */
+//gcc -o q adt/liststatik/listpengguna.c primitif/primitif.c adt/matriks/foto.c adt/queue/prioqueue.c adt/stack/drafstack.c adt/datetime/datetime.c adt/datetime/time.c adt/pcolor/pcolor.c
 
 /*void CreatePengguna(Pengguna *p, char name[20], char pass[20]) {
     p -> nama = name;
@@ -274,11 +275,11 @@ char* searchNamabyId(ListPengguna l, int id) {
     int i;
     for (i = 0; i < listLengthP(l); i++) {
         if (ID(ELMT(l, i)) == id) {
-            char* nameCopy = malloc(strlen(NAMA(ELMT(l, i))) + 1);
-            if (nameCopy != NULL) {
-                strCpy(NAMA(ELMT(l, i)), nameCopy); 
-                return nameCopy; 
-            }
+            // char* nameCopy = malloc(strlen(NAMA(ELMT(l, i))) + 1);
+            // if (nameCopy != NULL) {
+            //     strCpy(NAMA(ELMT(l, i)), nameCopy); 
+            //     return nameCopy; 
+            // }
             break;
         }
     }
@@ -295,15 +296,16 @@ int searchPenggunaByName(ListPengguna l, char *nama ){
     return IDX_UNDEF;
 }
 
-int findIDPenggunaByName(ListPengguna l, char *nama ){
+int findIDPenggunaByName(ListPengguna *l, char *nama ){
     int i = 0;
-    for(i = 0; i < listLengthP(l) ; i++){
-        if(isStrEqual(NAMA(ELMT(l,i)),nama)){
-            return ELMT(l,i).id;
+    for(i = 0; i < listLengthP(*l) ; i++){
+        if(isStrEqual(NAMA(ELMT(*l,i)),nama)){
+            return ELMT(*l,i).id;
         }
     }
     return IDX_UNDEF;
 }
+
 boolean isPenggunaPrivate(ListPengguna *l, char *nama){
     int i = 0;
     for ( i =0 ; i < listLengthP(*l) ; i++){

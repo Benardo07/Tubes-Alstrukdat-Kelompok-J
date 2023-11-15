@@ -178,7 +178,7 @@ char* searchNamabyId(ListPengguna l, int id);
 
 int searchPenggunaByName(ListPengguna l, char *nama );
 
-int findIDPenggunaByName(ListPengguna l, char *nama );
+int findIDPenggunaByName(ListPengguna *l, char *nama );
 
 boolean isPenggunaPrivate(ListPengguna *l, char *nama);
 
