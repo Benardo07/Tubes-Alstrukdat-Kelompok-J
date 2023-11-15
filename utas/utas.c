@@ -39,18 +39,6 @@ void insertUtas(Kicau *k){
         printf("Masukkan kicauan:\n");
         readKicau(&text);
         printf("\n");
-        if (!allSpace(text)){
-            space = false;
-        }
-        while(space){ // cek apakah cuma berisi space atau tidak
-            printf("Kicauan tidak boleh hanya berisi spasi!\n");
-            printf("Masukkan kicauan:\n");
-            readKicau(&text);
-            printf("\n");
-        if (!allSpace(text)){
-            space = false;
-        }
-        }
         len = length((*k).Utas);
         if (len==IDXUNDEF){
             id = 1;
@@ -135,26 +123,14 @@ void sambungUtas(Kicau *k,int idx,int IdUtas,List *ListUtas, char *aut){
     struct tm *localTime;
 
     len = length((*k).Utas);
-    if (idx<=len){
+    if (idx<=len || (idx==1 && len==0)){
         if(isStrEqual((*k).author,aut)){
             boolean space = true;
             Word text;
             printf("Masukkan kicauan:\n");
             readKicau(&text);
             printf("\n");
-            if (!allSpace(text)){
-                space = false;
-            }
-            while(space){ // cek apakah cuma berisi space atau tidak
-                printf("Kicauan tidak boleh hanya berisi spasi!\n");
-                printf("Masukkan kicauan:\n");
-                readKicau(&text);
-                printf("\n");
-            if (!allSpace(text)){
-                space = false;
-            }
-            }
-
+        
             currentTime = time(NULL);
             localTime = localtime(&currentTime);
             int day = localTime->tm_mday;
