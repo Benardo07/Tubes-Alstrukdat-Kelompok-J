@@ -7,7 +7,7 @@ void setBio(){
     int i;
     char* s = currentWord.TabWord;
     for(i=0;i<listLengthP(LPengguna);i++){
-        if(ID(ELMT(LPengguna,i)) == IdCurrentUser){
+        if(ID(ELMT(LPengguna,i)) == currentUser.id){
             strCpy(s,BIO(ELMT(LPengguna,i)));
             while(strlength(s) > 135){
                 printf("Bio memiliki panjang melebihi 135 karakter. Masukkan sesuai format lagi : \n");
@@ -40,7 +40,7 @@ void setNoHP(){
     hp = currentWord.TabWord;
     int i;
     for(i=0;i<listLengthP(LPengguna);i++){
-        if(ID(ELMT(LPengguna,i)) == IdCurrentUser){
+        if(ID(ELMT(LPengguna,i)) == currentUser.id){
             strCpy(hp,HP(ELMT(LPengguna,i)));
             while(!NumberValid(currentWord)){
                 printf("\n");
@@ -62,7 +62,7 @@ void setWeton(){
     char* wetonNew;
     int i;
     for(i=0;i<listLengthP(LPengguna);i++){
-        if(ID(ELMT(LPengguna,i)) == IdCurrentUser){
+        if(ID(ELMT(LPengguna,i)) == currentUser.id){
             strCpy(weton,WETON(ELMT(LPengguna,i)));
             while(!isWeton(weton)){
                 printf("\n");
@@ -78,7 +78,7 @@ void setWeton(){
 }
 
 void gantiProfil(){
-    printf("| Nama: %s\n",NAMA(ELMT(LPengguna,IdCurrentUser)));
+    printf("| Nama: %s\n",NAMA(ELMT(LPengguna,currentUser.id-1)));
     printf("| Bio Akun: \n");
     printf("| No HP: \n");
     printf("| Weton: \n");
@@ -91,45 +91,63 @@ void gantiProfil(){
     setWeton();
     printf("\n");
 
-    printf("| Nama: %s\n", NAMA(ELMT(LPengguna,IdCurrentUser)));
-    printf("| Bio Akun: %s\n", BIO(ELMT(LPengguna,IdCurrentUser)));
-    printf("| No HP: %s\n", HP(ELMT(LPengguna,IdCurrentUser)));
-    printf("| Weton: %s\n", WETON(ELMT(LPengguna,IdCurrentUser)));
+    printf("| Nama: %s\n", NAMA(ELMT(LPengguna,currentUser.id-1)));
+    printf("| Bio Akun: %s\n", BIO(ELMT(LPengguna,currentUser.id-1)));
+    printf("| No HP: %s\n", HP(ELMT(LPengguna,currentUser.id-1)));
+    printf("| Weton: %s\n", WETON(ELMT(LPengguna,currentUser.id-1)));
     printf("\n");
     
     printf("Profil Anda sudah berhasil diperbarui!\n");
 }
 
-void LihatProfil(char *s){
-    int id;
-    id = searchNama(LPengguna,s);
-    printf("%d\n",id);
-    if(JENIS(ELMT(LPengguna,id)) == "Privat"){
-        printf("Wah, akun %s diprivat nih. Ikuti dulu yuk untuk bisa melihat profil %s!", s);
+void LihatProfil(char *nama){
+    int idx;
+    idx = searchNamabyRef(&LPengguna,nama);
+
+    if(idx == -1){
+        printf("Tidak ada pengguna bernama %s",nama);
+        return;
+    }
+
+    if(isStrEqual("Privat",JENIS(ELMT(LPengguna,idx)))){
+        printf("Wah, akun %s diprivat nih. Ikuti dulu yuk untuk bisa melihat profil %s!", nama,nama);
         return;
     };
 
-    printf("| Nama: %s\n", NAMA(ELMT(LPengguna,id)));
-    printf("| Bio Akun: %s\n", BIO(ELMT(LPengguna,id)));
-    printf("| No HP: %s\n", HP(ELMT(LPengguna,id)));
-    printf("| Weton: %s\n", WETON(ELMT(LPengguna,id)));
+    printf("| Nama: %s\n", NAMA(ELMT(LPengguna,idx)));
+    printf("| Bio Akun: %s\n", BIO(ELMT(LPengguna,idx)));
+    printf("| No HP: %s\n", HP(ELMT(LPengguna,idx)));
+    printf("| Weton: %s\n", WETON(ELMT(LPengguna,idx)));
     printf("\n");
-    printf("Foto profil akun TuanBri\n");
-    PrintPhotoMatrix(FOTO(ELMT(LPengguna,id)));
-    printf("\n");
+    printf("Foto profil akun %s\n",nama);
+    PrintPhotoMatrix(FOTO(ELMT(LPengguna,idx)));
 }
 
 void aturjenisakun (){
-    printf("Saat ini, Akun anda adalah akun Publik. Ingin mengubah ke akun privat? \n");
-    printf("(YA/TIDAK) ");
-    STARTWORD();
-    printf("\n");
-    char *choice = currentWord.TabWord;
-    if(isStrEqual(choice,"YA") || isStrEqual(choice,"ya") || isStrEqual(choice,"Ya")){
-        strCpy("Privat",JENIS(ELMT(LPengguna,IdCurrentUser)));
-        printf("Akun anda telah diubah menjadi akun Privat.\n");
-    }else{
-        printf("Akun anda tetap menjadi akun Publik. \n");
+    if(isStrEqual("Publik",JENIS(ELMT(LPengguna,currentUser.id-1)))){
+        printf("Saat ini, Akun anda adalah akun Publik. Ingin mengubah ke akun privat? \n");
+        printf("(YA/TIDAK) ");
+        STARTWORD();
+        printf("\n");
+        char *choice = currentWord.TabWord;
+        if(isStrEqual(choice,"YA") || isStrEqual(choice,"ya") || isStrEqual(choice,"Ya")){
+            strCpy("Privat",JENIS(ELMT(LPengguna,currentUser.id-1)));
+            printf("Akun anda telah diubah menjadi akun Privat.\n");
+        }else{
+            printf("Akun anda tetap menjadi akun Publik. \n");
+        }
+    }else if(isStrEqual("Privat",JENIS(ELMT(LPengguna,currentUser.id-1)))){
+        printf("Saat ini, Akun anda adalah akun Privat. Ingin mengubah ke akun publik? \n");
+        printf("(YA/TIDAK) ");
+        STARTWORD();
+        printf("\n");
+        char *choice = currentWord.TabWord;
+        if(isStrEqual(choice,"YA") || isStrEqual(choice,"ya") || isStrEqual(choice,"Ya")){
+            strCpy("Publik",JENIS(ELMT(LPengguna,currentUser.id-1)));
+            printf("Akun anda telah diubah menjadi akun Publik.\n");
+        }else{
+            printf("Akun anda tetap menjadi akun Privat. \n");
+        }
     }
 }
 
@@ -139,8 +157,8 @@ int isSpaceOrControl(char ch) {
 
 void UbahfotoProfil() {
     printf("\nFoto profil anda saat ini adalah\n");
-    PrintPhotoMatrix(FOTO(ELMT(LPengguna,IdCurrentUser)));
-
+    PrintPhotoMatrix(FOTO(ELMT(LPengguna,currentUser.id-1)));
+    printf("\n");
     printf("Masukkan foto profil yang baru\n");
     STARTWORD();  
     char* input = currentWord.TabWord;
@@ -148,8 +166,8 @@ void UbahfotoProfil() {
     int row = 0, col = 0, i = 0;
     while (input[i] != '\0' && input[i] != ';') {
         if (!isSpaceOrControl(input[i])) {
-            if (col < COL_EFF(FOTO(ELMT(LPengguna,IdCurrentUser)))) {
-                ChangePhotoMatrix(&FOTO(ELMT(LPengguna,IdCurrentUser)), row, col, input[i]);
+            if (col < COL_EFF(FOTO(ELMT(LPengguna,currentUser.id-1)))) {
+                ChangePhotoMatrix(&FOTO(ELMT(LPengguna,currentUser.id-1)), row, col, input[i]);
                 col++;
             }
         } else if (input[i] == '\n' || input[i] == '\r') {
@@ -160,5 +178,5 @@ void UbahfotoProfil() {
     }
     printf("\n");
     printf("Foto Profil Anda sudah berhasil diganti!\n");
-    PrintPhotoMatrix(FOTO(ELMT(LPengguna,IdCurrentUser)));
+    PrintPhotoMatrix(FOTO(ELMT(LPengguna,currentUser.id-1)));
 }

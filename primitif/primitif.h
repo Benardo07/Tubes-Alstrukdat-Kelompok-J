@@ -21,6 +21,8 @@ int ambilangka(char *str1);
 
 int ambilangka2(char *str1);
 
+void getString(const char *str1, char *hasil, int maxLen);
+
 boolean isWeton(char *weton);
 
 void strCpyTwoElmt(char *str1,char *dest1 , int *dest2);

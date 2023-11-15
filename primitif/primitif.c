@@ -173,6 +173,25 @@ boolean isWeton(char *weton){
     return sukses;
 }
 
+void getString(const char *str1, char *hasil, int maxLen) {
+    int i = 0, j = 0;
+    while (str1[i] != ' ' && str1[i] != '\0') {
+        i++;
+    }
+
+    if (str1[i] == '\0') {
+        hasil[0] = '\0';
+        return;
+    }
+    i++;
+
+    while (str1[i] != '\0' && j < maxLen - 1) {
+        hasil[j++] = str1[i++];
+    }
+
+    hasil[j] = '\0';
+}
+
 void strCpyTwoElmt(char *str1,char *dest1 , int *dest2){
     int i = strlength(str1) - 1;
     int z = 0;
