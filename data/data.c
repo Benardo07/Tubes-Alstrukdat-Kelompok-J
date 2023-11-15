@@ -11,6 +11,8 @@
 #include "../teman/teman.h"
 #include "../draf/draf.h"
 #include "../balasan/balasan.h"
+#include "../profil/profil.h"
+#include "../permintaan/requests.h"
 
 ListPengguna LPengguna;
 ListPengguna users[20];
@@ -636,8 +638,23 @@ boolean MASUK() {
             daftarTeman(currentUser.id);
         } else if (isStrEqual(operasi, "HAPUS_TEMAN")) {
             hapusTeman(currentUser.id);
-        }
-        else if (isStrEqual(operasi, "KICAU")) { 
+        }else if(isStrEqual(operasi,"GANTI_PROFIL")){
+            gantiProfil();
+        }else if (isStrEqual(operasi, "LIHAT_PROFIL")){
+            char output[30];
+            getString(operasi,output,sizeof(output));
+            LihatProfil(output);
+        }else if(isStrEqual(operasi, "ATUR_JENIS_AKUN")){
+            aturjenisakun();
+        }else if(isStrEqual(operasi, "UBAH_FOTO_PROFIL")){
+            UbahfotoProfil();
+        }else if(isStrEqual(operasi, "TAMBAH_TEMAN")){
+            TambahTeman(&LPengguna);
+        }else if(isStrEqual(operasi, "DAFTAR_PERMINTAAN_PERTEMANAN")){
+            DaftarPermintaanTeman();
+        }else if(isStrEqual(operasi, "SETUJUI_PERTEMANAN")){
+            SetujuiTeman();
+        }else if (isStrEqual(operasi, "KICAU")) { 
             insertKicau(&LKicau,currentUser.nama,&IdKicau);
         }
         else if (isStrEqual(operasi, "KICAUAN")) { 
