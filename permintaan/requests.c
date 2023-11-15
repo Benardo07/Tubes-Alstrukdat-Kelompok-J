@@ -1,39 +1,38 @@
-# include "ADT\queue\prioqueue.h"
-# include "ADT\liststatik\listpengguna.h"
-# include "ADT\graf\graf.h"
-# include "../data/data.h"
+# include "requests.h"
 
 void TambahTeman(){
     printf("Masukkan nama pengguna: \n");
     STARTWORD();
+    // char* newnama = currentWord.TabWord;
+    // printf("tualan:%s\n",newnama);
+    int idUser = searchNama(LPengguna,currentWord.TabWord);
+    printf("%d\n",idUser);
 
-    char *nama = currentWord.TabWord;
-    int idUser = searchNama(LPengguna, nama);
-
-    if(idUser == IDX_UNDEF){
-        printf("Pengguna bernama %s tidak ditemukan.\n", nama);
+    if(idUser == -1){
+        printf("Pengguna bernama %s tidak ditemukan.\n", currentWord.TabWord);
         return;
-    } else {
-        if(IsPrioQueueEmpty(FREQ(currentUser))){
+    }else {
+        int i;
+        if(IsPrioQueueEmpty(FREQ(ELMT(LPengguna,idUser)))){
             infotype newFriendRequest;
             Info(newFriendRequest) = ID(currentUser);
             Prio(newFriendRequest) = TOTALFRIENDS(currentUser); 
 
             for (int i = 0; i < listLengthP(LPengguna); i++) {
-                if (ID(ELMT(LPengguna, i)) == idUser) {
+                if (ID(ELMT(LPengguna, i)) == idUser+1){
                     EnqueuePrio(&FREQ(ELMT(LPengguna, i)), newFriendRequest);
                     break;
                 }
             }
-
-            printf("Permintaan pertemanan kepada %s telah dikirim. Tunggu beberapa saat hingga permintaan Anda disetujui.\n", nama);
+            printf("Permintaan pertemanan kepada %s telah dikirim. Tunggu beberapa saat hingga permintaan Anda disetujui.\n", currentWord.TabWord);
             return;
         } else {
             printf("Terdapat permintaan pertemanan yang belum Anda setujui. Silakan kosongkan daftar permintaan pertemanan untuk Anda terlebih dahulu.\n");
             return; 
         }
-    }
-}
+    } 
+} 
+
 
 
 void printDaftar() {
@@ -65,15 +64,15 @@ void DaftarPermintaanTeman(){
     }
 }
 
-void SetujuiTeman(ListPengguna *LPengguna, Pengguna *currentUser) {
-    if (IsPrioQueueEmpty(FREQ(*currentUser))) {
+void SetujuiTeman() {
+    if (IsPrioQueueEmpty(FREQ(currentUser))) {
         printf("Tidak ada yang mengajukan pertemanan dengan Anda.\n");
     } else {
         infotype topRequest;
-        DequeuePrio(&FREQ(*currentUser), &topRequest);
+        DequeuePrio(&FREQ(ELMT(LPengguna,currentUser.id-1)), &topRequest);
         int topID = Info(topRequest);
         int jlhTeman = Prio(topRequest);
-        char* topName = searchNamabyId(*LPengguna, topID);
+        char *topName = searchNamabyId(LPengguna, topID);
 
         if (topName != NULL) {
             printf("Permintaan teratas dari %s\n", topName);
@@ -82,15 +81,15 @@ void SetujuiTeman(ListPengguna *LPengguna, Pengguna *currentUser) {
             
             printf("Apakah Anda ingin menyetujui permintaan pertemanan ini? (ya/tidak)\n");
             STARTWORD();
-            char* answer = currentWord.TabWord;
+            char *answer = currentWord.TabWord;
             if (isStrEqual(answer, "ya")) {
-                TOTALFRIENDS(*currentUser)++; 
+                TOTALFRIENDS(ELMT(LPengguna,currentUser.id-1))++; 
                 
-                for (int i = 0; i < listLengthP(*LPengguna); i++) {
-                    if (ID(ELMT(*LPengguna, i)) == topID) {
-                        TOTALFRIENDS(ELMT(*LPengguna, i))++; 
-                        UpdatePrioQueue(&FREQ(ELMT(*LPengguna, i)), ID(*currentUser)); 
-                        connectNode(&Teman,topID - 1,Id(*currentUser) - 1);
+                for (int i = 0; i < listLengthP(LPengguna); i++) {
+                    if (ID(ELMT(LPengguna, i)) == topID) {
+                        TOTALFRIENDS(ELMT(LPengguna, i))++; 
+                        UpdatePrioQueue(&FREQ(ELMT(LPengguna, i)), ID(currentUser)); 
+                        connectNode(&Teman,topID - 1,Id(currentUser) - 1);
                         break;
                     }
                 }
