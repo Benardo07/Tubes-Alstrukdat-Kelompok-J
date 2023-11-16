@@ -8,7 +8,7 @@ void CreatePhotoMatrix(foto *F) {
     
     for (int i = 0; i < CAP; ++i) {
         for (int j = 0; j < 10; ++j) {
-            Element(*F, i, j) = (j % 2 == 0) ? 'B' : '*';
+            Element(*F, i, j) = (j % 2 == 0) ? 'R' : '*';
         }
     }
 }
