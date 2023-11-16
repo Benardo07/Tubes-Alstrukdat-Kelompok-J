@@ -248,3 +248,9 @@ void takeTwovalue(char *str1 , int* yangDiBalas, int* yangBalas){
     }
 
 }
+
+void makeUpper(char *str){
+    if (str[0] >= 'a' && str[0] <= 'z') {
+        str[0] = str[0] - 'a' + 'A';
+    }
+};

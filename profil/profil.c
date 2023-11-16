@@ -59,6 +59,7 @@ void setWeton(){
     printf("Masukkan Weton: \n");
     STARTWORD();
     char* weton = currentWord.TabWord;
+    makeUpper(weton);
     char* wetonNew;
     int i;
     for(i=0;i<listLengthP(LPengguna);i++){
@@ -71,6 +72,7 @@ void setWeton(){
                 printf("Masukkan Weton: \n");
                 StartSentence();
                 wetonNew = currentWord.TabWord;
+                makeUpper(wetonNew);
                 strCpy(wetonNew,WETON(ELMT(LPengguna,i)));
             }
         }
@@ -151,7 +153,7 @@ void aturjenisakun (){
     }
 }
 
-int isSpaceOrControl(char ch) {
+int isAscii(char ch) {
     return ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r' || (ch >= 0 && ch <= 31);
 }
 
@@ -165,7 +167,7 @@ void UbahfotoProfil() {
 
     int row = 0, col = 0, i = 0;
     while (input[i] != '\0' && input[i] != ';') {
-        if (!isSpaceOrControl(input[i])) {
+        if (!isAscii(input[i])) {
             if (col < COL_EFF(FOTO(ELMT(LPengguna,currentUser.id-1)))) {
                 ChangePhotoMatrix(&FOTO(ELMT(LPengguna,currentUser.id-1)), row, col, input[i]);
                 col++;
