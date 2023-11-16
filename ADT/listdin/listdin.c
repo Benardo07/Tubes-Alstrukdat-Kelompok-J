@@ -66,17 +66,7 @@ boolean isFullDinTree(ListDinTree l){
 
 /* ********** BACA dan TULIS dengan INPUT/OUTPUT device ********** */
 /* *** Mendefinisikan isi list dari pembacaan *** */
-void readListDinTree(ListDinTree *l){
-    int n,i;
-    do{
-        scanf("%d",&n);
-    }while(n<0||n>CAPACITYDINTREE(*l));
-    CreateListDinTree(l,n);
-    for(i=IDX_MIN_B;i<n;i++){
-        scanf("%d",&ELMTDINTREE(*l,i));
-    }
-    NEFFDINTREE(*l) = n;
-};
+
 /* I.S. l sembarang dan sudah dialokasikan sebelumnya */
 /* F.S. List l terdefinisi */
 /* Proses : membaca banyaknya elemen l dan mengisi nilainya */
@@ -86,17 +76,17 @@ void readListDinTree(ListDinTree *l){
 /* 2. Jika 0 < N <= CAPACITY(l); Lakukan N kali: Baca elemen mulai dari indeks
       0 satu per satu diakhiri enter */
 /*    Jika N = 0; hanya terbentuk l kosong */
-void printListDinTree(ListDinTree l){
-     int i;
-    printf("[");
-    for (i=getFirstIdxDinTree(l);i<ListDinTreeLength(l); i++){
-      printf("%d", ELMTDINTREE(l,i));
-      if (i!=ListDinTreeLength(l)-1){
-         printf(",");
-      }
-   }
-   printf("]");
-};
+// void printListDinTree(ListDinTree l){
+//      int i;
+//     printf("[");
+//     for (i=getFirstIdxDinTree(l);i<ListDinTreeLength(l); i++){
+//       printf("%d", ELMTDINTREE(l,i));
+//       if (i!=ListDinTreeLength(l)-1){
+//          printf(",");
+//       }
+//    }
+//    printf("]");
+// };
 /* Proses : Menuliskan isi list dengan traversal, list ditulis di antara kurung siku;
    antara dua elemen dipisahkan dengan separator "koma", tanpa tambahan karakter di depan,
    di tengah, atau di belakang, termasuk spasi dan enter */
@@ -173,15 +163,7 @@ void deleteListDinAt(ListDinTree *l , int idx){
 // };
 /* Menghasilkan hasil penjumlahan semua elemen l */
 /* Jika l kosong menghasilkan 0 */
-int countValDinTree(ListDinTree l, ElDinType val){
-    int i,count=0;
-    for(i=IDX_MIN_B;i<ListDinTreeLength(l);i++){
-        if(ELMTDINTREE(l,i)==val){
-            count ++;
-        }
-    }
-    return count;
-};
+
 /* Menghasilkan berapa banyak kemunculan val di l */
 /* Jika l kosong menghasilkan 0 */
 
