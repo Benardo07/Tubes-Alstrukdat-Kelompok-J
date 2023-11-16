@@ -63,7 +63,6 @@ void CreateDraf(Draf *D,char * tweet, DATETIME waktu);
 
 void printDraf(Draf D);
 
-boolean findDraf(DrafStack S, int id);
 
 Draf printLastDraf(DrafStack S);
 

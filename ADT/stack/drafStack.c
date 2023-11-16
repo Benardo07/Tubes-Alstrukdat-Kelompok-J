@@ -59,16 +59,6 @@ void printDraf(Draf D){
     printf("%s\n",DrafTweet(D));
 }
 
-// boolean findDraf(DrafStack S, int id){
-//     Draf temp;
-//     while (!IsEmptyDrafStack(S)){
-//         PopDrafStack(&S,&temp);
-//         if(Id(temp) == id){
-//             return true;
-//         }
-//     }
-//     return false;
-// }
 
 Draf printLastDraf(DrafStack S){
     Draf temp;
