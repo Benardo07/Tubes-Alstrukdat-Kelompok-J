@@ -106,13 +106,18 @@ boolean MuatPengguna(char *namafolder){
 
         createGraph(&Teman);
         Teman.nodes = n;
-        int edge;
+        int edge, temanUser;
         for(i=0; i<n; ++i) {
+            temanUser = 0;
             for(j=0; j<n; ++j) {
                 fscanf(fPengguna, "%d", &edge);
                 ELMT_GRAPH(Teman, i, j) = edge;
-                if (edge == 1) Teman.edges++;
+                if (edge == 1) {
+                    Teman.edges++;
+                    if (i != j) temanUser++;
+                }
             }
+            TOTALFRIENDS(ELMT(LPengguna, i)) = temanUser;
         }
 
         fscanf(fPengguna, "%d", &n);
@@ -393,8 +398,7 @@ void SimpanKicauan(char* namaFolder) {
     for(int i=0; i<length(LKicau); ++i) {
         Kicau k = getElmt(LKicau, i);
         fprintf(fKicauan, "%d\n", k.id);
-        fprintf(fKicauan, "%s", k.text);
-        if (k.text.Length >= 280 && k.text.TabWord[280] != '\n') fprintf(fKicauan, "\n");
+        fprintf(fKicauan, "%s\n", k.text);
         fprintf(fKicauan, "%d\n", k.like);
         fprintf(fKicauan, "%s\n", k.author);
         SimpanDATETIME(fKicauan, k.waktu);
@@ -539,7 +543,7 @@ boolean Simpan() {
     char namaFolder[100];
     printf("\nMasukkan nama folder penyimpanan: ");
     StartSentence();
-    strCat("./configs/", currentWord.TabWord, namaFolder);
+    strCat("./", currentWord.TabWord, namaFolder);
 
     if (isDirectoryExist(namaFolder)) {
         printf("Anda akan melakukan penyimpanan di %s.\n", namaFolder);

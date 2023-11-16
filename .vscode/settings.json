@@ -3,6 +3,7 @@
         "graf.h": "c",
         "boolean.h": "c",
         "primitif.h": "c",
-        "listpengguna.h": "c"
+        "listpengguna.h": "c",
+        "kicauan.h": "c"
     }
 }
