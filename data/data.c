@@ -133,7 +133,6 @@ boolean MuatPengguna(char *namafolder){
             id_1 = currentChar - '0'; ADVFILE(); ADVFILE();
             id_2 = currentChar - '0'; ADVFILE(); ADVFILE();
             teman = currentChar - '0'; ADVFILE(); ADVFILE();
-            printf("%d %d %d\n",id_1,id_2,teman);
             infotype request = newPrioElmt(id_1, teman);
             EnqueuePrio(&FREQ(ELMT(LPengguna, id_2-1)), request);
         }
