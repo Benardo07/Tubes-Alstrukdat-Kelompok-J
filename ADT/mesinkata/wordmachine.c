@@ -62,7 +62,7 @@ void CopyWord()
             i++;
         }
         ADV();
-    } while (currentChar != MARK);
+    } while (currentChar != MARK && currentChar != BLANK);
     currentWord.Length = i;
 }
 
@@ -74,33 +74,6 @@ void ClearWord(Word *word)
         word->TabWord[i] = '\0';
     }
     word->Length = 0;
-}
-
-void StartSentence()
-{
-    ClearWord(&currentWord);
-
-    START();
-    //Word currentWord;
-
-    IgnoreBlanks();
-    if (currentChar == MARK) {
-        EndWord = true;
-    } else {
-        EndWord = false;
-
-        // Copy Sentence
-        // Asumsi panjang sentence (nama/sandi/etc) < NMax
-        int i=0;
-        do {
-            if (i < NMax) {
-                currentWord.TabWord[i] = currentChar;
-                i++;
-            }
-            ADV();
-        } while (currentChar != MARK);
-        currentWord.Length = i;
-    }
 }
 
 void printWord(Word word) {

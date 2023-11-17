@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "data.h"
 #include "../ADT/mesinkata/wordmachine.h"
+#include "../ADT/mesinkata/mesinkalimat.h"
 #include "../ADT/mesinkarakter/charmachine.h"
 #include "../ADT/listlinier/listlinier.h"
 #include "../ADT/matriks/foto.h"
@@ -14,6 +15,7 @@
 #include "../profil/profil.h"
 #include "../permintaan/requests.h"
 
+Sentence test;
 ListPengguna LPengguna;
 ListPengguna users[20];
 Graf Teman;
@@ -29,7 +31,7 @@ boolean Muat(){
     boolean sukses = true;
     printf("\nSilahkan masukan folder konfigurasi untuk dimuat: ");
     StartSentence();
-    strCat("./",currentWord.TabWord,namafolder); //menggunakan relative path
+    strCat("./",currentSentence.TabWord,namafolder); //menggunakan relative path
     //printf("%s\n", namafolder);
 
     if (!isDirectoryExist(namafolder)) {
@@ -227,7 +229,7 @@ boolean MuatDraf (char *namafolder){
                 PushDrafStack(&tempStack,d);
             }
 
-            copyReverse(tempStack,&DRAF(ELMT(LPengguna,searchNama(LPengguna,username))));          
+            copyReverse(tempStack,&DRAF(ELMT(LPengguna,searchNama(LPengguna,username))));
         }
     }
     fclose(fDraf);
@@ -279,14 +281,14 @@ boolean MuatUtas(char *namafolder){
                 CreateDATETIME(&date,d,b,y,h,m,s);
                 p.waktu = date;
                 insertLastKicau(&(utas.Utas),p);
-                
+
 
             }
             setElmt(&LKicau,id-1,utas);
             IdUtas+=1;
         }
     }
-    
+
     fclose(fUtas);
     return sukses;
 }
@@ -325,12 +327,12 @@ boolean MuatBalasan(char* namafolder) {
                 CreateBalasan(&B, idBalasan, text, author, date);
                 Tree T = newTree(B, 1000);
 
-                if(idParent == -1) AddBalasanKicauAt(&LKicau,idKicau,T);    
+                if(idParent == -1) AddBalasanKicauAt(&LKicau,idKicau,T);
                 else insertLastDinTree(&CHILDREN(findBalasanInTree(getElmt(LKicau, idKicau-1).Balas,idParent)),T);
             }
         }
     }
-    
+
     fclose(fBalasan);
     return sukses;
 }
@@ -344,7 +346,7 @@ void SimpanPengguna(char* namaFolder) {
     fprintf(fPengguna, "%d\n", listLengthP(LPengguna));
 
     int i, j, k, requestCount = 0;
-    
+
     PrioQueue q; CreatePrioQueue(&q);
     for(i=0; i<listLengthP(LPengguna); ++i) {
         Pengguna p = ELMT(LPengguna, i);
@@ -394,7 +396,7 @@ void SimpanKicauan(char* namaFolder) {
 
     fKicauan = fopen(pathKicauan, "w");
     fprintf(fKicauan, "%d\n", length(LKicau));
-    
+
     for(int i=0; i<length(LKicau); ++i) {
         Kicau k = getElmt(LKicau, i);
         fprintf(fKicauan, "%d\n", k.id);
@@ -413,13 +415,13 @@ void SimpanDraf(char* namaFolder) {
     strCat(namaFolder, "/draf.config", pathDraf);
 
     fDraf = fopen(pathDraf, "w");
-    
+
     PrioQueue q; CreatePrioQueue(&q);
     int n = 0, i;
     for(i=0; i<listLengthP(LPengguna); ++i) {
         if (JMLHDRAF(ELMT(LPengguna,i)) > 0) {
             infotype temp = newPrioElmt(i, 1);
-            EnqueuePrio(&q, temp);        
+            EnqueuePrio(&q, temp);
             n++;
         }
     }
@@ -496,7 +498,7 @@ void SimpanUtas(char* namaFolder) {
 
 void SimpanBalasanRekursif(FILE *fBalasan, Tree T, int id) {
     if (T == NULL) return;
-    
+
     for(int i=getFirstIdxDinTree(CHILDREN(T)); i<=getLastIdxDinTree(CHILDREN(T)); ++i) {
         Balasan B = BALASAN(ELMTDINTREE(CHILDREN(T), i));
         fprintf(fBalasan, "%d %d\n", id, B.id);
@@ -539,7 +541,7 @@ void SimpanBalasan(char* namaFolder) {
 
 boolean Simpan() {
     boolean sukses = true;
-    
+
     char namaFolder[100];
     printf("\nMasukkan nama folder penyimpanan: ");
     StartSentence();
@@ -587,7 +589,7 @@ boolean MASUK() {
     while (loop) {
         printf("\nMasukkan nama:\n");
         StartSentence();
-        strCpy(currentWord.TabWord,nama);
+        strCpy(currentSentence.TabWord,nama);
 
         idx = searchNama(LPengguna,nama);
         if (idx == IDX_UNDEF){
@@ -602,7 +604,7 @@ boolean MASUK() {
     while(loop){
         printf("\nMasukkan kata sandi:\n");
         StartSentence();
-        strCpy(currentWord.TabWord,sandi);
+        strCpy(currentSentence.TabWord,sandi);
 
         if (!checkSandi(LPengguna,idx,sandi)) {
             printf("\nWah, kata sandi yang Anda masukkan belum tepat. Periksa kembali kata sandi Anda!\n");
@@ -625,7 +627,7 @@ boolean MASUK() {
         char *operasi;
 
         StartSentence(); //Operasi hanya 1 kata (jika beberapa huruf, dipisah simbol '_')
-        operasi = currentWord.TabWord;
+        operasi = currentSentence.TabWord;
 
         if (isStrEqual(operasi, "MASUK")){
             printf("\nWah Anda sudah masuk. Keluar dulu yuk!\n");
@@ -646,7 +648,7 @@ boolean MASUK() {
             gantiProfil();
         }else if (isStrEqual(operasi, "LIHAT_PROFIL")){
             char output[30];
-            getString(operasi,output,sizeof(output));
+            getString(operasi,output,sizeof(output,1));
             LihatProfil(output);
         }else if(isStrEqual(operasi, "ATUR_JENIS_AKUN")){
             aturjenisakun();
@@ -658,26 +660,26 @@ boolean MASUK() {
             DaftarPermintaanTeman();
         }else if(isStrEqual(operasi, "SETUJUI_PERTEMANAN")){
             SetujuiTeman();
-        }else if (isStrEqual(operasi, "KICAU")) { 
+        }else if (isStrEqual(operasi, "KICAU")) {
             insertKicau(&LKicau,currentUser.nama,&IdKicau);
         }
-        else if (isStrEqual(operasi, "KICAUAN")) { 
+        else if (isStrEqual(operasi, "KICAUAN")) {
             kicauan(LKicau,LPengguna,currentUser.nama);
         }
-        else if (isStrEqual(operasi, "SUKA_KICAUAN")) { 
-            int id; 
+        else if (isStrEqual(operasi, "SUKA_KICAUAN")) {
+            int id;
             id = ambilangka(operasi);
             sukaKicau(&LKicau,LPengguna,id,currentUser.nama);
         }
-        else if (isStrEqual(operasi, "UBAH_KICAUAN")) { 
+        else if (isStrEqual(operasi, "UBAH_KICAUAN")) {
             int id;
             id = ambilangka(operasi);
             editKicau(&LKicau,id,currentUser.nama);
         }
-        else if (isStrEqual(operasi, "UTAS")) { 
+        else if (isStrEqual(operasi, "UTAS")) {
             int id;
             Kicau k1;
-            id = ambilangka(operasi);            
+            id = ambilangka(operasi);
             if(id>IdKicau-1){
                 printf("Kicauan Tidak Ditemukan!\n");
             }
@@ -686,7 +688,7 @@ boolean MASUK() {
                 buatUtas(&LKicau,&k1,&IdUtas,id-1,currentUser.nama);
             }
         }
-        else if (isStrEqual(operasi, "SAMBUNG_UTAS")) { 
+        else if (isStrEqual(operasi, "SAMBUNG_UTAS")) {
             int id,id2;
             Kicau k1;
             id = ambilangka(operasi);
@@ -701,7 +703,7 @@ boolean MASUK() {
                 setElmt(&LKicau,idkic,k1);
             }
         }
-        else if (isStrEqual(operasi, "HAPUS_UTAS")) { 
+        else if (isStrEqual(operasi, "HAPUS_UTAS")) {
             int id,id2;
             Kicau k1;
             id = ambilangka(operasi);
@@ -716,7 +718,7 @@ boolean MASUK() {
                 setElmt(&LKicau,idkic,k1);
             }
         }
-        else if (isStrEqual(operasi, "CETAK_UTAS")) { 
+        else if (isStrEqual(operasi, "CETAK_UTAS")) {
             int id;
             id = ambilangka(operasi);
             if(id>IdUtas-1){

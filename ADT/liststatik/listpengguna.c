@@ -259,7 +259,7 @@ int searchNamabyRef(ListPengguna *l, char *nama){
 }
 
 boolean checkSandi(ListPengguna l, int idx, char *sandi){
-    return isStrEqual(PASSWORD(ELMT(l,idx)),sandi);
+    return strictIsStrEqual(PASSWORD(ELMT(l,idx)),sandi);
 }
 
 void setJumlahDraf(ListPengguna *l, char *nama , int jumlah){
@@ -277,13 +277,13 @@ char* searchNamabyId(ListPengguna l, int id) {
         if (ID(ELMT(l, i)) == id) {
             // char* nameCopy = malloc(strlen(NAMA(ELMT(l, i))) + 1);
             // if (nameCopy != NULL) {
-            //     strCpy(NAMA(ELMT(l, i)), nameCopy); 
-            //     return nameCopy; 
+            //     strCpy(NAMA(ELMT(l, i)), nameCopy);
+            //     return nameCopy;
             // }
             break;
         }
     }
-    return NULL; 
+    return NULL;
 }
 
 int searchPenggunaByName(ListPengguna l, char *nama ){

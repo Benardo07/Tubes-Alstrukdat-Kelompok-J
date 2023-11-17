@@ -3,6 +3,7 @@
 #include <sys/stat.h>
 #include "adt/mesinkarakter/charmachine.h"
 #include "adt/mesinkata/wordmachine.h"
+#include "adt/mesinkata/mesinkalimat.h"
 #include "adt/liststatik/listpengguna.h"
 #include "adt/listlinier/listlinier.h"
 #include "kicauan/kicauan.h"
