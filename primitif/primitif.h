@@ -13,6 +13,8 @@ char *strLower(char *str);
 
 boolean strIsInt(char *str);
 
+int strToInt(char *str);
+
 boolean isStrEqual(char *str1, char *str2);
 
 boolean strictIsStrEqual(char *str1, char *str2);

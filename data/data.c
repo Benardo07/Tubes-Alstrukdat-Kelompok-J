@@ -55,7 +55,7 @@ boolean MuatPengguna(char *namafolder){
     char namafile[100]; //asumsi batasan strlength
 
     strCat(namafolder,"/pengguna.config", namafile);
-    //printf("%s\n",namafile);
+
     fPengguna = fopen(namafile,"r");
 
     if (fPengguna == NULL) {
@@ -64,44 +64,46 @@ boolean MuatPengguna(char *namafolder){
     } else {
         printf("File pengguna ditemukan\n");
 
+        STARTFILE(fPengguna);
         char line[135];
         int n, i, j, k;
 
-        fscanf(fPengguna,"%d",&n);
-        fgets(line,135,fPengguna);
+        readLineFile();
+        n = strToInt(currentSentence.TabWord);
 
         for (i=0;i<n;i++){
             Pengguna p;
             createPengguna(&p);
             ID(p) = i+1;
 
-            fgets(line,135,fPengguna);
-            strCpy(line,NAMA(p));
+            readLineFile();
+            strCpy(currentSentence.TabWord,NAMA(p));
 
-            fgets(line,135,fPengguna);
-            strCpy(line,PASSWORD(p));
+            readLineFile();
+            strCpy(currentSentence.TabWord,PASSWORD(p));
 
-            fgets(line,135,fPengguna);
-            strCpy(line,BIO(p));
+            readLineFile();
+            strCpy(currentSentence.TabWord,BIO(p));
 
-            fgets(line,135,fPengguna);
-            strCpy(line,HP(p));
+            readLineFile();
+            strCpy(currentSentence.TabWord,HP(p));
 
-            fgets(line,135,fPengguna);
-            strCpy(line,WETON(p));
+            readLineFile();
+            strCpy(currentSentence.TabWord,WETON(p));
 
-            fgets(line,135,fPengguna);
-            strCpy(line,JENIS(p));
+            readLineFile();
+            strCpy(currentSentence.TabWord,JENIS(p));
 
-            char *temp;
             for (j=0;j<5;j++) {
-                for (k=0; k<10; ++k) {
-                    fscanf(fPengguna, "%c ", &FOTO(p).matriks[j][k]);
+                for (k=0; k<10; k++) {
+                    FOTO(p).matriks[j][k] = currentChar;
+                    ADVFILE();
+                    ADVFILE();
                 }
-                fscanf(fPengguna, "\n", temp);
             }
+
             ROW_EFF(FOTO(p)) = CAP;
-            COL_EFF(FOTO(p)) =  2*CAP;
+            COL_EFF(FOTO(p)) = 2*CAP;
 
             insertLastP(&LPengguna,p);
         }
@@ -112,20 +114,26 @@ boolean MuatPengguna(char *namafolder){
         for(i=0; i<n; ++i) {
             temanUser = 0;
             for(j=0; j<n; ++j) {
-                fscanf(fPengguna, "%d", &edge);
+                edge = currentChar - '0';
                 ELMT_GRAPH(Teman, i, j) = edge;
                 if (edge == 1) {
                     Teman.edges++;
                     if (i != j) temanUser++;
                 }
+                ADVFILE();
+                ADVFILE();
             }
             TOTALFRIENDS(ELMT(LPengguna, i)) = temanUser;
         }
 
-        fscanf(fPengguna, "%d", &n);
+        readLineFile();
+        n = strToInt(currentSentence.TabWord);
         while(n--) {
             int id_1, id_2, teman;
-            fscanf(fPengguna, "%d %d %d", &id_1, &id_2, &teman);
+            id_1 = currentChar - '0'; ADVFILE(); ADVFILE();
+            id_2 = currentChar - '0'; ADVFILE(); ADVFILE();
+            teman = currentChar - '0'; ADVFILE(); ADVFILE();
+            printf("%d %d %d\n",id_1,id_2,teman);
             infotype request = newPrioElmt(id_1, teman);
             EnqueuePrio(&FREQ(ELMT(LPengguna, id_2-1)), request);
         }
@@ -734,7 +742,6 @@ boolean MASUK() {
                 else{
                     printf("Akun yang membuat utas ini adalah akun privat! Ikuti dahulu akun ini untuk melihat utasnya!");
                 }
-
             }
         }
         else if(isStrEqual(operasi,"BUAT_DRAF")){

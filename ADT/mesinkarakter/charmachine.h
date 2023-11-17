@@ -4,6 +4,7 @@
 #ifndef __CHAR_MACHINE_H__
 #define __CHAR_MACHINE_H__
 
+#include <stdio.h>
 #include "../boolean.h"
 
 #define MARK ';'
@@ -25,5 +26,9 @@ void ADV();
    F.S. : currentChar adalah karakter berikutnya dari currentChar yang lama,
           currentChar mungkin = MARK
           Jika  currentChar = MARK maka EOP akan menyala (true) */
+
+void STARTFILE(FILE *file);
+
+void ADVFILE();
 
 #endif

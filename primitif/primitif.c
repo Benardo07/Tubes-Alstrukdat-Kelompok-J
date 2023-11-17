@@ -1,5 +1,5 @@
-
 #include <stdio.h>
+#include <math.h>
 #include "primitif.h"
 
 boolean isDirectoryExist(char *nama){
@@ -90,6 +90,20 @@ boolean strIsInt(char *str){
     return sukses;
 }
 
+int strToInt(char *str) {
+    int i=0, s=0;
+
+    while (str[i] != '\0' && i < 31) {
+        s += str[i] - '0';
+        if (i > 0) {
+            s *= 10;
+        }
+        i++;
+    }
+
+    return s;
+}
+
 boolean isStrEqual(char *str1, char *str2){
     boolean equal = true;
     int i=0;
@@ -102,7 +116,7 @@ boolean isStrEqual(char *str1, char *str2){
         }
     }
     if(str1[i]!=' '){
-        if((str1[i]!='\0' && str2[i]=='\0') || (str1[i]=='\0' && str2[i]!='\0')){ 
+        if((str1[i]!='\0' && str2[i]=='\0') || (str1[i]=='\0' && str2[i]!='\0')){
                 equal = false;}
     }
 

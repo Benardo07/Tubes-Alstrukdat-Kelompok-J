@@ -82,3 +82,17 @@ void printSentence(Sentence sentence) {
       printf("%c", sentence.TabWord[i]);
    }
 }
+
+void readLineFile(){
+    ClearSentence(&currentSentence);
+    int i=0;
+    while (currentChar != '\n') {
+        if (i < NMax) {
+            currentSentence.TabWord[i] = currentChar;
+            i++;
+        }
+        ADVFILE();
+    }
+    currentSentence.Length = i;
+    ADVFILE();
+}

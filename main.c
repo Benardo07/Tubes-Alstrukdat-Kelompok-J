@@ -44,7 +44,7 @@ int main()
     }
 
     printf("\nFile konfigurasi berhasil dimuat! Selamat berkicau!\n");
-    printListP(LPengguna);
+    // printListP(LPengguna);
     // printf("\n");
     // DisplayDraf(InfoTop(sDraf));
 

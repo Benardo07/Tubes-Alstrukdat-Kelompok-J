@@ -47,5 +47,6 @@ void ClearSentence(Sentence *sentence);
 
 void printSentence(Sentence sentence);
 
+void readLineFile();
 
 #endif
