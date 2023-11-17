@@ -728,7 +728,13 @@ boolean MASUK() {
                 Kicau k1;
                 int idkic = cekutas(LKicau,id);
                 k1 = getElmt(LKicau,idkic);
-                perutasan(k1);
+                if(!isPenggunaPrivate(&LPengguna,k1.author)||(!isTeman(findIDPenggunaByName(&LPengguna,k1.author),findIDPenggunaByName(&LPengguna,currentUser.nama)))){
+                    perutasan(k1);
+                }
+                else{
+                    printf("Akun yang membuat utas ini adalah akun privat! Ikuti dahulu akun ini untuk melihat utasnya!");
+                }
+
             }
         }
         else if(isStrEqual(operasi,"BUAT_DRAF")){
@@ -749,7 +755,7 @@ boolean MASUK() {
         else if(isStrEqual(operasi,"HAPUS_BALASAN")){
             int kic = 0,bal = 0;
             takeTwovalue(operasi,&kic,&bal);
-            hapusBalasan(kic,bal);
+            // hapusBalasan(kic,bal);
         }
         else if (isStrEqual(operasi, "SIMPAN")) {
             Simpan();

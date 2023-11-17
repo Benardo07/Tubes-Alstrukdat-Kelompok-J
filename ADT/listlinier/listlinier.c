@@ -247,30 +247,6 @@ void deleteAt(List *l, int idx, Kicau *val){
 
 
 /****************** PROSES SEMUA ELEMEN LIST ******************/
-void displayList(List l){
-    if (isEmptyListLinier(l)){
-        printf("[]");
-    }
-    else{
-        Address p = l;
-        printf("[");
-        while (p!=NULL){
-            if (NEXT(p) != NULL) {
-                printf("%d,", INFO(p));
-            }else {
-                printf("%d", INFO(p));
-            }
-            p = NEXT(p);
-        }
-        printf("]");
-    }
-}
-// void printInfo(List l);
-/* I.S. List mungkin kosong */
-/* F.S. Jika list tidak kosong, iai list dicetak ke kanan: [e1,e2,...,en] */
-/* Contoh : jika ada tiga elemen bernilai 1, 20, 30 akan dicetak: [1,20,30] */
-/* Jika list kosong : menulis [] */
-/* Tidak ada tambahan karakter apa pun di awal, akhir, atau di tengah */
 
 int length(List l){
     int ctr = 0;
@@ -318,56 +294,6 @@ boolean fSearch(List L, Address P){
     return found;
 }
 
-// Address searchPrec(List L,Kicau X){
-//     Address p,loc;
-//     Kicau temp;
-//     p = L;
-//     loc = NULL;
-//     while (p!=NULL){
-//         if (INFO(p)==X){
-//             return loc;
-//         }else{
-//             loc = p;
-//             p = NEXT(p);
-//         }
-//      }
-//      return NULL;
-// }
-
-// Address adrMax(List l){
-//     Address max = l;
-//     Address p = l;
-//     p = NEXT(p);
-//     while (p!=NULL){
-//         if(INFO(p)>INFO(max)){
-//             max = p;
-//         }
-//         p=NEXT(p);
-//     }
-//     return max;
-// }
-
-// Kicau max(List l){
-//     return(INFO(adrMax(l)));
-// }
-
-// Address adrMin(List l){
-//     Address max = l;
-//     Address p = l;
-//     p = NEXT(p);
-//     while (p!=NULL){
-//         if(INFO(p)<INFO(max)){
-//             max = p;
-//         }
-//         p=NEXT(p);
-//     }
-//     return max;
-// }
-
-// Kicau min(List l){
-//     return(INFO(adrMin(l)));
-// }
-
 void deleteAll(List *l){
     Address p = *l;
     Kicau val;
@@ -389,24 +315,4 @@ void inverseList(List *l){
         setElmt(l,i,getElmt(*l,length(*l)-1-i));
         setElmt(l,length(*l)-1-i,temp);
     }
-}
-
-void splitList(List *l1, List *l2, List l){
-    CreateList(l1);
-    CreateList(l2);
-
-    Address p, loc, pNew;
-    int i=0;
-    p=l;
-    while (p!=NULL){
-        pNew = newNode(INFO(p));
-        if (i<length(l)/2){
-            insertLastKicau(l1, INFO(pNew));
-        }else{
-            insertLastKicau(l2, INFO(pNew));
-        }
-        free(pNew);
-        p=NEXT(p);
-        i++;
-    } 
 }

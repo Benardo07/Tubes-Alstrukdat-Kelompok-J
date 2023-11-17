@@ -120,14 +120,6 @@ void deleteAt(List *l, int idx, Kicau *val);
 
 
 /****************** PROSES SEMUA ELEMEN LIST ******************/
-void displayList(List l);
-// void printInfo(List l);
-/* I.S. List mungkin kosong */
-/* F.S. Jika list tidak kosong, iai list dicetak ke kanan: [e1,e2,...,en] */
-/* Contoh : jika ada tiga elemen bernilai 1, 20, 30 akan dicetak: [1,20,30] */
-/* Jika list kosong : menulis [] */
-/* Tidak ada tambahan karakter apa pun di awal, akhir, atau di tengah */
-
 int length(List l);
 /* Mengirimkan banyaknya elemen list; mengirimkan 0 jika list kosong */
 
@@ -146,7 +138,5 @@ void deleteAll(List *l);
 void copyList(List *l1, List *l2);
 
 void inverseList(List *l);
-
-void splitList(List *l1, List *l2, List l);
 
 #endif

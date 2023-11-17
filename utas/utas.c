@@ -6,6 +6,8 @@
 #include "../ADT/mesinkata/wordmachine.h"
 #include "../ADT/mesinkarakter/charmachine.h"
 #include "../primitif/primitif.h"
+#include "../teman/teman.h"
+#include "../ADT/liststatik/listpengguna.h"
 
 void buatUtas(List *l,Kicau *k, int *IdUtas,int IdKicau, char *author){
     if(!isStrEqual((*k).author, author)){
@@ -123,7 +125,7 @@ void sambungUtas(Kicau *k,int idx,int IdUtas,List *ListUtas, char *aut){
     struct tm *localTime;
 
     len = length((*k).Utas);
-    if (idx<=len || (idx==1 && len==0)){
+    if (idx<=len+1){
         if(isStrEqual((*k).author,aut)){
             boolean space = true;
             Word text;
