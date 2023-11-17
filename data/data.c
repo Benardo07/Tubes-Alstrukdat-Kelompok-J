@@ -755,7 +755,7 @@ boolean MASUK() {
         else if(isStrEqual(operasi,"HAPUS_BALASAN")){
             int kic = 0,bal = 0;
             takeTwovalue(operasi,&kic,&bal);
-            // hapusBalasan(kic,bal);
+            hapusBalasan(kic,bal);
         }
         else if (isStrEqual(operasi, "SIMPAN")) {
             Simpan();
