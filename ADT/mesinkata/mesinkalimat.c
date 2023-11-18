@@ -24,7 +24,7 @@ void StartSentence()
     START();
     //Word currentWord;
 
-    IgnoreBlanks();
+    IgnoreBlanksS();
     if (currentChar == MARK) {
         EndSentence = true;
     } else {
@@ -42,7 +42,7 @@ void AdvSentence() {
           currentChar adalah karakter pertama dari kata berikutnya, mungkin MARK
           Jika currentChar = MARK, EndWord = true.
    Proses : Akuisisi kata menggunakan procedure SalinWord */
-    IgnoreBlanks();
+    IgnoreBlanksS();
     if (currentChar == MARK) EndSentence = true;
     else CopySentence();
 }

@@ -8,6 +8,7 @@
 #include "../primitif/primitif.h"
 #include "../utas/utas.h"
 #include "../ADT/listlinier/listlinier.h"
+# include "../ADT/mesinkata/mesinkalimat.h"
 #include "../ADT/mesinkata/wordmachine.h"
 #include "../ADT/mesinkarakter/charmachine.h"
 #include "../ADT/tree/tree.h"

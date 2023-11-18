@@ -655,7 +655,7 @@ boolean MASUK() {
             gantiProfil();
         }else if (isStrEqual(operasi, "LIHAT_PROFIL")){
             char output[30];
-            getString(operasi,output,sizeof(output,1));
+            getString(operasi,output,sizeof(output));
             LihatProfil(output);
         }else if(isStrEqual(operasi, "ATUR_JENIS_AKUN")){
             aturjenisakun();
