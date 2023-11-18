@@ -9,25 +9,27 @@ void makingDraf (ListPengguna *Lpeng){
     // Ambil waktu lokal
     time_t currentTime;
     struct tm *localTime;
-
-    
-    DATETIME d = getLocalTime();
+    DATETIME d;
     Draf tempDraf;
-    CreateDraf(&tempDraf,text.TabWord,d);
+    
+    
     printf("\nApakah anda ingin menghapus, menyimpan, atau menerbitkan draf ini?\n");
     
     while(true){
         StartSentence();
         char *pilihan;
-        pilihan = currentWord.TabWord;
+        pilihan = currentSentence.TabWord;
         
         if(isStrEqual(pilihan,"SIMPAN")){
+            d = getLocalTime();
+            CreateDraf(&tempDraf,text.TabWord,d);
             int index = searchNamabyRef(Lpeng,currentUser.nama);
             PushDrafStack(&DRAF(ELMT(*Lpeng,index)),tempDraf);
             JMLHDRAF(ELMT(*Lpeng,index))++;
-            printf("\nDraf telah berhasil disimpan!\n\n");
+            printf("\nDraf telah berhasil disimpan!\n");
             break;
         }else if(isStrEqual(pilihan,"TERBIT")){
+            d = getLocalTime();
             Kicau k;
             CreateKicau(&k,IdKicau,0,text,currentUser.nama,d);
             insertLastKicau(&LKicau,k);
@@ -55,12 +57,12 @@ void seeDraf(){
         printf("\nIni draf terakhir anda: \n");
         Draf stemp = printLastDraf(DRAF(ELMT(LPengguna,index)));
         printf("\nApakah anda ingin mengubah, menghapus, atau menerbitkan draf ini? (KEMBALI jika ingin kembali)\n");
-        DATETIME d1 = getLocalTime();
+
         while (true)
         {
             StartSentence();
             char *pilihan;
-            pilihan = currentWord.TabWord;
+            pilihan = currentSentence.TabWord;
 
             
             
@@ -71,12 +73,11 @@ void seeDraf(){
                 Word tweet;
                 strCpy(DrafTweet(stemp),tweet.TabWord);
                 tweet.Length = strlength(tweet.TabWord);
-
-                
-                TulisDATETIME(d1);
+                DATETIME d1 = getLocalTime();
                 CreateKicau(&k,IdKicau,0,tweet,currentUser.nama,d1);
                 insertLastKicau(&LKicau,k);
                 DeleteLastDraf(&DRAF(ELMT(LPengguna,index)));
+                JMLHDRAF(ELMT(LPengguna,index))--;
                 // print hasil kicau
                 printf("\nSelamat! kicauan telah diterbitkan!\n");
                 printKicau(LKicau,IdKicau);
@@ -84,6 +85,7 @@ void seeDraf(){
                 break;
             }else if(isStrEqual(pilihan,"HAPUS")){
                 DeleteLastDraf(&DRAF(ELMT(LPengguna,index)));
+                JMLHDRAF(ELMT(LPengguna,index))--;
                 printf("\nDraf telah dihapus!\n\n");
                 break;
 
@@ -92,13 +94,13 @@ void seeDraf(){
                 Word text;
                 readKicau(&text);
 
-                printf("\n Apakah anda ingin menghapus, menyimpan, atau menerbitkan draf ini?\n");
+                printf("\nApakah anda ingin menghapus, menyimpan, atau menerbitkan draf ini?\n");
 
                 while (true)
                 {
                     StartSentence();
                     char *pilihan1;
-                    pilihan1 = currentWord.TabWord;
+                    pilihan1 = currentSentence.TabWord;
 
                     
                     

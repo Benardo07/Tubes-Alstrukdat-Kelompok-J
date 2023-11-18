@@ -72,12 +72,15 @@ Draf printLastDraf(DrafStack S){
 void DeleteLastDraf(DrafStack *S){
     Draf temp;
     PopDrafStack(S,&temp);
+    
 }
 
 void EditLastDraf(DrafStack *S , char *tweet){
     Draf temp;
     PopDrafStack(S,&temp);
     strCpy(tweet,DrafTweet(temp));
+    DATETIME d = getLocalTime();
+    DateTime(temp) = d;
     PushDrafStack(S,temp);
 }
 

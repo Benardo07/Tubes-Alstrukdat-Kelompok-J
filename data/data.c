@@ -552,7 +552,7 @@ boolean Simpan() {
     char namaFolder[100];
     printf("\nMasukkan nama folder penyimpanan: ");
     StartSentence();
-    strCat("./", currentWord.TabWord, namaFolder);
+    strCat("./", currentSentence.TabWord, namaFolder);
 
     if (isDirectoryExist(namaFolder)) {
         printf("Anda akan melakukan penyimpanan di %s.\n", namaFolder);
