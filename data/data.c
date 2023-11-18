@@ -782,7 +782,7 @@ void DAFTAR(){
     while (loop) {
         printf("\nMasukkan nama:\n");
         StartSentence();
-        strCpy(currentWord.TabWord,nama);
+        strCpy(currentSentence.TabWord,nama);
 
         if (searchNama(LPengguna, nama) != IDX_UNDEF) {
             printf("\nWah, sayang sekali nama tersebut telah diambil. \n");
@@ -795,7 +795,7 @@ void DAFTAR(){
     char sandi[21];
     printf("\nMasukkan kata sandi:\n");
     StartSentence();
-    strCpy(currentWord.TabWord,sandi);
+    strCpy(currentSentence.TabWord,sandi);
 
     Pengguna p;
     newPengguna(&p, nama, sandi);
