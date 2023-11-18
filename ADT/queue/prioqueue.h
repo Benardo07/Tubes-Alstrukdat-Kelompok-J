@@ -6,8 +6,8 @@
 # define Nil -1
 
 typedef struct {
-    int prio;  /* [1..100], prioritas dengan nilai 1..100 (100 adalah prioritas adalah tertinggi) */
-    int userId;  /* elemen karakter */
+    int prio;  /* Popularitas User */
+    int userId;  /* Id User */
 } infotype;
 
 infotype newPrioElmt(int userId, int prio);
@@ -16,6 +16,7 @@ infotype newPrioElmt(int userId, int prio);
 typedef int address;   /* indeks tabel */
 /* Contoh deklarasi variabel bertype PrioQueueChar : */
 /* Versi I : tabel dinamik, Head dan Tail eksplisit, ukuran disimpan */
+
 typedef struct {
     infotype T[20];   /* tabel penyimpan elemen */ 
     address HEAD;  /* alamat penghapusan */

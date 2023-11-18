@@ -7,9 +7,9 @@
 #define CAP 5
 
 typedef struct{
-    char matriks[CAP][2*CAP];
-    int row;
-    int col;
+    char matriks[CAP][2*CAP]; /* Total penyimpanan matriks */
+    int row; /* Banyaknya/Ukuran baris yang terdefinisi */
+    int col; /* Banyaknya/Ukuran kolom yang terdefinisi */
 } foto;
 
 #define ROW_EFF(M) (M).row

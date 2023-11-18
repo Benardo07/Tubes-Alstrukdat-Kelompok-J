@@ -5,14 +5,14 @@ void setBio(){
     printf("Masukkan Bio Akun (Max : 135 karakter): \n");
     StartSentence();
     int i;
-    char* s = currentWord.TabWord;
+    char* s = currentSentence.TabWord;
     for(i=0;i<listLengthP(LPengguna);i++){
         if(ID(ELMT(LPengguna,i)) == currentUser.id){
             strCpy(s,BIO(ELMT(LPengguna,i)));
             while(strlength(s) > 135){
                 printf("Bio memiliki panjang melebihi 135 karakter. Masukkan sesuai format lagi : \n");
                 StartSentence();
-                s = currentWord.TabWord;
+                s = currentSentence.TabWord;
                 strCpy(s,BIO(ELMT(LPengguna,i)));
             }
         }
@@ -34,7 +34,7 @@ boolean NumberValid(Word input){
 
 void setNoHP(){
     printf("Masukkan No HP: \n");
-    StartSentence();
+    STARTWORD();
     char* hp;
     char* hpnew;
     hp = currentWord.TabWord;
@@ -47,7 +47,7 @@ void setNoHP(){
                 printf("No HP tidak valid. Masukkan lagi yuk!\n");
                 printf("\n");
                 printf("Masukkan No HP: \n");
-                StartSentence();
+                STARTWORD();
                 hpnew = currentWord.TabWord;
                 strCpy(hpnew,HP(ELMT(LPengguna,i)));
             }
@@ -70,7 +70,7 @@ void setWeton(){
                 printf("Weton anda tidak valid.\n");
                 printf("\n");
                 printf("Masukkan Weton: \n");
-                StartSentence();
+                STARTWORD();
                 wetonNew = currentWord.TabWord;
                 makeUpper(wetonNew);
                 strCpy(wetonNew,WETON(ELMT(LPengguna,i)));

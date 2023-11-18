@@ -2,15 +2,15 @@
 
 void TambahTeman(){
     printf("Masukkan nama pengguna: \n");
-    STARTWORD();
+    StartSentence();
     char *name;
-    name = currentWord.TabWord;
+    name = currentSentence.TabWord;
 
     int j=0;
     boolean found = false;
 
     while (j < listLengthP(LPengguna) && !found){
-        if (isStrEqual(NAMA(ELMT(LPengguna,j)),currentWord.TabWord)){
+        if (isStrEqual(NAMA(ELMT(LPengguna,j)),currentSentence.TabWord)){
             found = true;
         } else {
             j++;
@@ -23,7 +23,7 @@ void TambahTeman(){
         return;
     }
     if(j == -1){
-        printf("\nPengguna bernama %s tidak ditemukan.\n", currentWord.TabWord);
+        printf("\nPengguna bernama %s tidak ditemukan.\n", currentSentence.TabWord);
         return;
     }else {
         if(!IsPrioQueueEmpty(FREQ(ELMT(LPengguna,ID(currentUser)-1)))){
@@ -53,7 +53,7 @@ void TambahTeman(){
                 printf("\nAnda sudah mengirimkan permintaan pertemanan kepada %s. Silakan tunggu hingga permintaan Anda disetujui.\n", NAMA(ELMT(LPengguna, j)));
                 return;
             }else{
-                printf("\nPermintaan pertemanan kepada %s telah dikirim. Tunggu beberapa saat hingga permintaan Anda disetujui.\n", currentWord.TabWord);
+                printf("\nPermintaan pertemanan kepada %s telah dikirim. Tunggu beberapa saat hingga permintaan Anda disetujui.\n", currentSentence.TabWord);
 
                 int i;
                 infotype newFriendRequest;
