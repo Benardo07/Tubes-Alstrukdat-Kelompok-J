@@ -1,14 +1,14 @@
 #include <stdio.h>
 #include "draf.h"
-#include "..\data\data.h"
+#include "../data/data.h"
 
 void makingDraf (ListPengguna *Lpeng){
     printf("\nMasukkan draf:\n");
     Word text;
     readKicau(&text);
     // Ambil waktu lokal
-    time_t currentTime;
-    struct tm *localTime;
+    // time_t currentTime;
+    // struct tm *localTime;
     DATETIME d;
     Draf tempDraf;
     

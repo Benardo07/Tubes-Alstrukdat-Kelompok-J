@@ -29,14 +29,14 @@ void buatUtas(List *l,Kicau *k, int *IdUtas,int IdKicau, char *author){
 
 
 void insertUtas(Kicau *k){
-    Word input,text;
+    // Word input,text;
     int id,len;
     boolean lanjut = true;
     time_t currentTime;
     struct tm *localTime;
 
     while(lanjut){
-        boolean space = true;
+        // boolean space = true;
         Word text;
         printf("Masukkan kicauan:\n");
         readKicau(&text);
@@ -119,15 +119,15 @@ void perutasan(Kicau k){
 }
 
 void sambungUtas(Kicau *k,int idx,int IdUtas,List *ListUtas, char *aut){
-    Word input,text;
-    int id,len;
+    // Word input,text;
+    int id = 0,len;
     time_t currentTime;
     struct tm *localTime;
 
     len = length((*k).Utas);
     if (idx<=len+1){
         if(isStrEqual((*k).author,aut)){
-            boolean space = true;
+            // boolean space = true;
             Word text;
             printf("Masukkan kicauan:\n");
             readKicau(&text);
@@ -168,11 +168,12 @@ void sambungUtas(Kicau *k,int idx,int IdUtas,List *ListUtas, char *aut){
 }
 
 void hapusUtas(Kicau *k,int idx, char *aut){
-    Word input,text;
-    int id,len;
-    time_t currentTime;
-    struct tm *localTime;
+    // Word input,text;
+    // int id,len;
+    // time_t currentTime;
+    // struct tm *localTime;
 
+    int len;
     len = length((*k).Utas);
     if (idx<=len){
         if(isStrEqual((*k).author,aut)){
