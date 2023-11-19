@@ -16,7 +16,7 @@ void CreatePrioQueue(PrioQueue *Q){
 }
 
 boolean IsPrioQueueEmpty (PrioQueue Q){
-    return (Head(Q) == Nil & Tail(Q) == Nil);
+    return (Head(Q) == Nil && Tail(Q) == Nil);
 };
 
 boolean IsPrioQueueFull (PrioQueue Q){
