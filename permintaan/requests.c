@@ -3,8 +3,6 @@
 void TambahTeman(){
     printf("Masukkan nama pengguna: \n");
     StartSentence();
-    char *name;
-    name = currentSentence.TabWord;
 
     int j=0;
     boolean found = false;
@@ -60,7 +58,7 @@ void TambahTeman(){
                 Info(newFriendRequest) = ID(currentUser);
                 Prio(newFriendRequest) = TOTALFRIENDS(currentUser); 
 
-                for (int i = 0; i < listLengthP(LPengguna); i++){
+                for (i = 0; i < listLengthP(LPengguna); i++){
                     if(ID(ELMT(LPengguna, i)) == j+1){
                         EnqueuePrio(&FREQ(ELMT(LPengguna, i)), newFriendRequest);
                         break;
@@ -99,7 +97,6 @@ void printDaftar() {
 
 
 void DaftarPermintaanTeman(){
-    int i;
     int len = lengthPrioQueue(FREQ(ELMT(LPengguna,currentUser.id-1)));;
     
     if(!IsPrioQueueEmpty(FREQ(ELMT(LPengguna,currentUser.id-1)))){
