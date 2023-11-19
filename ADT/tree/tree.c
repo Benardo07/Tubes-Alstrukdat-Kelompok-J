@@ -25,18 +25,20 @@ int nbElmt(Tree T) {
     return cnt;
 }
 
-Balasan CreateBalasan(Balasan *B, int id, char *tweet ,char *writer , DATETIME d){
+void CreateBalasan(Balasan *B, int id, char *tweet ,char *writer , DATETIME d){
     IDBalasan(*B) = id;
     strCpy(tweet,TweetBalasan(*B));
     strCpy(writer,WriterBalasan(*B));
     WaktuBalasan(*B) = d;
+
 }
 
 Balasan CreateRootBalasan(){
-    Balasan B;
-    IDBalasan(B) = -1;
-    B.tweet[0] = '\0';
-    B.writer[0] = '\0';
+    Balasan Btemp;
+    IDBalasan(Btemp) = -1;
+    Btemp.tweet[0] = '\0';
+    Btemp.writer[0] = '\0';
+    return Btemp;
 }
 
 AddressTree findBalasanInTree(Tree T,int id){
