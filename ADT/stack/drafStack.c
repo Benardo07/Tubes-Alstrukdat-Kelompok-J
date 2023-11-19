@@ -2,7 +2,7 @@
 #include "drafStack.h"
 
 #include <stdio.h>
-#include "..\mesinkata\wordmachine.h"
+
 
 void CreateEmptyDrafStack(DrafStack *S){
     Top(*S) = Nil;

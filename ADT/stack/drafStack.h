@@ -4,7 +4,7 @@
 #include "../boolean.h"
 #include "../datetime/datetime.h"
 #include "../../primitif/primitif.h"
-
+#include "../mesinkata/wordmachine.h"
 #define Nil -1
 #define MaxEL 100
 
