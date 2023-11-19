@@ -20,7 +20,6 @@
 
 /* Konstruktor : */
 void newPengguna(Pengguna *p, char *nama, char *sandi) {
-    int i;
 
     strCpy(nama, NAMA(*p));
     strCpy(sandi, PASSWORD(*p));

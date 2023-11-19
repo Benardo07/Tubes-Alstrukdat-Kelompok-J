@@ -295,7 +295,6 @@ boolean fSearch(List L, Address P){
 }
 
 void deleteAll(List *l){
-    Address p = *l;
     Kicau val;
     while(!isEmptyListLinier(*l)){
         deleteFirst(l,&val);
@@ -308,7 +307,6 @@ void copyList(List *l1, List *l2){
 }
 
 void inverseList(List *l){
-    Address p = *l;
     Kicau temp;
     for(int i = 0; i<length(*l)/2;i++){
         temp = getElmt(*l,i);
