@@ -65,7 +65,6 @@ boolean MuatPengguna(char *namafolder){
         printf("File pengguna ditemukan\n");
 
         STARTFILE(fPengguna);
-        char line[135];
         int n, i, j, k;
 
         readLineFile();
@@ -156,8 +155,7 @@ boolean MuatKicauan(char *namafolder){
     } else {
         printf("File kicauan ditemukan\n");
 
-        char line[200];
-        int n, i, j;
+        int n, i;
         DATETIME date;
     
         STARTFILE(fKicauan);
@@ -166,7 +164,7 @@ boolean MuatKicauan(char *namafolder){
 
         for (i=0;i<n;i++){
             Kicau p;
-            int id,like;
+            int like;
 
             readLineFile();
             p.id = i+1;
@@ -212,7 +210,7 @@ boolean MuatDraf (char *namafolder){
     }else{
         printf("File draf ditemukan.\n");
         char line[280];
-        int n, i, j;
+        int n, i;
 
         fscanf(fDraf,"%d\n",&n);
         for(i = 0 ; i < n ; i++){
@@ -257,7 +255,7 @@ boolean MuatUtas(char *namafolder){
     } else {
         printf("File utas ditemukan\n");
 
-        char line[280];
+   
         int n, m, i, j;
         DATETIME date;
 
@@ -409,7 +407,7 @@ void SimpanKicauan(char* namaFolder) {
     for(int i=0; i<length(LKicau); ++i) {
         Kicau k = getElmt(LKicau, i);
         fprintf(fKicauan, "%d\n", k.id);
-        fprintf(fKicauan, "%s\n", k.text);
+        fprintf(fKicauan, "%s\n", k.text.TabWord);
         fprintf(fKicauan, "%d\n", k.like);
         fprintf(fKicauan, "%s\n", k.author);
         SimpanDATETIME(fKicauan, k.waktu);
@@ -491,7 +489,7 @@ void SimpanUtas(char* namaFolder) {
             Address loc = FirstUtas(p);
             while(loc != NULL) {
                 Kicau k = INFO(loc);
-                fprintf(fUtas, "%s", k.text);
+                fprintf(fUtas, "%s", k.text.TabWord);
                 if (k.text.Length >= 280 && k.text.TabWord[280] != '\n') fprintf(fUtas, "\n");
                 fprintf(fUtas, "%s\n", k.author);
                 SimpanDATETIME(fUtas, k.waktu);
@@ -525,10 +523,9 @@ void SimpanBalasan(char* namaFolder) {
 
     fBalasan = fopen(pathBalasan, "w");
     inverseList(&LKicau);
-    Address p = LKicau;
     PrioQueue q; CreatePrioQueue(&q);
 
-    int i, j;
+    int i;
     for(i=0; i<length(LKicau); ++i){
         if (NEFFDINTREE(CHILDREN(getElmt(LKicau, i).Balas)) > 0) {
             infotype temp = newPrioElmt(i, 1);
