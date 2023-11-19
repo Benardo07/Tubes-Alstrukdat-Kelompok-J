@@ -14,7 +14,8 @@
 #include "main.h"
 #include "adt/stack/drafStack.h"
 
-//gcc -o p main.c data/data.c primitif/primitif.c adt/pcolor/pcolor.c adt/matriks/foto.c adt/mesinkarakter/charmachine.c adt/queue/prioqueue.c adt/graf/graf.c adt/mesinkata/wordmachine.c adt/liststatik/listpengguna.c adt/listlinier/listlinier.c kicauan/kicauan.c teman/teman.c adt/stack/drafstack.c adt/datetime/datetime.c adt/datetime/time.c utas/utas.c adt/listdin/listdin.c adt/tree/tree.c permintaan/requests.c draf/draf.c balasan/balasan.c profil/profil.c
+//gcc -o p adt/listlinier/driverlistlinier.c data/data.c primitif/primitif.c adt/pcolor/pcolor.c adt/matriks/foto.c adt/mesinkarakter/charmachine.c adt/queue/prioqueue.c adt/graf/graf.c adt/mesinkata/wordmachine.c adt/liststatik/listpengguna.c adt/listlinier/listlinier.c kicauan/kicauan.c teman/teman.c adt/stack/drafstack.c adt/datetime/datetime.c adt/datetime/time.c utas/utas.c adt/listdin/listdin.c adt/tree/tree.c permintaan/requests.c draf/draf.c balasan/balasan.c profil/profil.c
+//gcc -o p main.c data/data.c primitif/primitif.c adt/pcolor/pcolor.c adt/matriks/foto.c adt/mesinkarakter/charmachine.c adt/queue/prioqueue.c adt/graf/graf.c adt/mesinkata/wordmachine.c adt/liststatik/listpengguna.c adt/listlinier/listlinier.c kicauan/kicauan.c teman/teman.c adt/stack/drafstack.c adt/datetime/datetime.c adt/datetime/time.c utas/utas.c adt/listdin/listdin.c adt/tree/tree.c draf/draf.c balasan/balasan.c permintaan/requests.c profil/profil.c
 
 //inisialisasi variabel di luar supaya bisa langsung diakses semua function (gk usah oper parameter), tapi! lokalisasi buruk
 // extern ListPengguna LPengguna;
@@ -45,6 +46,8 @@ int main()
 
     printf("\nFile konfigurasi berhasil dimuat! Selamat berkicau!\n");
     // printListP(LPengguna);
+    printListP(LPengguna);
+    printf("%d",NEFF(LPengguna));
     // printf("\n");
     // DisplayDraf(InfoTop(sDraf));
 

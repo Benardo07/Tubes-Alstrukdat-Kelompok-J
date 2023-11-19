@@ -65,16 +65,16 @@ void insertUtas(Kicau *k){
         
         printf("Apakah Anda ingin melanjutkan utas ini? (YA/TIDAK)\n");
         char *operasi;
-        STARTWORD();
-        operasi = currentWord.TabWord;
+        StartSentence();
+        operasi = currentSentence.TabWord;
         printf("\n");
 
 
         while (!(isStrEqual(operasi,"YA")) && !(isStrEqual(operasi,"TIDAK")) ){
             printf("Perintah Tidak Dikenali\n");
             printf("Apakah Anda ingin melanjutkan utas ini? (YA/TIDAK)\n");
-            STARTWORD();
-            operasi = currentWord.TabWord;
+            StartSentence();
+            operasi = currentSentence.TabWord;
             printf("\n");
         }
         if (isStrEqual(operasi,"TIDAK")){

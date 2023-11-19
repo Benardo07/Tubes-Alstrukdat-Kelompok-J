@@ -93,11 +93,11 @@ boolean strIsInt(char *str){
 int strToInt(char *str) {
     int i=0, s=0;
 
-    while (str[i] != '\0' && i < 31) {
-        s += str[i] - '0';
+    while (str[i] != '\0' && str[i] != ' ' && i<31) {
         if (i > 0) {
             s *= 10;
         }
+        s += str[i] - '0';
         i++;
     }
 

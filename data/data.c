@@ -156,35 +156,35 @@ boolean MuatKicauan(char *namafolder){
     } else {
         printf("File kicauan ditemukan\n");
 
-        char line[280];
+        char line[200];
         int n, i, j;
         DATETIME date;
-
-        fscanf(fKicauan,"%d",&n);
-        fgets(line,280,fKicauan);
+    
+        STARTFILE(fKicauan);
+        readLineFile();
+        n = strToInt(currentSentence.TabWord);
 
         for (i=0;i<n;i++){
             Kicau p;
             int id,like;
 
-            fscanf(fKicauan,"%d",&id);
-            fgets(line,280,fKicauan);
-            p.id = id;
+            readLineFile();
+            p.id = i+1;
 
-            fgets(p.text.TabWord, sizeof(p.text.TabWord), fKicauan);
+            readLineFile();
+            strCpy(currentSentence.TabWord,p.text.TabWord);
             p.text.Length = strlength(p.text.TabWord);
 
-            fscanf(fKicauan,"%d",&like);
-            fgets(line,280,fKicauan);
+            readLineFile();
+            like = strToInt(currentSentence.TabWord);
             p.like = like;
 
-            fgets(line,280,fKicauan);
-            strCpy(line,p.author);
-
+            readLineFile();
+            strCpy(currentSentence.TabWord,p.author);
 
             int h,m,s,d,b,y;
-            fscanf(fKicauan, "%d/%d/%d %d:%d:%d", &d, &b, &y, &h, &m, &s);
-            fgets(line,280,fKicauan);
+            readLineFile();
+            sscanf(currentSentence.TabWord, "%d/%d/%d %d:%d:%d", &d, &b, &y, &h, &m, &s);
             CreateDATETIME(&date,d,b,y,h,m,s);
             p.waktu = date;
             p.idutas = -999;
@@ -261,41 +261,43 @@ boolean MuatUtas(char *namafolder){
         int n, m, i, j;
         DATETIME date;
 
-        fscanf(fUtas,"%d",&n);
-        fgets(line,280,fUtas);
-
+        STARTFILE(fUtas);
+        readLineFile();
+        n = strToInt(currentSentence.TabWord);
         for (i=0;i<n;i++){
             int id;
-            fscanf(fUtas,"%d",&id);
-            fgets(line,50,fUtas);
 
-            fscanf(fUtas,"%d",&m);
-            fgets(line,280,fUtas);
+            readLineFile();
+            id = strToInt(currentSentence.TabWord);
+           ;
+            readLineFile();
+            m = strToInt(currentSentence.TabWord);
+
             Kicau utas = getElmt(LKicau,id-1);
             utas.idutas = IdUtas;
             utas.Utas = NULL;
             for (j=0;j<m;j++){
                 Kicau p;
-                fgets(p.text.TabWord, sizeof(p.text.TabWord), fUtas);
+               
+                readLineFile();
+                strCpy(currentSentence.TabWord,p.text.TabWord);
                 p.text.Length = strlength(p.text.TabWord);
-
-                fgets(line,280,fUtas);
-                strCpy(line,p.author);
-
+                
+                readLineFile();
+                strCpy(currentSentence.TabWord,p.author);
+    
+                readLineFile();
                 int h,m,s,d,b,y;
-                fscanf(fUtas, "%d/%d/%d %d:%d:%d", &d, &b, &y, &h, &m, &s);
-                fgets(line,280,fUtas);
+                sscanf(currentSentence.TabWord, "%d/%d/%d %d:%d:%d", &d, &b, &y, &h, &m, &s);
+
                 CreateDATETIME(&date,d,b,y,h,m,s);
                 p.waktu = date;
                 insertLastKicau(&(utas.Utas),p);
-
-
             }
             setElmt(&LKicau,id-1,utas);
             IdUtas+=1;
         }
     }
-
     fclose(fUtas);
     return sukses;
 }
@@ -739,7 +741,7 @@ boolean MASUK() {
                     perutasan(k1);
                 }
                 else{
-                    printf("Akun yang membuat utas ini adalah akun privat! Ikuti dahulu akun ini untuk melihat utasnya!");
+                    printf("Akun yang membuat utas ini adalah akun privat! Ikuti dahulu akun ini untuk melihat utasnya!\n");
                 }
             }
         }
