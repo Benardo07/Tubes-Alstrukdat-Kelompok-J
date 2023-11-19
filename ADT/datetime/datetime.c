@@ -76,7 +76,6 @@ boolean IsDATETIMEValid(int D, int M, int Y, int h, int m, int s){
 
 /* *** Konstruktor: Membentuk sebuah DATETIME dari komponen-komponennya *** */
 void CreateDATETIME(DATETIME *D, int DD, int MM, int YYYY, int hh, int mm, int ss){
-    int d,m,s;
     TIME t1;
     Day(*D)= DD;
     Month(*D)= MM;
@@ -94,7 +93,6 @@ void BacaDATETIME(DATETIME *D)
 {
     int dd,mm,yy;
     int h, m, s;
-    TIME t1;
     scanf("%d %d %d",&dd,&mm,&yy);
     scanf("%d %d %d", &h, &m, &s);
     while(!IsDATETIMEValid(dd,mm,yy,h,m,s)){
@@ -146,40 +144,38 @@ boolean DLT(DATETIME D1, DATETIME D2)
 {
     if(Year(D1)<=Year(D2)){
         if(Year(D1)<(Year(D2))){
-            return 1;
+            return  true;
         }
         else{
             if (Month(D1)>Month(D2)){
-                return 0;
+                return false;
             }
-            else if(Month(D1)<=Month(D2)){
+            else{
                 if(Month(D1)<(Month(D2))){
-                    return 1;
+                    return true;
                 }
                 else{
                     if(Day(D1)>Day(D2)){
-                        return 0;
+                        return false;
                     }
-                    else if(Day(D1)<=Day(D2)){
+                    else {
                         if(Day(D1)<(Day(D2))){
-                            return 1;
+                            return true;
                             }
                         else{
                             if(TLT(Time(D1),Time(D2))){
-                                return 1;
+                                return false;
                             }
                             else{
-                                return 0;
+                                return false;
                             }
                     }
             }
                 }
             }
         }
-    }
-        
-    else{
-        return 0;
+    }else{
+        return false;
     }
 }
 /* Mengirimkan true jika D1<D2, false jika tidak */
@@ -187,30 +183,30 @@ boolean DGT(DATETIME D1, DATETIME D2)
 {
     if(Year(D1)>=Year(D2)){
         if(Year(D1)>(Year(D2))){
-            return 1;
+            return true;
         }
         else{
             if(Month(D1)<Month(D2)){
-                return 0;
+                return false;
             }
-            else if(Month(D1)>=Month(D2)){
+            else{
                 if(Month(D1)>(Month(D2))){
-                    return 1;
+                    return true;
                 }
                 else{
                     if(Day(D1)<Day(D2)){
-                        return 0;
+                        return false;
                     }
-                    else if(Day(D1)>=Day(D2)){
+                    else{
                         if(Day(D1)>(Day(D2))){
-                            return 1;
+                            return true;
                             }
                         else{
                             if(TGT(Time(D1),Time(D2))){
-                                return 1;
+                                return true;
                             }
                             else{
-                                return 0;
+                                return false;
                             }
                     }
             }
@@ -220,7 +216,7 @@ boolean DGT(DATETIME D1, DATETIME D2)
     }
         
     else{
-        return 0;
+        return true;
     }
 }
 /* Mengirimkan true jika D1>D2, false jika tidak */

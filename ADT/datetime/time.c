@@ -37,7 +37,7 @@ Jam tidak valid
 {
     int h, m, s;
     scanf("%d %d %d", &h, &m, &s);
-    while (!IsTIMEValid(h,m,s));{
+    while (!IsTIMEValid(h,m,s)){
         printf("Jam tidak valid\n");
         scanf("%d %d %d", &h, &m, &s);
     };
