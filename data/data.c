@@ -339,6 +339,7 @@ boolean MuatBalasan(char* namafolder) {
             readLineFile();
             m = strToInt(currentSentence.TabWord);
             int idParent, idBalasan;
+            int idTemp = 0;
             for(j=0; j<m; ++j) {
                  
                 // readLineFile();
@@ -363,9 +364,13 @@ boolean MuatBalasan(char* namafolder) {
 
                 if(idParent == -1) AddBalasanKicauAt(&LKicau,idKicau,T);
                 else insertLastDinTree(&CHILDREN(findBalasanInTree(getElmt(LKicau, idKicau-1).Balas,idParent)),T);
+
+                if(idTemp < idBalasan){
+                    idTemp = idBalasan;
+                }
             }
 
-            setLastId(&LKicau,idKicau,idBalasan);
+            setLastId(&LKicau,idKicau,idTemp);
         }
     }
 
