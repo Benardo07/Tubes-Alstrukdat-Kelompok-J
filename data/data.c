@@ -489,8 +489,7 @@ void SimpanUtas(char* namaFolder) {
             Address loc = FirstUtas(p);
             while(loc != NULL) {
                 Kicau k = INFO(loc);
-                fprintf(fUtas, "%s", k.text.TabWord);
-                if (k.text.Length >= 280 && k.text.TabWord[280] != '\n') fprintf(fUtas, "\n");
+                fprintf(fUtas, "%s\n", k.text.TabWord);
                 fprintf(fUtas, "%s\n", k.author);
                 SimpanDATETIME(fUtas, k.waktu);
 
@@ -527,21 +526,23 @@ void SimpanBalasan(char* namaFolder) {
 
     int i;
     for(i=0; i<length(LKicau); ++i){
-        if (NEFFDINTREE(CHILDREN(getElmt(LKicau, i).Balas)) > 0) {
-            infotype temp = newPrioElmt(i, 1);
+        Kicau k = getElmt(LKicau, i);
+        if (NEFFDINTREE(CHILDREN(k.Balas)) > 0) {
+            infotype temp = newPrioElmt(k.id, 1);
             EnqueuePrio(&q, temp);
         }
     }
 
     fprintf(fBalasan, "%d\n", lengthPrioQueue(q));
+    inverseList(&LKicau);
     while(!IsPrioQueueEmpty(q)) {
         infotype temp; DequeuePrio(&q, &temp);
-        fprintf(fBalasan, "%d\n", temp.userId+1);
-        Tree T = getElmt(LKicau, temp.userId).Balas;
+        fprintf(fBalasan, "%d\n", temp.userId);
+        Tree T = getElmt(LKicau, temp.userId-1).Balas;
         fprintf(fBalasan, "%d\n", nbElmt(T));
         SimpanBalasanRekursif(fBalasan, T, -1);
     }
-
+    inverseList(&LKicau);
     fclose(fBalasan);
 }
 

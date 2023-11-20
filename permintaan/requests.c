@@ -1,4 +1,5 @@
-# include "requests.h"
+#include "requests.h"
+#include "../teman/teman.h"
 
 void TambahTeman(){
     printf("Masukkan nama pengguna: \n");
@@ -20,10 +21,13 @@ void TambahTeman(){
         printf("\nAnda tidak dapat berteman dengan diri sendiri.\n");
         return;
     }
-    if(j == -1){
+    else if(j == -1){
         printf("\nPengguna bernama %s tidak ditemukan.\n", currentSentence.TabWord);
         return;
-    }else {
+    } else if (isTeman(ID(currentUser), j+1)) {
+        printf("\nAnda telah berteman dengan %s!\n", NAMA(ELMT(LPengguna, j)));
+    }
+    else {
         if(!IsPrioQueueEmpty(FREQ(ELMT(LPengguna,ID(currentUser)-1)))){
             printf("\nTerdapat permintaan pertemanan yang belum Anda setujui. Silakan kosongkan daftar permintaan pertemanan untuk Anda terlebih dahulu.\n");
             return; 
@@ -139,7 +143,7 @@ void SetujuiTeman() {
                 TOTALFRIENDS(ELMT(LPengguna,currentUser.id-1))++; 
                 for (int i = 0; i < listLengthP(LPengguna); i++) {
                     if (ID(ELMT(LPengguna, i)) == topID) {
-                        TOTALFRIENDS(ELMT(LPengguna, i))++; 
+                        TOTALFRIENDS(ELMT(LPengguna, i))++;
                         connectNode(&Teman,topID - 1,Id(currentUser) - 1);
                         break;
                     }
