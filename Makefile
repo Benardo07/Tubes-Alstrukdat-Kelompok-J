@@ -2,30 +2,30 @@ CC = gcc
 CFLAGS = -Wall -Werror -std=c11
 
 # Source and Object Files
-SRC = adt/mesinkarakter/charmachine.c \
-      adt/mesinkata/wordmachine.c \
-      adt/liststatik/listpengguna.c \
+SRC = ADT/mesinkarakter/charmachine.c \
+      ADT/mesinkata/wordmachine.c \
+      ADT/liststatik/listpengguna.c \
       kicauan/kicauan.c \
-      adt/graf/graf.c \
-      adt/stack/drafStack.c \
+      ADT/graf/graf.c \
+      ADT/stack/drafStack.c \
       primitif/primitif.c \
       utas/utas.c \
-      adt/tree/tree.c \
-      adt/listdin/listdin.c \
-      adt/listlinier/listlinier.c \
-      adt/matriks/foto.c \
-      adt/datetime/datetime.c \
-      adt/datetime/time.c \
+      ADT/tree/tree.c \
+      ADT/listdin/listdin.c \
+      ADT/listlinier/listlinier.c \
+      ADT/matriks/foto.c \
+      ADT/datetime/datetime.c \
+      ADT/datetime/time.c \
       teman/teman.c \
       draf/draf.c \
       balasan/balasan.c \
       data/data.c \
       main.c \
-      adt/queue/prioqueue.c \
-      adt/pcolor/pcolor.c \
+      ADT/queue/prioqueue.c \
+      ADT/pcolor/pcolor.c \
       permintaan/requests.c \
       profil/profil.c \
-      adt/mesinkata/mesinkalimat.c
+      ADT/mesinkata/mesinkalimat.c
 OBJ = $(SRC:.c=.o)
 
 .PHONY: all clean

@@ -1,18 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
-#include "adt/mesinkarakter/charmachine.h"
-#include "adt/mesinkata/wordmachine.h"
-#include "adt/mesinkata/mesinkalimat.h"
-#include "adt/liststatik/listpengguna.h"
-#include "adt/listlinier/listlinier.h"
+#include "ADT/mesinkarakter/charmachine.h"
+#include "ADT/mesinkata/wordmachine.h"
+#include "ADT/mesinkata/mesinkalimat.h"
+#include "ADT/liststatik/listpengguna.h"
+#include "ADT/listlinier/listlinier.h"
 #include "kicauan/kicauan.h"
 #include "utas/utas.h"
 #include "teman/teman.h"
 #include "ADT/graf/graf.h"
-#include "adt/boolean.h"
+#include "ADT/boolean.h"
 #include "main.h"
-#include "adt/stack/drafStack.h"
+#include "ADT/stack/drafStack.h"
 
 //gcc -o p main.c adt/mesinkata/mesinkalimat.c data/data.c primitif/primitif.c adt/pcolor/pcolor.c adt/matriks/foto.c adt/mesinkarakter/charmachine.c adt/queue/prioqueue.c adt/graf/graf.c adt/mesinkata/wordmachine.c adt/liststatik/listpengguna.c adt/listlinier/listlinier.c kicauan/kicauan.c teman/teman.c adt/stack/drafstack.c adt/datetime/datetime.c adt/datetime/time.c utas/utas.c adt/listdin/listdin.c adt/tree/tree.c permintaan/requests.c draf/draf.c balasan/balasan.c profil/profil.c
 

@@ -1,4 +1,4 @@
-#include "../adt/boolean.h"
+#include "../ADT/boolean.h"
 #include <sys/stat.h>
 
 boolean isDirectoryExist(char *nama);
