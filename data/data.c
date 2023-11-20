@@ -212,29 +212,36 @@ boolean MuatDraf (char *namafolder){
         sukses = false;
     }else{
         printf("File draf ditemukan.\n");
-        char line[280];
         int n, i;
-
-        fscanf(fDraf,"%d\n",&n);
+        DATETIME date;
+        STARTFILE(fDraf);
+        readLineFile();
+        n = strToInt(currentSentence.TabWord);
         for(i = 0 ; i < n ; i++){
             DrafStack tempStack;
             CreateEmptyDrafStack(&tempStack);
-            fgets(line,280,fDraf);
+            readLineFile();
             char username[20];
             int tempJumlah;
-            strCpyTwoElmt(line,username,&tempJumlah);
+            strCpyTwoElmt(currentSentence.TabWord,username,&tempJumlah);
             int index = searchNama(LPengguna,username);
             JMLHDRAF(ELMT(LPengguna,index)) = tempJumlah;
             int k;
             for (k = 0; k < tempJumlah;k++){
-                Draf d;
-                fgets(line, 280, fDraf);
-                strCpy(line,DrafTweet(d));
+                Draf dtemp;
+                readLineFile();
+                strCpy(currentSentence.TabWord,DrafTweet(dtemp));
 
-                fscanf(fDraf, "%d/%d/%d %d:%d:%d", &Day(DateTime(d)), &Month(DateTime(d)), &Year(DateTime(d)), &Hour(Time(DateTime(d))) ,&Minute(Time(DateTime(d))) , &Second(Time(DateTime(d))));
-                fgets(line,280,fDraf);
+                int h,m,s,d,b,y;
+                readLineFile();
+                sscanf(currentSentence.TabWord, "%d/%d/%d %d:%d:%d", &d, &b, &y, &h, &m, &s);
+                CreateDATETIME(&date,d,b,y,h,m,s);
 
-                PushDrafStack(&tempStack,d);
+                DateTime(dtemp) = date;
+                // fscanf(fDraf, "%d/%d/%d %d:%d:%d", &Day(DateTime(d)), &Month(DateTime(d)), &Year(DateTime(d)), &Hour(Time(DateTime(d))) ,&Minute(Time(DateTime(d))) , &Second(Time(DateTime(d))));
+                // fgets(line,280,fDraf);
+
+                PushDrafStack(&tempStack,dtemp);
             }
 
             copyReverse(tempStack,&DRAF(ELMT(LPengguna,searchNama(LPengguna,username))));
