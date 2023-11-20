@@ -2,6 +2,10 @@
 #include "../teman/teman.h"
 
 void TambahTeman(){
+    if(!IsPrioQueueEmpty(FREQ(ELMT(LPengguna,IdCurrentUser-1)))){
+        printf("\nTerdapat permintaan pertemanan yang belum Anda setujui. Silakan kosongkan daftar permintaan pertemanan untuk Anda terlebih dahulu.\n");
+        return; 
+    }
     printf("Masukkan nama pengguna: \n");
     StartSentence();
 
@@ -28,12 +32,9 @@ void TambahTeman(){
         printf("\nAnda telah berteman dengan %s!\n", NAMA(ELMT(LPengguna, j)));
     }
     else {
-        if(!IsPrioQueueEmpty(FREQ(ELMT(LPengguna,IdCurrentUser-1)))){
-            printf("\nTerdapat permintaan pertemanan yang belum Anda setujui. Silakan kosongkan daftar permintaan pertemanan untuk Anda terlebih dahulu.\n");
-            return; 
-        }else{        
+        if(IsPrioQueueEmpty(FREQ(ELMT(LPengguna,IdCurrentUser-1)))){        
             boolean alreadyRequested = false;
-                                   
+                                
             PrioQueue temp;
             CreatePrioQueue(&temp);
             infotype checkRequest;
