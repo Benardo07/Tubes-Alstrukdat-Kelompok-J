@@ -293,3 +293,47 @@ void makeUpper(char *str){
         str[0] = str[0] - 'a' + 'A';
     }
 };
+
+void ambilDuaNum(char *str1, int *num1, int *num2) {
+    int i = 0, sign = 1;
+
+    *num1 = 0;  // Initialize num1
+    *num2 = 0;  // Initialize num2
+
+    // Handling the sign for the first number
+    if (str1[i] == '-') {
+        sign = -1;
+        i++;
+    }
+
+    // Extracting the first number
+    while (str1[i] != ' ' && str1[i] != '\0') {
+        if (isdigit(str1[i])) {
+            *num1 = (*num1 * 10) + (str1[i] - '0');
+        }
+        i++;
+    }
+    *num1 *= sign;
+
+    // Skip the space
+    while (str1[i] == ' ') {
+        i++;
+    }
+
+    // Handling the sign for the second number
+    if (str1[i] == '-') {
+        sign = -1;
+        i++;
+    } else {
+        sign = 1;
+    }
+
+    // Extracting the second number
+    while (str1[i] != '\0') {
+        if (isdigit(str1[i])) {
+            *num2 = (*num2 * 10) + (str1[i] - '0');
+        }
+        i++;
+    }
+    *num2 *= sign;
+}

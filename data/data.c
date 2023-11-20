@@ -191,6 +191,7 @@ boolean MuatKicauan(char *namafolder){
             p.idutas = -999;
             p.Utas = NULL;
             p.Balas = newTree(CreateRootBalasan(),1000);
+            p.lastIDBalas = 0;
             insertLastKicau(&LKicau,p);
             IdKicau+=1;
         }
@@ -324,29 +325,47 @@ boolean MuatBalasan(char* namafolder) {
     } else {
         printf("File balasan ditemukan\n");
 
+        DATETIME date;
         int n, m, i, j;
-        fscanf(fBalasan,"%d",&n);
+        STARTFILE(fBalasan);
+        readLineFile();
+        n = strToInt(currentSentence.TabWord);
 
         for (i=0;i<n;i++){
-            int idKicau; fscanf(fBalasan,"%d",&idKicau);
+            int idKicau; 
+            readLineFile();
+            idKicau = strToInt(currentSentence.TabWord);
 
-            fscanf(fBalasan, "%d", &m);
+            readLineFile();
+            m = strToInt(currentSentence.TabWord);
+            int idParent, idBalasan;
             for(j=0; j<m; ++j) {
-                int idParent, idBalasan; fscanf(fBalasan, "%d %d", &idParent, &idBalasan);
-
+                 
+                readLineFile();
+                ambilDuaNum(currentSentence.TabWord,&idParent,&idBalasan);
+                printf("%d %d\n",idParent,idBalasan);
                 Balasan B;
-                fscanf(fBalasan, "\n");
-                char text[280]; fgets(text,280,fBalasan);
-                char author[20]; fgets(author, 20, fBalasan);
+                char text[280]; 
+                readLineFile();
+                strCpy(currentSentence.TabWord,text);
 
-                int h,m,s,d,b,y; fscanf(fBalasan, "%d/%d/%d %d:%d:%d", &d, &b, &y, &h, &m, &s);
-                DATETIME date; CreateDATETIME(&date, d, b, y, h, m, s);
+                char author[20];
+                readLineFile();
+                strCpy(currentSentence.TabWord,author);
+
+                int h,m,s,d,b,y;
+                readLineFile();
+                sscanf(currentSentence.TabWord, "%d/%d/%d %d:%d:%d", &d, &b, &y, &h, &m, &s);
+                CreateDATETIME(&date,d,b,y,h,m,s);
+
                 CreateBalasan(&B, idBalasan, text, author, date);
                 Tree T = newTree(B, 1000);
 
                 if(idParent == -1) AddBalasanKicauAt(&LKicau,idKicau,T);
                 else insertLastDinTree(&CHILDREN(findBalasanInTree(getElmt(LKicau, idKicau-1).Balas,idParent)),T);
             }
+
+            setLastId(&LKicau,idKicau,idBalasan);
         }
     }
 

@@ -32,3 +32,5 @@ void strCpyTwoElmt(char *str1,char *dest1 , int *dest2);
 void takeTwovalue(char *str1 , int* yangDiBalas, int* yangBalas);
 
 void makeUpper(char *str);
+
+void ambilDuaNum(char *str1 , int *num1 , int *num2);
