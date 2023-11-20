@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 #include "../ADT/liststatik/listpengguna.h"
 #include "../kicauan/kicauan.h"
 #include "../ADT/graf/graf.h"

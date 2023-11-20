@@ -23,6 +23,9 @@ void START()
        pita = stdin;
        fflush(pita);
        ADV();
+       if(currentChar == '\n'){
+              ADV();
+       }
 }
 
 void ADV()
@@ -36,6 +39,7 @@ void ADV()
 
        /* Algoritma */
        retval = fscanf(pita, "%c", &currentChar);
+
        EOP = (currentChar == MARK);
 }
 
@@ -68,4 +72,13 @@ void ADVFILE()
 
        /* Algoritma */
        currentChar = fgetc(config);
+
+       if (currentChar == EOF){
+              EOP = true;
+       }else if(currentChar == '\f' || currentChar == '\r' || currentChar == '\t' || currentChar == '\v'){
+              ADVFILE();
+       }
+       else{
+              EOP = false;
+       }
 }

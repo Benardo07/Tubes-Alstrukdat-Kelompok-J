@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <math.h>
+#include <ctype.h>
 #include "primitif.h"
 
 boolean isDirectoryExist(char *nama){
@@ -31,7 +32,7 @@ void strCat(char *str1, char *str2, char *dest){
     }
 }
 
-void strCpy(char *str1, char *dest){
+void strCpy(const char *str1, char *dest){
     int i = 0;
     while(str1[i]!='\0'&&str1[i]!='\n') {
         dest[i]=str1[i];
@@ -90,10 +91,34 @@ boolean strIsInt(char *str){
     return sukses;
 }
 
-int strToInt(char *str) {
-    int i=0, s=0;
+// int strToInt(char *str) {
+// //     int i=0, s=0;
 
-    while (str[i] != '\0' && str[i] != ' ' && i<31) {
+// //     while (str[i] != '\0' && str[i] != ' ' && i<31) {
+// //         if (i > 0) {
+// //             s *= 10;
+// //         }
+// //         s += str[i] - '0';
+// //         i++;
+// //     }
+
+// //     return s;
+// // }
+
+int strToInt(const char *str) {
+    int i = 0, s = 0, sign = 1;
+
+    // Check for negative numbers
+    if (str[0] == '-') {
+        sign = -1;
+        i = 1;
+    }
+
+    while (str[i] != '\0' && str[i] != ' ' && i < 31) {
+        if (!isdigit(str[i])) {
+            // Handle non-digit characters
+            break;
+        }
         if (i > 0) {
             s *= 10;
         }
@@ -101,7 +126,7 @@ int strToInt(char *str) {
         i++;
     }
 
-    return s;
+    return sign * s;
 }
 
 boolean isStrEqual(char *str1, char *str2){

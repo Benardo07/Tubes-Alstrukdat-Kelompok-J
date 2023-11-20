@@ -28,9 +28,11 @@ void STARTWORD()
     START();
     //Word currentWord;
 
+        
     if (currentChar == MARK) {
         EndWord = true;
-    } else {
+    }
+    else {
         EndWord = false;
         CopyWord();
     }

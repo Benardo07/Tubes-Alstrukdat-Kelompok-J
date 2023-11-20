@@ -85,14 +85,34 @@ void printSentence(Sentence sentence) {
 
 void readLineFile(){
     ClearSentence(&currentSentence);
-    int i=0;
-    while (currentChar != '\n') {
+    int i = 0;
+    int lastNonSpaceIndex = -1;  // Initialize to -1 to indicate no non-space character seen yet
+
+    while (currentChar != '\n' && !EOP) {
         if (i < NMax) {
             currentSentence.TabWord[i] = currentChar;
+
+            // Update lastNonSpaceIndex if current character is not a space
+            if (currentChar != ' ' && currentChar != '\f' && currentChar != '\r' && currentChar != '\t' && currentChar != '\v') {
+                lastNonSpaceIndex = i;
+            }
+
             i++;
         }
         ADVFILE();
     }
-    currentSentence.Length = i;
-    ADVFILE();
+
+    // Trim trailing spaces by adjusting the length
+    if (lastNonSpaceIndex != -1) {
+        currentSentence.Length = lastNonSpaceIndex + 1;
+        currentSentence.TabWord[currentSentence.Length] = '\0';
+    } else {
+        currentSentence.Length = 0;  // If the line is only spaces, set length to 0
+    }
+
+    // Move past the newline character if not at EOP
+    if (!EOP) {
+        ADVFILE();
+    }
+
 }

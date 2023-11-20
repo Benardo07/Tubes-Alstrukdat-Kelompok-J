@@ -45,8 +45,8 @@ int main()
 
     printf("\nFile konfigurasi berhasil dimuat! Selamat berkicau!\n");
     // printListP(LPengguna);
-    printListP(LPengguna);
-    printf("%d",NEFF(LPengguna));
+    // printListP(LPengguna);
+    // printf("%d",NEFF(LPengguna));
     // printf("\n");
     // DisplayDraf(InfoTop(sDraf));
 
@@ -58,8 +58,6 @@ int main()
 
         STARTWORD();
         operasi = currentWord.TabWord;
-
-
         if (isStrEqual(operasi, "DAFTAR")){
             DAFTAR();
         } else if (isStrEqual(operasi, "MASUK")){

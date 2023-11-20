@@ -40,10 +40,14 @@ boolean Muat(){
     } else {
         printf("\nFolder ditemukan\n");
         sukses = MuatPengguna(namafolder);
-        sukses = MuatKicauan(namafolder);
-        sukses = MuatUtas(namafolder);
         sukses = MuatDraf(namafolder);
+        sukses = MuatKicauan(namafolder);
+        
+
+        sukses = MuatUtas(namafolder);
+        
         sukses = MuatBalasan(namafolder);
+
     }
 
     return sukses;
@@ -69,7 +73,6 @@ boolean MuatPengguna(char *namafolder){
 
         readLineFile();
         n = strToInt(currentSentence.TabWord);
-
         for (i=0;i<n;i++){
             Pengguna p;
             createPengguna(&p);
@@ -105,6 +108,7 @@ boolean MuatPengguna(char *namafolder){
             COL_EFF(FOTO(p)) = 2*CAP;
 
             insertLastP(&LPengguna,p);
+            printPengguna(p);
         }
 
         createGraph(&Teman);
@@ -161,7 +165,6 @@ boolean MuatKicauan(char *namafolder){
         STARTFILE(fKicauan);
         readLineFile();
         n = strToInt(currentSentence.TabWord);
-
         for (i=0;i<n;i++){
             Kicau p;
             int like;
@@ -267,7 +270,7 @@ boolean MuatUtas(char *namafolder){
 
             readLineFile();
             id = strToInt(currentSentence.TabWord);
-           ;
+
             readLineFile();
             m = strToInt(currentSentence.TabWord);
 
@@ -561,7 +564,7 @@ boolean Simpan() {
         printf("Tidak ditemukan folder %s. Membuat folder baru bernama %s...\n", namaFolder, namaFolder);
         printf("Mohon tunggu...\n");
         printf("1...\n2...\n3...\n");
-        int check = mkdir(namaFolder);
+        int check = mkdir(namaFolder,0777);
         if (check == 0) printf("Folder berhasil dibuat!\n");
         else {
             printf("Folder gagal dibuat.\n");
@@ -597,7 +600,6 @@ boolean MASUK() {
         printf("\nMasukkan nama:\n");
         StartSentence();
         strCpy(currentSentence.TabWord,nama);
-
         idx = searchNama(LPengguna,nama);
         if (idx == IDX_UNDEF){
             printf("\nWah, nama yang Anda cari tidak ada. Masukkan nama lain!\n");
@@ -612,7 +614,6 @@ boolean MASUK() {
         printf("\nMasukkan kata sandi:\n");
         StartSentence();
         strCpy(currentSentence.TabWord,sandi);
-
         if (!checkSandi(LPengguna,idx,sandi)) {
             printf("\nWah, kata sandi yang Anda masukkan belum tepat. Periksa kembali kata sandi Anda!\n");
         } else {
