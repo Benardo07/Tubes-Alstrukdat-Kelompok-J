@@ -28,6 +28,8 @@ void newPengguna(Pengguna *p, char *nama, char *sandi) {
     strCpy("", HP(*p));
     strCpy("", WETON(*p));
     CreatePhotoMatrix(&FOTO(*p));
+    CreatePrioQueue(&FREQ(*p));
+    TOTALFRIENDS(*p) = 0;
     JMLHDRAF(*p) = 0;
     CreateEmptyDrafStack(&DRAF(*p));
     //printPengguna(*p);
