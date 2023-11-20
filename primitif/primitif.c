@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <math.h>
-#include <ctype.h>
 #include "primitif.h"
 
 boolean isDirectoryExist(char *nama){
@@ -115,10 +114,6 @@ int strToInt(const char *str) {
     }
 
     while (str[i] != '\0' && str[i] != ' ' && i < 31) {
-        if (!isdigit(str[i])) {
-            // Handle non-digit characters
-            break;
-        }
         if (i > 0) {
             s *= 10;
         }
@@ -308,9 +303,8 @@ void ambilDuaNum(char *str1, int *num1, int *num2) {
 
     // Extracting the first number
     while (str1[i] != ' ' && str1[i] != '\0') {
-        if (isdigit(str1[i])) {
-            *num1 = (*num1 * 10) + (str1[i] - '0');
-        }
+        *num1 = (*num1 * 10) + (str1[i] - '0');
+        
         i++;
     }
     *num1 *= sign;
@@ -330,9 +324,8 @@ void ambilDuaNum(char *str1, int *num1, int *num2) {
 
     // Extracting the second number
     while (str1[i] != '\0') {
-        if (isdigit(str1[i])) {
-            *num2 = (*num2 * 10) + (str1[i] - '0');
-        }
+        *num2 = (*num2 * 10) + (str1[i] - '0');
+        
         i++;
     }
     *num2 *= sign;

@@ -341,9 +341,9 @@ boolean MuatBalasan(char* namafolder) {
             int idParent, idBalasan;
             for(j=0; j<m; ++j) {
                  
-                readLineFile();
-                ambilDuaNum(currentSentence.TabWord,&idParent,&idBalasan);
-                printf("%d %d\n",idParent,idBalasan);
+                // readLineFile();
+                // ambilDuaNum(currentSentence.TabWord,&idParent,&idBalasan);
+                readTwoValuesLine(&idParent,&idBalasan);
                 Balasan B;
                 char text[280]; 
                 readLineFile();
@@ -590,7 +590,12 @@ boolean Simpan() {
         printf("Tidak ditemukan folder %s. Membuat folder baru bernama %s...\n", namaFolder, namaFolder);
         printf("Mohon tunggu...\n");
         printf("1...\n2...\n3...\n");
-        int check = mkdir(namaFolder,0777);
+        int check;
+        #ifdef _WIN32
+        check = mkdir(namaFolder);  // Windows version of mkdir
+        #else
+        check = mkdir(namaFolder, 0777);  // Unix/Linux version of mkdir
+        #endif
         if (check == 0) printf("Folder berhasil dibuat!\n");
         else {
             printf("Folder gagal dibuat.\n");

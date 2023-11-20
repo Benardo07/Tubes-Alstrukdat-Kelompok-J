@@ -49,4 +49,6 @@ void printSentence(Sentence sentence);
 
 void readLineFile();
 
+void readTwoValuesLine(int *num1, int *num2);
+
 #endif

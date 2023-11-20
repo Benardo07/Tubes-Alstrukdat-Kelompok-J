@@ -5,9 +5,9 @@ void balasKicauan(int idkic,int idbal ,List *l){
         printf("\nWah, tidak terdapat kicauan yang ingin Anda balas!\n");
     }else if(idbal != -1 && findBalasanInTree(getElmt(*l,indexOf(*l,idkic)).Balas,idbal) == NULL){
         printf("\nWah, tidak terdapat balasan yang ingin Anda balas!\n");
-    }else if(isPenggunaPrivate(&LPengguna, getElmt(*l,indexOf(*l,idkic)).author) ){
+    }else if(isPenggunaPrivate(&LPengguna, getElmt(*l,indexOf(*l,idkic)).author)  && !isTeman(findIDPenggunaByName(&LPengguna,currentUser.nama), findIDPenggunaByName(&LPengguna,getElmt(*l,indexOf(*l,idkic)).author))){
         printf("\nWah, akun tersebut merupakan akun private dan anda belum berteman dengan akun tersebut!\n");
-    }else if(idbal != -1 && isPenggunaPrivate(&LPengguna,BALASAN(findBalasanInTree(getElmt(*l,indexOf(*l,idkic)).Balas,idbal)).writer)){
+    }else if(idbal != -1 && isPenggunaPrivate(&LPengguna,BALASAN(findBalasanInTree(getElmt(*l,indexOf(*l,idkic)).Balas,idbal)).writer) && !isTeman(findIDPenggunaByName(&LPengguna,currentUser.nama), findIDPenggunaByName(&LPengguna,BALASAN(findBalasanInTree(getElmt(*l,indexOf(*l,idkic)).Balas,idbal)).writer))){
         printf("\nWah, akun tersebut merupakan akun private dan anda belum berteman dengan akun tersebut!\n");
     }else{
         printf("\nMasukkan balasan : \n");
@@ -44,7 +44,7 @@ void printAllBalasanWithIndent(Tree T, int depth) {
 
     // Print the current node's Balasan with indentation
     if(depth != 0){
-        if(isPenggunaPrivate(&LPengguna,BALASAN(T).writer)){
+        if(isPenggunaPrivate(&LPengguna,BALASAN(T).writer) && !isTeman(findIDPenggunaByName(&LPengguna,currentUser.nama), findIDPenggunaByName(&LPengguna,BALASAN(T).writer))){
             printBalasanPrivate(BALASAN(T), depth);
         }else{
             printBalasanWithIndent(BALASAN(T), depth);

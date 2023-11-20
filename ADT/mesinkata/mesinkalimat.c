@@ -116,3 +116,45 @@ void readLineFile(){
     }
 
 }
+
+void readTwoValuesLine(int *num1, int *num2) {
+    ClearSentence(&currentSentence);
+    *num1 = 0;
+    *num2 = 0;
+    int sign = 1;
+
+    // Read first number
+    if (currentChar == '-') {
+        sign = -1;
+        ADVFILE();
+    }
+    while (currentChar != ' ' && currentChar != '\f' && 
+           currentChar != '\r' && currentChar != '\t' && 
+           currentChar != '\v' && !EOP) {
+        *num1 = (*num1 * 10) + (currentChar - '0');
+        ADVFILE();
+    }
+    *num1 *= sign;
+
+    // Skip to next number
+    while (currentChar == ' ' && !EOP) {
+        ADVFILE();
+    }
+
+    // Read second number
+    sign = 1;
+    if (currentChar == '-') {
+        sign = -1;
+        ADVFILE();
+    }
+    while (currentChar != ' ' && currentChar != '\n' && 
+           currentChar != '\f' && currentChar != '\r' && 
+           currentChar != '\t' && currentChar != '\v' && !EOP) {
+        *num2 = (*num2 * 10) + (currentChar - '0');
+        ADVFILE();
+    }
+    *num2 *= sign;
+    if(currentChar == '\n'){
+        ADVFILE();
+    }
+}
