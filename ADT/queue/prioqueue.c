@@ -35,13 +35,13 @@ int lengthPrioQueue (PrioQueue Q){
     }
 };
 
-void EnqueuePrio (PrioQueue * Q, infotype X){
-    if(IsPrioQueueEmpty(*Q)){
+void EnqueuePrio (PrioQueue * Q, infotype X) {
+    if(IsPrioQueueEmpty(*Q)) {
         Head(*Q) = 0;
         Tail(*Q) = 0;
-        InfoHead(*Q) =  X;
-    }else{
-        Tail(*Q) = (Tail(*Q)+1) % MaxEl(*Q);
+        InfoHead(*Q) = X;
+    } else {
+        Tail(*Q) = (Tail(*Q) + 1) % MaxEl(*Q);
         InfoTail(*Q) = X;
 
         int len = lengthPrioQueue(*Q);
@@ -49,29 +49,21 @@ void EnqueuePrio (PrioQueue * Q, infotype X){
         int current, next;
         infotype temp;
 
-        for(i=0;i<len-1;i++){
-            current = Tail(*Q) - i;
-            if (current < 0){
-                current += MaxEl(*Q);
-            }else{
-                current = current;
-            }
+        for(i = 0; i < len - 1; i++) {
+            current = (Tail(*Q) - i + MaxEl(*Q)) % MaxEl(*Q);
+            next = (current - 1 + MaxEl(*Q)) % MaxEl(*Q);
 
-            next = current - 1;
-            if(next < 0){
-                next += MaxEl(*Q);
-            }else{
-                next = next;
-            }
-
-            if(Prio(Elmt(*Q,current)) > Prio(Elmt(*Q,next))){
-                temp = Elmt(*Q,current);
-                Elmt(*Q,current) = Elmt(*Q,next);
-                Elmt(*Q,next) = temp;
+            if (Prio(Elmt(*Q, current)) > Prio(Elmt(*Q, next))) {
+                temp = Elmt(*Q, current);
+                Elmt(*Q, current) = Elmt(*Q, next);
+                Elmt(*Q, next) = temp;
+            } else {
+                break;
             }
         }
     }
-};
+}
+
 
 void DequeuePrio (PrioQueue * Q, infotype * X){
     * X = InfoHead(*Q);
