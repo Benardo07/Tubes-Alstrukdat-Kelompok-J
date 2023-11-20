@@ -106,6 +106,11 @@ void gantiProfil(){
 
 void LihatProfil(char *nama){
     int idx;
+    boolean isCurrentUser = false;
+    if(isStrEqual(NAMA(currentUser),nama)){
+        isCurrentUser = true;
+    }
+
     idx = searchNamabyRef(&LPengguna,nama);
 
     if(idx == -1){
@@ -113,7 +118,7 @@ void LihatProfil(char *nama){
         return;
     }
 
-    if(isStrEqual("Privat",JENIS(ELMT(LPengguna,idx)))){
+    if(!isCurrentUser && isStrEqual("Privat",JENIS(ELMT(LPengguna,idx)))){
         printf("Wah, akun %s diprivat nih. Ikuti dulu yuk untuk bisa melihat profil %s!", nama,nama);
         return;
     };
