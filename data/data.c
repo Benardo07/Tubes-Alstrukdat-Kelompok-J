@@ -820,32 +820,37 @@ boolean MASUK() {
 }
 
 void DAFTAR(){
-    boolean loop = true;
+    if (!isFullP(LPengguna)){
+        boolean loop = true;
 
-    // terima nama
-    char nama[21];
-    while (loop) {
-        printf("\nMasukkan nama:\n");
-        StartSentence();
-        strCpy(currentSentence.TabWord,nama);
+        // terima nama
+        char nama[21];
+        while (loop) {
+            printf("\nMasukkan nama:\n");
+            StartSentence();
+            strCpy(currentSentence.TabWord,nama);
 
-        if (searchNama(LPengguna, nama) != IDX_UNDEF) {
-            printf("\nWah, sayang sekali nama tersebut telah diambil. \n");
-        } else {
-            loop = false;
+            if (searchNama(LPengguna, nama) != IDX_UNDEF) {
+                printf("\nWah, sayang sekali nama tersebut telah diambil. \n");
+            } else {
+                loop = false;
+            }
         }
+
+        // terima sandi
+        char sandi[21];
+        printf("\nMasukkan kata sandi:\n");
+        StartSentence();
+        strCpy(currentSentence.TabWord,sandi);
+
+        Pengguna p;
+        newPengguna(&p, nama, sandi);
+
+        insertLastP(&LPengguna,p);
+
+        printf("\nPengguna telah berhasil terdaftar. Masuk untuk menikmati fitur-fitur BurBir.\n");
+    } else {
+        printf("\nJumlah pengguna sudah penuh.\n");
     }
 
-    // terima sandi
-    char sandi[21];
-    printf("\nMasukkan kata sandi:\n");
-    StartSentence();
-    strCpy(currentSentence.TabWord,sandi);
-
-    Pengguna p;
-    newPengguna(&p, nama, sandi);
-
-    insertLastP(&LPengguna,p);
-
-    printf("\nPengguna telah berhasil terdaftar. Masuk untuk menikmati fitur-fitur BurBir.\n");
 }
