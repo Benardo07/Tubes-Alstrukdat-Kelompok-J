@@ -39,15 +39,18 @@ boolean Muat(){
         printf("\nFolder tidak ditemukan\n");
     } else {
         printf("\nFolder ditemukan\n");
+        
+        deleteAll(&LKicau);
+        CreateListPengguna(&LPengguna);
+        createGraph(&Teman);
+
         sukses = MuatPengguna(namafolder);
         sukses = MuatDraf(namafolder);
         sukses = MuatKicauan(namafolder);
-        
-
         sukses = MuatUtas(namafolder);
-        
         sukses = MuatBalasan(namafolder);
 
+        printf("Data berhasil dimuat.\n");
     }
 
     return sukses;
@@ -398,8 +401,8 @@ void SimpanPengguna(char* namaFolder) {
         fprintf(fPengguna, "%s\n", WETON(p));
         fprintf(fPengguna, "%s\n", JENIS(p));
         for(j=0; j<5; ++j) {
-            for(k=0; k<10; ++k) fprintf(fPengguna, "%c ", FOTO(p).matriks[j][k]);
-            fprintf(fPengguna, "\n");
+            for(k=0; k<9; ++k) fprintf(fPengguna, "%c ", FOTO(p).matriks[j][k]);
+            fprintf(fPengguna, "%c\n", FOTO(p).matriks[j][9]);
         }
         if (!IsPrioQueueEmpty(FREQ(p))) {
             infotype temp = newPrioElmt(i, 1);
@@ -409,10 +412,10 @@ void SimpanPengguna(char* namaFolder) {
     }
 
     for(i=0; i<SIMPUL(Teman); ++i) {
-        for(j=0; j<SIMPUL(Teman); ++j) {
+        for(j=0; j<SIMPUL(Teman)-1; ++j) {
             fprintf(fPengguna, "%d ", ELMT_GRAPH(Teman, i, j));
         }
-        fprintf(fPengguna, "\n");
+        fprintf(fPengguna, "%d\n", ELMT_GRAPH(Teman, i, SIMPUL(Teman)-1));
     }
 
     fprintf(fPengguna, "%d\n", requestCount);
@@ -573,6 +576,7 @@ void SimpanBalasan(char* namaFolder) {
         infotype temp; DequeuePrio(&q, &temp);
         fprintf(fBalasan, "%d\n", temp.userId);
         Tree T = getElmt(LKicau, temp.userId-1).Balas;
+        
         fprintf(fBalasan, "%d\n", nbElmt(T));
         SimpanBalasanRekursif(fBalasan, T, -1);
     }
@@ -802,6 +806,10 @@ boolean MASUK() {
         }
         else if (isStrEqual(operasi, "SIMPAN")) {
             Simpan();
+        }
+        else if (isStrEqual(operasi, "MUAT")) {
+            Muat();
+            loop = false;
         }
         //else if (isStrEqual(operasi, "_____")) { } <--- dilanjutkan
         else {
