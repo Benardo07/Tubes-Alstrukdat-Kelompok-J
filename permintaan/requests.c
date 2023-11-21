@@ -137,9 +137,16 @@ void SetujuiTeman() {
             printf(" | %s\n", topName);
             printf(" | Jumlah Teman: %d\n", jlhTeman);
             
-            printf("Apakah Anda ingin menyetujui permintaan pertemanan ini? (YA/TIDAK)\n");
+            printf("\nApakah Anda ingin menyetujui permintaan pertemanan ini? (YA/TIDAK)\n");
             STARTWORD();
             char *answer = currentWord.TabWord;
+            while(!isStrEqual(answer, "YA") && !isStrEqual(answer, "TIDAK")){
+                printf("\nTolong untuk memasukkan input sesuai format.\n");
+                printf("\n");
+                printf("Apakah Anda ingin menyetujui permintaan pertemanan ini? (YA/TIDAK)\n");
+                STARTWORD();
+                answer = currentWord.TabWord;
+            }
             if (isStrEqual(answer, "YA")) {
                 TOTALFRIENDS(ELMT(LPengguna,IdCurrentUser-1))++; 
                 for (int i = 0; i < listLengthP(LPengguna); i++) {
