@@ -36,10 +36,11 @@ DRIVERS =   ADT/graf/driver_graf.c \
             ADT/matriks/driverFoto.c \
             ADT/datetime/driverdatetime.c \
             ADT/datetime/drivertime.c \
+            ADT/liststatik/driverlistpengguna.c \
             ADT/queue/driverPrio.c 
 # DRIVER_EXES = $(DRIVERS:.c=.o)
 
-.PHONY: all clean test drivers driver_graf driver_drafStack driver_tree driver_listdin driverlistlinier driverFoto driverdatetime drivertime driverPrio
+.PHONY: all clean test drivers driver_graf driver_drafStack driver_tree driver_listdin driverlistlinier driverFoto driverdatetime drivertime driverPrio driverlistpengguna
 
 # Main Target
 all: main drivers
@@ -52,7 +53,7 @@ main: $(OBJ)
 %.o: %.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-drivers: driver_graf driver_drafStack driver_tree driver_listdin driverlistlinier driverFoto driverdatetime drivertime driverPrio
+drivers: driver_graf driver_drafStack driver_tree driver_listdin driverlistlinier driverFoto driverdatetime drivertime driverPrio driverlistpengguna
 
 driver_graf:
 	$(CC) $(CFLAGS) -o $@ $^ ADT/graf/driver_graf.c ADT/graf/graf.c ADT/queue/prioqueue.c 
@@ -78,11 +79,14 @@ drivertime:
 driverPrio:
 	$(CC) $(CFLAGS) -o $@ $^ ADT/queue/driverPrio.c ADT/queue/prioqueue.c
 
+driverlistpengguna:
+	$(CC) $(CFLAGS) -o $@ $^ ADT/liststatik/driverlistpengguna.c ADT/liststatik/listpengguna.c ADT/mesinkata/wordmachine.c ADT/datetime/datetime.c ADT/listdin/listdin.c ADT/tree/tree.c ADT/mesinkarakter/charmachine.c ADT/datetime/time.c primitif/primitif.c ADT/matriks/foto.c ADT/queue/prioqueue.c ADT/stack/drafStack.c ADT/graf/graf.c ADT/pcolor/pcolor.c ADT/mesinkata/mesinkalimat.c profil/profil.c permintaan/requests.c utas/utas.c balasan/balasan.c draf/draf.c data/data.c teman/teman.c kicauan/kicauan.c ADT/listlinier/listlinier.c
+
 driverlistlinier:
 	$(CC) $(CFLAGS) -o $@ $^ ADT/listlinier/driverlistlinier.c ADT/listlinier/listlinier.c kicauan/kicauan.c ADT/mesinkata/wordmachine.c ADT/datetime/datetime.c ADT/listdin/listdin.c ADT/tree/tree.c ADT/mesinkarakter/charmachine.c ADT/datetime/time.c primitif/primitif.c ADT/liststatik/listpengguna.c teman/teman.c ADT/matriks/foto.c ADT/queue/prioqueue.c ADT/stack/drafStack.c ADT/graf/graf.c ADT/pcolor/pcolor.c data/data.c ADT/mesinkata/mesinkalimat.c profil/profil.c permintaan/requests.c utas/utas.c balasan/balasan.c draf/draf.c
 
 # Clean
 clean:
-	rm -f main $(OBJ) ADT/graf/driver_graf ADT/stack/driver_drafStack ADT/tree/driver_tree ADT/listdin/driver_listdin ADT/listlinier/driverlistlinier ADT/matriks/driverFoto ADT/datetime/driverdatetime ADT/datetime/drivertime ADT/queue/driverPrio primitif/primitif kicauan/kicauan teman/teman profil/profil primitif/primitif permintaan/requests teman/teman utas/utas draf/draf balasan/balasan
+	rm -f main $(OBJ) ADT/graf/driver_graf ADT/stack/driver_drafStack ADT/tree/driver_tree ADT/listdin/driver_listdin ADT/listlinier/driverlistlinier ADT/matriks/driverFoto ADT/datetime/driverdatetime ADT/datetime/drivertime ADT/queue/driverPrio primitif/primitif kicauan/kicauan teman/teman profil/profil primitif/primitif permintaan/requests teman/teman utas/utas draf/draf balasan/balasan ADT/liststatik/driverlistpengguna
 
 # Add any other rules or targets as necessary
