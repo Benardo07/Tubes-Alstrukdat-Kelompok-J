@@ -109,7 +109,7 @@ void printPengguna(Pengguna p) {
     printf("%s\n",HP(p));
     printf("%s\n",WETON(p));
     printf("%s\n",JENIS(p));
-    // PrintPhotoMatrix(FOTO(p));
+    PrintPhotoMatrix(FOTO(p));
 }
 
 void printListP(ListPengguna l) {
@@ -121,8 +121,9 @@ void printListP(ListPengguna l) {
 /* Contoh : jika ada tiga elemen bernilai 1, 20, 30 akan dicetak: [1,20,30] */
 /* Jika List kosong : menulis [] */
     IdxType i;
+    int n = listLengthP(l);
 
-    for (i=0;i<listLengthP(l);i++){
+    for (i=0;i<n;i++){
         printPengguna(ELMT(l,i));
     }
 }
