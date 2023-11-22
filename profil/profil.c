@@ -134,24 +134,40 @@ void LihatProfil(char *nama){
 
 void aturjenisakun (){
     if(isStrEqual("Publik",JENIS(ELMT(LPengguna,IdCurrentUser-1)))){
-        printf("Saat ini, Akun anda adalah akun Publik. Ingin mengubah ke akun privat? \n");
+        printf("Saat ini, Akun anda adalah akun Publik. Ingin mengubah akun menjadi akun privat? \n");
         printf("(YA/TIDAK) ");
         STARTWORD();
-        printf("\n");
         char *choice = currentWord.TabWord;
-        if(isStrEqual(choice,"YA") || isStrEqual(choice,"ya") || isStrEqual(choice,"Ya")){
+        while(!isStrEqual(choice, "YA") && !isStrEqual(choice, "TIDAK")){
+                printf("\nTolong untuk memasukkan input sesuai format.\n");
+                printf("\n");
+                printf("Saat ini, Akun anda adalah akun Publik. Ingin mengubah akun menjadi akun privat? \n");
+                printf("(YA/TIDAK) ");
+                STARTWORD();
+                choice = currentWord.TabWord;
+        }
+        printf("\n");
+        if(isStrEqual(choice,"YA")){
             strCpy("Privat",JENIS(ELMT(LPengguna,IdCurrentUser-1)));
             printf("Akun anda telah diubah menjadi akun Privat.\n");
         }else{
             printf("Akun anda tetap menjadi akun Publik. \n");
         }
     }else if(isStrEqual("Privat",JENIS(ELMT(LPengguna,IdCurrentUser-1)))){
-        printf("Saat ini, Akun anda adalah akun Privat. Ingin mengubah ke akun publik? \n");
+        printf("Saat ini, Akun anda adalah akun Privat. Ingin mengubah akun menjadi akun publik? \n");
         printf("(YA/TIDAK) ");
         STARTWORD();
-        printf("\n");
         char *choice = currentWord.TabWord;
-        if(isStrEqual(choice,"YA") || isStrEqual(choice,"ya") || isStrEqual(choice,"Ya")){
+        while(!isStrEqual(choice, "YA") && !isStrEqual(choice, "TIDAK")){
+                printf("Tolong untuk memasukkan input sesuai format.\n");
+                printf("\n");
+                printf("Saat ini, Akun anda adalah akun Privat. Ingin mengubah akun menjadi akun publik? \n");
+                printf("(YA/TIDAK) ");
+                STARTWORD();
+                choice = currentWord.TabWord;
+        }
+        printf("\n");
+        if(isStrEqual(choice,"YA")){
             strCpy("Publik",JENIS(ELMT(LPengguna,IdCurrentUser-1)));
             printf("Akun anda telah diubah menjadi akun Publik.\n");
         }else{
