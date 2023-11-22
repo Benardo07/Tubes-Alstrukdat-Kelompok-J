@@ -18,8 +18,8 @@ int main(){
     printPengguna(p);
 
     // Tes manipulasi pengguna
-    strCpy("08123415",&HP(p));
-    strCpy("tes bio",&BIO(p));
+    strCpy("08123415",HP(p));
+    strCpy("tes bio",BIO(p));
     printPengguna(p);
 
     // Tes lain
