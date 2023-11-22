@@ -11,9 +11,13 @@ int main(){
 
     DATETIME d;
     CreateDATETIME(&d,20,10,2023,10,12,49);
-    Balasan b1 = CreateBalasan(&b1,1,"Haloo gess","ben",d);
-    Balasan b2 = CreateBalasan(&b2,2,"Haloo semua","ben",d);
-    Balasan b3 = CreateBalasan(&b3,3,"Haloo semua","ben",d);
+    Balasan b1;
+    CreateBalasan(&b1,1,"Haloo gess","ben",d);
+    Balasan b2;
+    CreateBalasan(&b2,2,"Haloo semua","ben",d);
+    Balasan b3;
+    CreateBalasan(&b3,3,"Haloo semua","ben",d);
+    
     ElDinType val1 = newTree(b1,100); // Initialize val1 appropriately
     ElDinType val2 = newTree(b2,100);
     insertLastDinTree(&l, val1);

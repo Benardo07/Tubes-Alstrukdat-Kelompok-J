@@ -4,10 +4,11 @@
 int main(){
     // Create Balasan
     DATETIME d;
+    Balasan b1,b2,b3;
     CreateDATETIME(&d,20,10,2023,10,12,49);
-    Balasan b1 = CreateBalasan(&b1,1,"Haloo gess","ben",d);
-    Balasan b2 = CreateBalasan(&b2,2,"Haloo semua","ben",d);
-    Balasan b3 = CreateBalasan(&b3,3,"Haloo semua kwkwkw","ben",d);
+    CreateBalasan(&b1,1,"Haloo gess","ben",d);
+    CreateBalasan(&b2,2,"Haloo semua","ben",d);
+    CreateBalasan(&b3,3,"Haloo semua kwkwkw","ben",d);
     // ... create more Balasan instances as needed ...
 
     // Create Tree

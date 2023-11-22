@@ -17,8 +17,8 @@ int main(){
     TulisTIME(t2); 
     printf("\n");
     
-    printf("Waktu t1 ke detik: %d\n", TIMEToDetik(t1));
-    printf("Waktu t2 ke detik: %d\n", TIMEToDetik(t2));
+    printf("Waktu t1 ke detik: %ld\n", TIMEToDetik(t1));
+    printf("Waktu t2 ke detik: %ld\n", TIMEToDetik(t2));
 
     printf("Masukkan detik: ");
     scanf("%d", &detik);

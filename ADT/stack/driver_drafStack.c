@@ -8,7 +8,7 @@ DrafStack S, S2;
     // Assuming CreateDraf and DisplayDraf functions are defined properly.
     DATETIME d;
     CreateDATETIME(&d,20,10,2023,10,12,49);
-    Draf d1, d2, dTemp;
+    Draf d1, d2;
     CreateDraf(&d1, "Sample Tweet 1",d);
     CreateDraf(&d2, "Sample Tweet 2",d);
 
