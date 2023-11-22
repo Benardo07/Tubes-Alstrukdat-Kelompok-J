@@ -30,6 +30,11 @@ Ande-Ande Lumut yang iba mendengar kisah Klenting Kuning kemudian berencana untu
 <p align="right">(<a href="#atas">kembali</a>)</p>
 
 ## Cara Kompilasi Program
+Pertama-tama Clone repository terlebih dahulu
+```
+git clone https://github.com/Benardo07/Tubes-Alstrukdat-Kelompok-J.git
+```
+
 Tuliskan command berikut di **folder utama** project ini, yaitu folder yang sama tempat **Makefile** berada.
 
 ```shell
