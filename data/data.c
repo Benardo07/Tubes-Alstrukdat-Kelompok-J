@@ -689,7 +689,7 @@ boolean MASUK() {
             loop = false;
             keluar = true;
         } else if (isStrEqual(operasi, "DAFTAR_TEMAN")) {
-            daftarTeman(currentUser.id);
+            daftarTeman(IdCurrentUser);
         } else if (isStrEqual(operasi, "HAPUS_TEMAN")) {
             hapusTeman(currentUser.id);
         }else if(isStrEqual(operasi,"GANTI_PROFIL")){
