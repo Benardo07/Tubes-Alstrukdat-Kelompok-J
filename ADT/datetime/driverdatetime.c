@@ -3,7 +3,6 @@
 
 int main(){
     DATETIME d1, d2;
-    long int detik;
 
     printf("Masukkan d1: \n");
     BacaDATETIME(&d1);
