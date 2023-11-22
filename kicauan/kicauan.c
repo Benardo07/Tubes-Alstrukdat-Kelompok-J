@@ -122,7 +122,7 @@ void sukaKicau(List *l, ListPengguna l2, int id,char *auth){
             printKicau(*l,id);
         }
         else{
-            if(!isTeman(findIDPenggunaByName(&l2,el.author),findIDPenggunaByName(&l2,auth))){
+            if(isTeman(findIDPenggunaByName(&l2,el.author),findIDPenggunaByName(&l2,auth))){
                 el.like += 1;
                 setElmt(l,id-1,el); // set element dengan text baru
                 printf("Selamat! kicauan telah disukai!\n");
@@ -172,7 +172,7 @@ void kicauan(List l, ListPengguna l2, char *auth){
             printf("\n");
         }
         else{
-            if(!isTeman(findIDPenggunaByName(&l2,p->info.author),findIDPenggunaByName(&l2,auth))){
+            if(isTeman(findIDPenggunaByName(&l2,p->info.author),findIDPenggunaByName(&l2,auth))){
                 printf("| ID = %d\n",id(p));
                 printf("| ");
                 printf("%s\n",p->info.author);

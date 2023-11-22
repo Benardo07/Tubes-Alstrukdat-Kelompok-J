@@ -776,7 +776,7 @@ boolean MASUK() {
                 Kicau k1;
                 int idkic = cekutas(LKicau,id);
                 k1 = getElmt(LKicau,idkic);
-                if(!isPenggunaPrivate(&LPengguna,k1.author)||(!isTeman(findIDPenggunaByName(&LPengguna,k1.author),findIDPenggunaByName(&LPengguna,currentUser.nama)))){
+                if(!isPenggunaPrivate(&LPengguna,k1.author)||(isTeman(findIDPenggunaByName(&LPengguna,k1.author),findIDPenggunaByName(&LPengguna,currentUser.nama)))){
                     perutasan(k1);
                 }
                 else{

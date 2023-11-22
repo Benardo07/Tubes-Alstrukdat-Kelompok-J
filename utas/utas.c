@@ -70,14 +70,14 @@ void insertUtas(Kicau *k){
         printf("\n");
 
 
-        while (!(isStrEqual(operasi,"YA")) && !(isStrEqual(operasi,"TIDAK")) ){
+        while (!(isStrEqual(operasi,"YA")) && !(isStrEqual(operasi,"ya")) && !(isStrEqual(operasi,"Ya")) && !(isStrEqual(operasi,"TIDAK")) && !(isStrEqual(operasi,"tidak")) && !(isStrEqual(operasi,"Tidak")) ){
             printf("Perintah Tidak Dikenali\n");
             printf("Apakah Anda ingin melanjutkan utas ini? (YA/TIDAK)\n");
             StartSentence();
             operasi = currentSentence.TabWord;
             printf("\n");
         }
-        if (isStrEqual(operasi,"TIDAK")){
+        if ((isStrEqual(operasi,"TIDAK")) || (isStrEqual(operasi,"tidak")) || (isStrEqual(operasi,"Tidak"))){
             lanjut = false;
         }
     }
