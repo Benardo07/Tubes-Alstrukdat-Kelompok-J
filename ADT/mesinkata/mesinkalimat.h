@@ -9,11 +9,11 @@
 
 typedef struct
 {
-   char TabWord[NMax]; /* container penyimpan kata, indeks yang dipakai [0..NMax-1] */
+   char TabWord[NMax]; /* container penyimpan kalimat, indeks yang dipakai [0..NMax-1] */
    int Length;
 } Sentence;
 
-/* State Mesin Word */
+/* State Mesin Kalimat */
 extern boolean EndSentence;
 extern Sentence currentSentence;
 
