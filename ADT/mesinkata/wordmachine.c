@@ -100,6 +100,7 @@ void readKicau(Word *input){
         }
         ADV();
     }
+    (*input).TabWord[i] = '\0';
 
     (*input).Length = i;
 }
