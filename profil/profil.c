@@ -81,11 +81,10 @@ void setWeton(){
 }
 
 void gantiProfil(){
-    printf("%d\n",IdCurrentUser);
-    printf("| Nama: %s\n",NAMA(ELMT(LPengguna,IdCurrentUser-1)));
-    printf("| Bio Akun: \n");
-    printf("| No HP: \n");
-    printf("| Weton: \n");
+    printf("\n| Nama: %s\n",NAMA(ELMT(LPengguna,IdCurrentUser-1)));
+    printf("| Bio Akun: %s\n", BIO(ELMT(LPengguna,IdCurrentUser-1)));
+    printf("| No HP: %s\n", HP(ELMT(LPengguna,IdCurrentUser-1)));
+    printf("| Weton: %s\n", WETON(ELMT(LPengguna,IdCurrentUser-1)));
     printf("\n");
 
     setBio();
@@ -114,7 +113,7 @@ void LihatProfil(char *nama){
     idx = searchNamabyRef(&LPengguna,nama);
 
     if(idx == -1){
-        printf("Tidak ada pengguna bernama %s",nama);
+        printf("\nTidak ada pengguna bernama %s\n",nama);
         return;
     }
 
@@ -185,8 +184,8 @@ void UbahfotoProfil() {
     PrintPhotoMatrix(FOTO(ELMT(LPengguna,IdCurrentUser-1)));
     printf("\n");
     printf("Masukkan foto profil yang baru\n");
-    STARTWORD();  
-    char* input = currentWord.TabWord;
+    StartSentence();  
+    char* input = currentSentence.TabWord;
 
     int row = 0, col = 0, i = 0;
     while (input[i] != '\0' && input[i] != ';') {
