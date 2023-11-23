@@ -61,7 +61,7 @@ void TambahTeman(){
                 int i;
                 infotype newFriendRequest;
                 Info(newFriendRequest) = IdCurrentUser;
-                Prio(newFriendRequest) = TOTALFRIENDS(currentUser); 
+                Prio(newFriendRequest) = TOTALFRIENDS(ELMT(LPengguna,IdCurrentUser-1)); 
 
                 for (i = 0; i < listLengthP(LPengguna); i++){
                     if(i+1 == j+1){
