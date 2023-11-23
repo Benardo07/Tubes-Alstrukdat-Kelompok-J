@@ -103,6 +103,13 @@ boolean MuatPengguna(char *namafolder){
                 for (k=0; k<10; k++) {
                     FOTO(p).matriks[j][k] = currentChar;
                     ADVFILE();
+                    if(k == 9){
+                        while (currentChar == ' ')
+                        {
+                            ADVFILE();
+                        }
+                        
+                    }
                     ADVFILE();
                 }
             }
