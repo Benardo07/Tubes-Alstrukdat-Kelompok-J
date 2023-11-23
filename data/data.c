@@ -32,7 +32,6 @@ boolean Muat(){
     printf("\nSilahkan masukan folder konfigurasi untuk dimuat: ");
     StartSentence();
     strCat("./",currentSentence.TabWord,namafolder); //menggunakan relative path
-    //printf("%s\n", namafolder);
 
     if (!isDirectoryExist(namafolder)) {
         sukses = false;
@@ -118,7 +117,6 @@ boolean MuatPengguna(char *namafolder){
             COL_EFF(FOTO(p)) = 2*CAP;
 
             insertLastP(&LPengguna,p);
-            printPengguna(p);
         }
 
         createGraph(&Teman);
@@ -671,9 +669,6 @@ boolean MASUK() {
         }
     }
 
-    //printPengguna(currentUser);
-    //printf("%d\n", IdCurrentUser);
-
     //*************************************MAIN-LOOP******************************************//
     boolean keluar = false;
     loop = true;
@@ -681,7 +676,7 @@ boolean MASUK() {
         printf("\n>> ");
         char *operasi;
 
-        StartSentence(); //Operasi hanya 1 kata (jika beberapa huruf, dipisah simbol '_')
+        StartSentence(); 
         operasi = currentSentence.TabWord;
 
         if (isStrEqual(operasi, "MASUK")){
