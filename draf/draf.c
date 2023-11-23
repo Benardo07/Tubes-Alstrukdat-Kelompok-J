@@ -3,9 +3,24 @@
 #include "../data/data.h"
 
 void makingDraf (ListPengguna *Lpeng){
+    boolean space = true;
     printf("\nMasukkan draf:\n");
     Word text;
     readKicau(&text);
+    printf("\n");
+    if (!allSpace(text)){
+        space = false;
+    }
+
+    while(space){ // cek apakah cuma berisi space atau tidak
+        printf("Draf tidak boleh hanya berisi spasi!\n");
+        printf("\nMasukkan Draf:\n");
+        readKicau(&text);
+        printf("\n");
+        if (!allSpace(text)){
+            space = false;
+        }
+    }
     // Ambil waktu lokal
     // time_t currentTime;
     // struct tm *localTime;
@@ -13,7 +28,7 @@ void makingDraf (ListPengguna *Lpeng){
     Draf tempDraf;
     
     
-    printf("\nApakah anda ingin menghapus, menyimpan, atau menerbitkan draf ini?\n");
+    printf("Apakah anda ingin menghapus, menyimpan, atau menerbitkan draf ini?\n");
     
     while(true){
         StartSentence();
@@ -90,10 +105,24 @@ void seeDraf(){
                 break;
 
             }else if(isStrEqual(pilihan,"UBAH")){
+                boolean space = true;
                 printf("\nMasukkan draf yang baru:\n");
                 Word text;
                 readKicau(&text);
+                printf("\n");
+                if (!allSpace(text)){
+                    space = false;
+                }
 
+                while(space){ // cek apakah cuma berisi space atau tidak
+                    printf("Draf tidak boleh hanya berisi spasi!\n");
+                    printf("\nMasukkan draf yang baru:\n");
+                    readKicau(&text);
+                    printf("\n");
+                    if (!allSpace(text)){
+                        space = false;
+                    }
+                }
                 printf("\nApakah anda ingin menghapus, menyimpan, atau menerbitkan draf ini?\n");
 
                 while (true)
