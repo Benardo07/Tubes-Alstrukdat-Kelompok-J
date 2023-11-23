@@ -11,8 +11,22 @@ void balasKicauan(int idkic,int idbal ,List *l){
         printf("\nWah, akun tersebut merupakan akun private dan anda belum berteman dengan akun tersebut!\n");
     }else{
         printf("\nMasukkan balasan : \n");
+        boolean space = true;
         Word text;
         readKicau(&text);
+        printf("\n");
+        if (!allSpace(text)){
+            space = false;
+        }
+        while(space){ // cek apakah cuma berisi space atau tidak
+            printf("Balasan tidak boleh hanya berisi spasi!\n");
+            printf("\nMasukkan balasan:\n");
+            readKicau(&text);
+            printf("\n");
+            if (!allSpace(text)){
+                space = false;
+            }
+        }
         Balasan B;
         int IdBalasan = getElmt(*l,indexOf(*l,idkic)).lastIDBalas + 1;
         DATETIME d = getLocalTime();
@@ -34,7 +48,16 @@ void balasKicauan(int idkic,int idbal ,List *l){
 
 
 void printSemuaBalasan(int idKicau){
-    printAllBalasanWithIndent(getElmt(LKicau,indexOf(LKicau,idKicau)).Balas,0);
+    if(indexOf(LKicau,idKicau) == IDXUNDEF){       
+        printf("\nTidak ada kicauan dengan id tersebut!\n");
+    }else if(isPenggunaPrivate(&LPengguna, getElmt(LKicau,indexOf(LKicau,idKicau)).author)  && !isTeman(IdCurrentUser, findIDPenggunaByName(&LPengguna,getElmt(LKicau,indexOf(LKicau,idKicau)).author))){
+        printf("\nWah,kicauan tersebut dibuat oleh pengguna dengan akun privat!\n");
+    }else if(getElmt(LKicau,idKicau-1).lastIDBalas == 0){
+        printf("\nBelum terdapat balasan apapun dalam kicauan tersebut.Yuk balas kicauan tersebut!\n");
+    }else{
+        printAllBalasanWithIndent(getElmt(LKicau,indexOf(LKicau,idKicau)).Balas,0);
+    }
+    
 }
 
 void printAllBalasanWithIndent(Tree T, int depth) {
@@ -116,7 +139,6 @@ void hapusBalasan(int idkic , int idbal){
     }else{
         Tree temp = findBalasanInTree(getElmt(LKicau,indexOf(LKicau,idkic)).Balas,idbal);
         Tree parentTemp = findBalasanParentInTree(getElmt(LKicau,indexOf(LKicau,idkic)).Balas,idbal,NULL);
-        printAllBalasanWithIndent(parentTemp,0);
         deleteListDinAt(&CHILDREN(parentTemp),indexOfDinTree(CHILDREN(parentTemp),temp));
         printf("Balasan berhasil di hapus!\n");
     }
