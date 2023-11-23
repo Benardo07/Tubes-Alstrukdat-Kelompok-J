@@ -42,7 +42,6 @@ void AdvSentence() {
           currentChar adalah karakter pertama dari kata berikutnya, mungkin MARK
           Jika currentChar = MARK, EndWord = true.
    Proses : Akuisisi kata menggunakan procedure SalinWord */
-    IgnoreBlanksS();
     if (currentChar == MARK) EndSentence = true;
     else CopySentence();
 }

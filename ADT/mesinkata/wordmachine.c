@@ -28,7 +28,7 @@ void STARTWORD()
     START();
     //Word currentWord;
 
-        
+    IgnoreBlanks();
     if (currentChar == MARK) {
         EndWord = true;
     }
