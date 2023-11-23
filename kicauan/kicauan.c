@@ -122,7 +122,7 @@ void sukaKicau(List *l, ListPengguna l2, int id,char *auth){
             printKicau(*l,id);
         }
         else{
-            if(isTeman(findIDPenggunaByName(&l2,el.author),findIDPenggunaByName(&l2,auth))){
+            if(isTeman(findIDPenggunaByName(&l2,el.author),IdCurrentUser)){
                 el.like += 1;
                 setElmt(l,id-1,el); // set element dengan text baru
                 printf("Selamat! kicauan telah disukai!\n");
@@ -155,7 +155,7 @@ void printKicau(List l,int id){ // print kicau satuan
 
 // print semua kicauan (ini belum cek temenan apa ngga)
 void kicauan(List l, ListPengguna l2, char *auth){ 
-     inverseList(&l); // di invers dulu biar ngeprint yang terbaru
+    inverseList(&l); // di invers dulu biar ngeprint yang terbaru
     Address p = l;
     while (p!=NULL){
         if(!isPenggunaPrivate(&l2,p->info.author)){
@@ -171,8 +171,8 @@ void kicauan(List l, ListPengguna l2, char *auth){
             printf("| Disukai: %d\n",like(p));
             printf("\n");
         }
-        else{
-            if(isTeman(findIDPenggunaByName(&l2,p->info.author),findIDPenggunaByName(&l2,auth))){
+        else if(isPenggunaPrivate(&l2,p->info.author)) {
+            if(isTeman(findIDPenggunaByName(&l2,p->info.author),IdCurrentUser)){
                 printf("| ID = %d\n",id(p));
                 printf("| ");
                 printf("%s\n",p->info.author);
