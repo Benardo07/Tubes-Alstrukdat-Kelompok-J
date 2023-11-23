@@ -40,7 +40,7 @@ DRIVERS =   ADT/graf/driver_graf.c \
             ADT/queue/driverPrio.c 
 # DRIVER_EXES = $(DRIVERS:.c=.o)
 
-.PHONY: all clean test drivers driver_graf driver_drafStack driver_tree driver_listdin driverlistlinier driverFoto driverdatetime drivertime driverPrio driverlistpengguna driver_pcolor
+.PHONY: all clean test drivers driver_graf driver_drafStack driver_tree driver_listdin driverlistlinier driverFoto driverdatetime drivertime driverPrio driverlistpengguna driver_pcolor drivermesinkalimat drivercharmachine driverwordmachine
 
 # Main Target
 all: main drivers
@@ -53,7 +53,7 @@ main: $(OBJ)
 %.o: %.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-drivers: driver_graf driver_drafStack driver_tree driver_listdin driverlistlinier driverFoto driverdatetime drivertime driverPrio driverlistpengguna driver_pcolor
+drivers: driver_graf driver_drafStack driver_tree driver_listdin driverlistlinier driverFoto driverdatetime drivertime driverPrio driverlistpengguna driver_pcolor drivermesinkalimat drivercharmachine driverwordmachine
 
 driver_graf:
 	$(CC) $(CFLAGS) -o $@ $^ ADT/graf/driver_graf.c ADT/graf/graf.c ADT/queue/prioqueue.c 
@@ -88,8 +88,17 @@ driverlistlinier:
 driver_pcolor:
 	$(CC) $(CFLAGS) -o $@ $^ ADT/pcolor/driver_pcolor.c ADT/pcolor/pcolor.c
 
+drivercharmachine:
+	$(CC) $(CFLAGS) -o $@ $^ ADT/mesinkarakter/drivercharmachine.c ADT/mesinkarakter/charmachine.c
+
+driverwordmachine:
+	$(CC) $(CFLAGS) -o $@ $^ ADT/mesinkata/driverwordmachine.c ADT/mesinkarakter/charmachine.c ADT/mesinkata/wordmachine.c
+
+drivermesinkalimat:
+	$(CC) $(CFLAGS) -o $@ $^ ADT/mesinkata/drivermesinkalimat.c ADT/mesinkarakter/charmachine.c ADT/mesinkata/wordmachine.c ADT/mesinkata/mesinkalimat.c
+
 # Clean
 clean:
-	rm -f main $(OBJ) ADT/graf/driver_graf ADT/stack/driver_drafStack ADT/tree/driver_tree ADT/listdin/driver_listdin ADT/listlinier/driverlistlinier ADT/matriks/driverFoto ADT/datetime/driverdatetime ADT/datetime/drivertime ADT/queue/driverPrio primitif/primitif kicauan/kicauan teman/teman profil/profil primitif/primitif permintaan/requests teman/teman utas/utas draf/draf balasan/balasan ADT/liststatik/driverlistpengguna ADT/pcolor/driver_pcolor
+	rm -f main $(OBJ) ADT/graf/driver_graf ADT/stack/driver_drafStack ADT/tree/driver_tree ADT/listdin/driver_listdin ADT/listlinier/driverlistlinier ADT/matriks/driverFoto ADT/datetime/driverdatetime ADT/datetime/drivertime ADT/queue/driverPrio primitif/primitif kicauan/kicauan teman/teman profil/profil primitif/primitif permintaan/requests teman/teman utas/utas draf/draf balasan/balasan ADT/liststatik/driverlistpengguna ADT/pcolor/driver_pcolor ADT/mesinkarakter/drivercharmachine ADT/mesinkata/driverwordmachine ADT/mesinkata/drivermesinkalimat
 
 # Add any other rules or targets as necessary
