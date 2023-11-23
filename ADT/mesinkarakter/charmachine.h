@@ -31,4 +31,6 @@ void STARTFILE(FILE *file);
 
 void ADVFILE();
 
+void CLOSE();
+
 #endif
