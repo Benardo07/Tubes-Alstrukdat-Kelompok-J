@@ -693,7 +693,7 @@ boolean MASUK() {
         } else if (isStrEqual(operasi, "DAFTAR_TEMAN")) {
             daftarTeman(IdCurrentUser);
         } else if (isStrEqual(operasi, "HAPUS_TEMAN")) {
-            hapusTeman(currentUser.id);
+            hapusTeman(IdCurrentUser);
         }else if(isStrEqual(operasi,"GANTI_PROFIL")){
             gantiProfil();
         }else if (isStrEqual(operasi, "LIHAT_PROFIL")){
@@ -847,6 +847,7 @@ void DAFTAR(){
 
         Pengguna p;
         newPengguna(&p, nama, sandi);
+        Teman.nodes++;
 
         insertLastP(&LPengguna,p);
 
