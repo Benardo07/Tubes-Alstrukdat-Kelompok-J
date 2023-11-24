@@ -1,92 +1,142 @@
-CC = gcc
-CFLAGS = -Wall -Werror -std=c11
+<a name="atas"></a>
 
-# Source and Object Files
-SRC = ADT/mesinkarakter/charmachine.c \
-      ADT/mesinkata/wordmachine.c \
-      ADT/liststatik/listpengguna.c \
-      kicauan/kicauan.c \
-      ADT/graf/graf.c \
-      ADT/stack/drafStack.c \
-      primitif/primitif.c \
-      utas/utas.c \
-      ADT/tree/tree.c \
-      ADT/listdin/listdin.c \
-      ADT/listlinier/listlinier.c \
-      ADT/matriks/foto.c \
-      ADT/datetime/datetime.c \
-      ADT/datetime/time.c \
-      teman/teman.c \
-      draf/draf.c \
-      balasan/balasan.c \
-      data/data.c \
-      main.c \
-      ADT/queue/prioqueue.c \
-      ADT/pcolor/pcolor.c \
-      permintaan/requests.c \
-      profil/profil.c \
-      ADT/mesinkata/mesinkalimat.c
-OBJ = $(SRC:.c=.o)
+## Helpful Links
+[PEDOMAN](https://docs.google.com/document/d/1vnoqQK18ECL8PEAkYbjM-9g1MRGTI7hOLv6GKHlGnuc/edit)
 
-.PHONY: all clean test drivers driver_graf driver_drafstack driver_tree driver_listdin driver_listlinier driver_foto driver_datetime driver_time driver_prioqueue driver_listpengguna driver_pcolor driver_mesinkalimat driver_charmachine driver_wordmachine
+[SPESIFIKASI](https://docs.google.com/document/d/1yy0SLsXEE0e-ZBxMSrd0Gz9AOSWqJw1trtTqDjeyfsk/edit)
 
-# Main Target
-all: main drivers
+[Laporan](https://docs.google.com/document/d/1vvcpjb0gBg7fAZ2sz8jaaZ33nvVweUy7/edit)
 
-# Linking
-main: $(OBJ)
-	$(CC) $(CFLAGS) -o $@ $^
+## Tentang Aplikasi
 
-# Compiling
-%.o: %.c
-	$(CC) $(CFLAGS) -c -o $@ $<
+<div align="center">
+    <h2>Bur Bir</h2>
+    <p>By Kelompok J</p>
+    <img src="readme/burbir.png" alt="burbir" style="max-width:20em;"></img>
+    <br/>
+    <br/>
+</div>
 
-drivers: driver_graf driver_drafstack driver_tree driver_listdin driver_listlinier driver_foto driver_datetime driver_time driver_prioqueue driver_listpengguna driver_pcolor driver_mesinkalimat driver_charmachine driver_wordmachine
 
-driver_graf:
-	$(CC) $(CFLAGS) -o $@ $^ ADT/graf/driver_graf.c ADT/graf/graf.c ADT/queue/prioqueue.c 
+Klenting Kuning sedang sedih karena dia dirundung oleh ibu tirinya di aplikasi sosial media yang sedang beken saat zaman itu, yaitu Y. Dia dirundung karena dia berhasil memikat hati Ande-Ande Lumut. Ibu tirinya kesal, karena menurutnya, yang pantas untuk menjadi pasangan dari Ande-Ande Lumut adalah saudara tiri dari Klenting Kuning, yaitu Klenting Biru dan Klenting Merah. Klenting Kuning dikumpulkan di Y Spaces, tempat live audio, yang kelak disebut sebagai Kuning Space untuk dirundung oleh ibu tirinya bersama dengan anak-anaknya.
 
-driver_drafstack:
-	$(CC) $(CFLAGS) -o $@ $^ ADT/stack/driver_drafStack.c ADT/stack/drafStack.c ADT/datetime/datetime.c primitif/primitif.c ADT/mesinkata/wordmachine.c ADT/mesinkarakter/charmachine.c ADT/datetime/time.c
+“Kuning, saya ini perwakilan Klenting Biru dan Klenting Merah. Saya sudah panggil advokat saya untuk bawa kasus ini ke meja hijau. Jadi kamu jangan macam-macam ya!”.
+ 
+Klenting Kuning yang mendengar ancaman dari Ibu tirinya pun ketakutan dengan ancaman tersebut. Apalagi, ibu tirinya ini merupakan seorang aktivis HAM yang ayahnya merupakan salah satu pejabat terkenal di zamannya, dan begitu pula adiknya. Kakak dari suaminya juga merupakan salah satu kepala pejabat yang terkenal. Yang paling menyeramkan, dosen dari ibu tirinya merupakan salah satu petinggi partai di zaman itu.
 
-driver_tree:
-	$(CC) $(CFLAGS) -o $@ $^ ADT/tree/driver_tree.c ADT/tree/tree.c ADT/listdin/listdin.c ADT/datetime/datetime.c primitif/primitif.c ADT/datetime/time.c
+Ande-Ande Lumut yang iba mendengar kisah Klenting Kuning kemudian berencana untuk membuat pengganti sosial media yang beken di zaman itu dimana ibu tiri dan saudara jahatnya dicekal dari pendaftaran, yang kelak dinamai BurBir (Burung Biru). Akan tetapi, dia tidak pandai dalam menggunakan bahasa C, sehingga kami, anak buah dari Yuyu Kangkang, diminta untuk membantu Ande-Ande Lumut membuat Aplikasi BurBir di CLI.
 
-driver_listdin:
-	$(CC) $(CFLAGS) -o $@ $^ ADT/listdin/driver_listdin.c ADT/listdin/listdin.c ADT/tree/tree.c ADT/datetime/datetime.c ADT/datetime/time.c primitif/primitif.c
 
-driver_foto:
-	$(CC) $(CFLAGS) -o $@ $^ ADT/matriks/driverfoto.c ADT/matriks/foto.c ADT/pcolor/pcolor.c
+<p align="right">(<a href="#atas">kembali</a>)</p>
 
-driver_datetime: 
-	$(CC) $(CFLAGS) -o $@ $^ ADT/datetime/driverdatetime.c ADT/datetime/datetime.c ADT/datetime/time.c
+## Cara Kompilasi Program
+Pertama-tama Clone repository terlebih dahulu
+```
+git clone https://github.com/Benardo07/Tubes-Alstrukdat-Kelompok-J.git
+```
 
-driver_time:
-	$(CC) $(CFLAGS) -o $@ $^ ADT/datetime/drivertime.c ADT/datetime/time.c
+Jika ingin mengkompilasi main program dan semua drivers secara bersamaan
+Tuliskan command berikut di **folder utama** project ini, yaitu folder yang sama tempat **Makefile** berada.
 
-driver_prioqueue:
-	$(CC) $(CFLAGS) -o $@ $^ ADT/queue/driverPrio.c ADT/queue/prioqueue.c
+```shell
+$ make
+```
 
-driver_listpengguna:
-	$(CC) $(CFLAGS) -o $@ $^ ADT/liststatik/driverlistpengguna.c ADT/liststatik/listpengguna.c ADT/mesinkata/wordmachine.c ADT/datetime/datetime.c ADT/listdin/listdin.c ADT/tree/tree.c ADT/mesinkarakter/charmachine.c ADT/datetime/time.c primitif/primitif.c ADT/matriks/foto.c ADT/queue/prioqueue.c ADT/stack/drafStack.c ADT/graf/graf.c ADT/pcolor/pcolor.c ADT/mesinkata/mesinkalimat.c profil/profil.c permintaan/requests.c utas/utas.c balasan/balasan.c draf/draf.c data/data.c teman/teman.c kicauan/kicauan.c ADT/listlinier/listlinier.c
+**Note**: Gunakan Git Bash / WSL jika Anda menggukanan Sistem Operasi Windows
 
-driver_listlinier:
-	$(CC) $(CFLAGS) -o $@ $^ ADT/listlinier/driverlistlinier.c ADT/listlinier/listlinier.c kicauan/kicauan.c ADT/mesinkata/wordmachine.c ADT/datetime/datetime.c ADT/listdin/listdin.c ADT/tree/tree.c ADT/mesinkarakter/charmachine.c ADT/datetime/time.c primitif/primitif.c ADT/liststatik/listpengguna.c teman/teman.c ADT/matriks/foto.c ADT/queue/prioqueue.c ADT/stack/drafStack.c ADT/graf/graf.c ADT/pcolor/pcolor.c data/data.c ADT/mesinkata/mesinkalimat.c profil/profil.c permintaan/requests.c utas/utas.c balasan/balasan.c draf/draf.c
 
-driver_pcolor:
-	$(CC) $(CFLAGS) -o $@ $^ ADT/pcolor/driver_pcolor.c ADT/pcolor/pcolor.c
+### Test Driver Program
 
-driver_charmachine:
-	$(CC) $(CFLAGS) -o $@ $^ ADT/mesinkarakter/drivercharmachine.c ADT/mesinkarakter/charmachine.c
+Jika hanya ingin mengkompilasi drivers dari setiap ADT
+```shell
+$ make drivers
+```
+<p align="right">(<a href="#atas">kembali</a>)</p>
 
-driver_wordmachine:
-	$(CC) $(CFLAGS) -o $@ $^ ADT/mesinkata/driverwordmachine.c ADT/mesinkarakter/charmachine.c ADT/mesinkata/wordmachine.c
+## Cara Menjalankan Program
+Setelah dikompilasi, jalankan program dengan memanggil langsung *executables* melalui terminal dengan menulis
 
-driver_mesinkalimat:
-	$(CC) $(CFLAGS) -o $@ $^ ADT/mesinkata/drivermesinkalimat.c ADT/mesinkarakter/charmachine.c ADT/mesinkata/wordmachine.c ADT/mesinkata/mesinkalimat.c
+```shell
+$ ./main
+```
 
-# Clean
-clean:
-	rm -f main $(OBJ) ADT/graf/driver_graf ADT/stack/driver_drafStack ADT/tree/driver_tree ADT/listdin/driver_listdin ADT/listlinier/driverlistlinier ADT/matriks/driverFoto ADT/datetime/driverdatetime ADT/datetime/drivertime ADT/queue/driverPrio primitif/primitif kicauan/kicauan teman/teman profil/profil primitif/primitif permintaan/requests teman/teman utas/utas draf/draf balasan/balasan ADT/liststatik/driverlistpengguna ADT/pcolor/driver_pcolor ADT/mesinkarakter/drivercharmachine ADT/mesinkata/driverwordmachine ADT/mesinkata/drivermesinkalimat
+sebelum memanggil program, pastikan  *Current Working Directory* terminal berada di **folder utama** program.
 
-# Add any other rules or targets as necessary
+ *Current Working Directory* terminal dapat dilihat dengan menulis
+
+ ```shell
+ $ cwd
+ ```
+ atau
+ ```shell
+ $ pwd
+ ```
+
+
+### Test Driver Program
+Test program dapat dijalankan dengan memanggil masing-masing *binary file* yang sesuai dengan nama ADT, contoh
+
+```shell
+$ ./(nama_driveradt)
+```
+
+### List nama_driveradt :
+- driver_time : untuk Unit Test ADT Sederhana (Time)
+- driver_datetime : untuk Unit Test ADT Sederhana (Datetime)
+- driver_listpengguna : untuk Unit Test ADT List dengan Struktur Data Array Statik
+- driver_foto : untuk Unit Test ADT Matriks
+- driver_listdin : untuk Unit Test ADT List dengan Struktur Data Array Dinamik
+- driver_charmachine : untuk Unit Test Mesin Karakter
+- driver_wordmachine : untuk Unit Test Mesin Kalimat
+- driver_prioqueue : untuk Unit Test ADT Priority Queue
+- driver_drafstack : untuk Unit Test ADT Stack
+- driver_listlinier : untuk Unit Test ADT List dengan Struktur Data Berkait
+- driver_tree : untuk Unit Test ADT Tree
+- driver_graf : untuk Unit Test ADT Graf dengan Representasi Adjacency Matrix
+<p align="right">(<a href="#atas">kembali</a>)</p>
+
+## Anggota Kelompok
+| NIM |Nama |
+|-----|-----|
+|13522002|Ariel Herfrison|
+|13522007|Irfan Sidiq Permana|
+|13522021|Filbert|
+|13522025|Debrina Veisha Rashika W|
+|13522055|Benardo|
+
+<p align="right">(<a href="#atas">kembali</a>)</p>
+
+## Daftar Fitur
+| No. | Nama Fitur | Status |
+|-----|------------|:------:|
+|1 |DAFTAR|:heavy_check_mark:|
+|2 |MASUK|:heavy_check_mark:|
+|3 |GANTI_PROFIL|:heavy_check_mark:|
+|4 |LIHAT_PROFIL|:heavy_check_mark:|
+|5 |ATUR_JENIS_AKUN|:heavy_check_mark:|
+|6 |UBAH_FOTO_PROFIL|:heavy_check_mark:|
+|7 |DAFTAR_TEMAN|:heavy_check_mark:|
+|8 |HAPUS_TEMAN|:heavy_check_mark:|
+|9 |TAMBAH_TEMAN|:heavy_check_mark:|
+|10|DAFTAR_PERMINTAAN_PERTEMANAN|:heavy_check_mark:|
+|11|SETUJUI_PERTEMANAN|:heavy_check_mark:|
+|12|KICAU|:heavy_check_mark:|
+|13|KICAUAN|:heavy_check_mark:|
+|14|SUKA_KICAUAN|:heavy_check_mark:|
+|15|UBAH_KICAUAN|:heavy_check_mark:|
+|16|BALAS|:heavy_check_mark:|
+|17|BALASAN|:heavy_check_mark:|
+|18|HAPUS_BALASAN|:heavy_check_mark:|
+|19|BUAT_DRAF|:heavy_check_mark:|
+|20|LIHAT_DRAF|:heavy_check_mark:|
+|21|UTAS|:heavy_check_mark:|
+|22|SAMBUNG_UTAS|:heavy_check_mark:|
+|23|HAPUS_UTAS|:heavy_check_mark:|
+|24|CETAK_UTAS|:heavy_check_mark:|
+|25|SIMPAN|:heavy_check_mark:|
+|26|MUAT|:heavy_check_mark:|
+|27|KELUAR|:heavy_check_mark:|
+|28|TUTUP_PROGRAM|:heavy_check_mark:|
+
+<p align="right">(<a href="#atas">kembali</a>)</p>
+
