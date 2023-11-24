@@ -96,13 +96,13 @@ $ ./(nama_driveradt)
 <p align="right">(<a href="#atas">kembali</a>)</p>
 
 ## Anggota Kelompok
-| NIM |Nama |
-|-----|-----|
-|13522002|Ariel Herfrison|
-|13522007|Irfan Sidiq Permana|
-|13522021|Filbert|
-|13522025|Debrina Veisha Rashika W|
-|13522055|Benardo|
+| NIM |Nama | Daftar Pembagian Tugas|
+|-----|-----|-----------------------|
+|13522002|Ariel Herfrison|Fitur Inisialisasi, Perintah, Pengguna|
+|13522007|Irfan Sidiq Permana|Fitur Teman, Simpan dan Muat|
+|13522021|Filbert|Fitur Profil, Permintaan pertemanan, dan makefile driver |
+|13522025|Debrina Veisha Rashika W|Fitur Kicauan, Fitur Utas,  Config Kicauan, Config Utas|
+|13522055|Benardo|Fitur Balasan , Fitur Draf, Config Balasan , Config Draf, makefile|
 
 <p align="right">(<a href="#atas">kembali</a>)</p>
 
