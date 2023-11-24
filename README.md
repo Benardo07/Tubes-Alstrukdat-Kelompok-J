@@ -35,17 +35,19 @@ Pertama-tama Clone repository terlebih dahulu
 git clone https://github.com/Benardo07/Tubes-Alstrukdat-Kelompok-J.git
 ```
 
+Jika ingin mengkompilasi main program dan semua drivers secara bersamaan
 Tuliskan command berikut di **folder utama** project ini, yaitu folder yang sama tempat **Makefile** berada.
 
 ```shell
 $ make
 ```
 
-**Note**: Gunakan Git Bash jika Anda menggukanan Sistem Operasi Windows
+**Note**: Gunakan Git Bash / WSL jika Anda menggukanan Sistem Operasi Windows
 
 
 ### Test Driver Program
 
+Jika hanya ingin mengkompilasi drivers dari setiap ADT
 ```shell
 $ make drivers
 ```
@@ -57,7 +59,6 @@ Setelah dikompilasi, jalankan program dengan memanggil langsung *executables* me
 ```shell
 $ ./main
 ```
-jika Anda menggunakan sistem operasi Windows.
 
 sebelum memanggil program, pastikan  *Current Working Directory* terminal berada di **folder utama** program.
 
@@ -78,6 +79,9 @@ Test program dapat dijalankan dengan memanggil masing-masing *binary file* yang 
 ```shell
 $ ./(nama_driveradt)
 ```
+
+List nama_driveradt
+1.driverlistpengguna : untuk Unit test List Array 
 <p align="right">(<a href="#atas">kembali</a>)</p>
 
 ## Anggota Kelompok
