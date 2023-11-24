@@ -103,6 +103,7 @@ boolean isFullP(ListPengguna l) {
 }
 
 void printPengguna(Pengguna p) {
+    printf("%d\n",ID(p));
     printf("%s\n",NAMA(p));
     printf("%s\n",PASSWORD(p));
     printf("%s\n",BIO(p));

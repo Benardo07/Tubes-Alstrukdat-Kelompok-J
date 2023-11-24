@@ -847,6 +847,7 @@ void DAFTAR(){
 
         Pengguna p;
         newPengguna(&p, nama, sandi);
+        ID(p) = listLengthP(LPengguna)+1;
         Teman.nodes++;
 
         insertLastP(&LPengguna,p);
