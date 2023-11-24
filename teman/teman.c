@@ -39,16 +39,6 @@ void daftarTeman(int idUser) {
     // }
 }
 
-int searchNamaP(ListPengguna l, char *nama){
-    int i=0; boolean found = false;
-    while (i < NEFF(l) && !found){
-        if (isStrEqual(NAMA(ELMT(l,i)),nama)) found = true;
-        else i++;
-    }
-    if (!found) {i = IDX_UNDEF;}
-    return i;
-}
-
 void hapusTeman() {
     if (TOTALFRIENDS(currentUser) == 0) {
         printf("Anda belum memiliki teman!\n");
@@ -60,7 +50,7 @@ void hapusTeman() {
     StartSentence();
     strCpy(currentSentence.TabWord, nama);
 
-    int id_target = searchNamaP(LPengguna, nama);
+    int id_target = searchPenggunaByName(LPengguna, nama);
     if (id_target != IDX_UNDEF) {
         id_target++;
         if (id_target == ID(currentUser)) {
