@@ -585,7 +585,6 @@ void SimpanBalasan(char* namaFolder) {
         fprintf(fBalasan, "%d\n", nbElmt(T));
         SimpanBalasanRekursif(fBalasan, T, -1);
     }
-    inverseList(&LKicau);
     fclose(fBalasan);
 }
 

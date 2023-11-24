@@ -66,19 +66,21 @@ void setWeton(){
     printf("Masukkan Weton: \n");
     STARTWORD();
     char* weton = currentWord.TabWord;
-    makeUpper(weton);
     char* wetonNew;
+    wetonNew = strLower(weton);
+    makeUpper(wetonNew);
     int i;
     for(i=0;i<listLengthP(LPengguna);i++){
         if(i+1 == IdCurrentUser){
-            strCpy(weton,WETON(ELMT(LPengguna,i)));
+            strCpy(wetonNew,WETON(ELMT(LPengguna,i)));
             while(!isWeton(weton)){
                 printf("\n");
                 printf("Weton anda tidak valid.\n");
                 printf("\n");
                 printf("Masukkan Weton: \n");
                 STARTWORD();
-                wetonNew = currentWord.TabWord;
+                weton = currentWord.TabWord;
+                wetonNew = strLower(weton);
                 makeUpper(wetonNew);
                 strCpy(wetonNew,WETON(ELMT(LPengguna,i)));
             }

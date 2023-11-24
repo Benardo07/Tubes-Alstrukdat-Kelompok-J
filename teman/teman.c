@@ -25,18 +25,6 @@ void daftarTeman(int idUser) {
             DequeuePrio(&q, &temp);
         }
     }
-
-    // if (TOTALFRIENDS(ELMT(LPengguna, idUser-1)) == 0) {
-    //     printf("%s belum mempunyai teman.\n", NAMA(currentUser));
-    // }
-    // else {
-    //     printf("%s mempunyai %d teman\n", NAMA(currentUser), TOTALFRIENDS(ELMT(LPengguna, idUser-1)));
-    //     for (int i=0; i<SIMPUL(Teman); ++i) {
-    //         if (i != IdCurrentUser-1 && isTeman(i+1, IdCurrentUser)) {
-    //             printf("| %s\n", NAMA(ELMT(LPengguna, i)));
-    //         }
-    //     }
-    // }
 }
 
 void hapusTeman() {
@@ -53,16 +41,16 @@ void hapusTeman() {
     int id_target = searchPenggunaByName(LPengguna, nama);
     if (id_target != IDX_UNDEF) {
         id_target++;
-        if (id_target == ID(currentUser)) {
+        if (id_target == IdCurrentUser) {
             printf("Anda tidak dapat menghapus diri sendiri!\n");
         }
-        else if (isTeman(ID(currentUser), id_target)) {
+        else if (isTeman(IdCurrentUser, id_target)) {
             printf("Apakah anda yakin ingin menghapus %s dari daftar teman Anda? (YA/TIDAK): ", nama);
             boolean inputValid = false;
             while(!inputValid) {
                 StartSentence();
                 if (isStrEqual(currentSentence.TabWord, "YA")) {
-                    deleteEdge(&Teman, ID(currentUser)-1, id_target-1);
+                    deleteEdge(&Teman, IdCurrentUser-1, id_target-1);
                     printf("%s berhasil dihapus dari daftar teman Anda.\n", nama);
                     inputValid = true;
                     TOTALFRIENDS(currentUser)--;
