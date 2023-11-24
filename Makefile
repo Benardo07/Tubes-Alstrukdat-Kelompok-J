@@ -28,19 +28,7 @@ SRC = ADT/mesinkarakter/charmachine.c \
       ADT/mesinkata/mesinkalimat.c
 OBJ = $(SRC:.c=.o)
 
-DRIVERS =   ADT/graf/driver_graf.c \
-            ADT/stack/driver_drafStack.c \
-            ADT/tree/driver_tree.c \
-            ADT/listdin/driver_listdin.c \
-            ADT/listlinier/driverlistlinier.c \
-            ADT/matriks/driverFoto.c \
-            ADT/datetime/driverdatetime.c \
-            ADT/datetime/drivertime.c \
-            ADT/liststatik/driverlistpengguna.c \
-            ADT/queue/driverPrio.c 
-# DRIVER_EXES = $(DRIVERS:.c=.o)
-
-.PHONY: all clean test drivers driver_graf driver_drafStack driver_tree driver_listdin driverlistlinier driverFoto driverdatetime drivertime driverPrio driverlistpengguna driver_pcolor drivermesinkalimat drivercharmachine driverwordmachine
+.PHONY: all clean test drivers driver_graf driver_drafstack driver_tree driver_listdin driver_listlinier driver_foto driver_datetime driver_time driver_prioqueue driver_listpengguna driver_pcolor driver_mesinkalimat driver_charmachine driver_wordmachine
 
 # Main Target
 all: main drivers
@@ -53,12 +41,12 @@ main: $(OBJ)
 %.o: %.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-drivers: driver_graf driver_drafStack driver_tree driver_listdin driverlistlinier driverFoto driverdatetime drivertime driverPrio driverlistpengguna driver_pcolor drivermesinkalimat drivercharmachine driverwordmachine
+drivers: driver_graf driver_drafstack driver_tree driver_listdin driver_listlinier driver_foto driver_datetime driver_time driver_prioqueue driver_listpengguna driver_pcolor driver_mesinkalimat driver_charmachine driver_wordmachine
 
 driver_graf:
 	$(CC) $(CFLAGS) -o $@ $^ ADT/graf/driver_graf.c ADT/graf/graf.c ADT/queue/prioqueue.c 
 
-driver_drafStack:
+driver_drafstack:
 	$(CC) $(CFLAGS) -o $@ $^ ADT/stack/driver_drafStack.c ADT/stack/drafStack.c ADT/datetime/datetime.c primitif/primitif.c ADT/mesinkata/wordmachine.c ADT/mesinkarakter/charmachine.c ADT/datetime/time.c
 
 driver_tree:
@@ -67,34 +55,34 @@ driver_tree:
 driver_listdin:
 	$(CC) $(CFLAGS) -o $@ $^ ADT/listdin/driver_listdin.c ADT/listdin/listdin.c ADT/tree/tree.c ADT/datetime/datetime.c ADT/datetime/time.c primitif/primitif.c
 
-driverFoto:
+driver_foto:
 	$(CC) $(CFLAGS) -o $@ $^ ADT/matriks/driverfoto.c ADT/matriks/foto.c ADT/pcolor/pcolor.c
 
-driverdatetime: 
+driver_datetime: 
 	$(CC) $(CFLAGS) -o $@ $^ ADT/datetime/driverdatetime.c ADT/datetime/datetime.c ADT/datetime/time.c
 
-drivertime:
+driver_time:
 	$(CC) $(CFLAGS) -o $@ $^ ADT/datetime/drivertime.c ADT/datetime/time.c
 
-driverPrio:
+driver_prioqueue:
 	$(CC) $(CFLAGS) -o $@ $^ ADT/queue/driverPrio.c ADT/queue/prioqueue.c
 
-driverlistpengguna:
+driver_listpengguna:
 	$(CC) $(CFLAGS) -o $@ $^ ADT/liststatik/driverlistpengguna.c ADT/liststatik/listpengguna.c ADT/mesinkata/wordmachine.c ADT/datetime/datetime.c ADT/listdin/listdin.c ADT/tree/tree.c ADT/mesinkarakter/charmachine.c ADT/datetime/time.c primitif/primitif.c ADT/matriks/foto.c ADT/queue/prioqueue.c ADT/stack/drafStack.c ADT/graf/graf.c ADT/pcolor/pcolor.c ADT/mesinkata/mesinkalimat.c profil/profil.c permintaan/requests.c utas/utas.c balasan/balasan.c draf/draf.c data/data.c teman/teman.c kicauan/kicauan.c ADT/listlinier/listlinier.c
 
-driverlistlinier:
+driver_listlinier:
 	$(CC) $(CFLAGS) -o $@ $^ ADT/listlinier/driverlistlinier.c ADT/listlinier/listlinier.c kicauan/kicauan.c ADT/mesinkata/wordmachine.c ADT/datetime/datetime.c ADT/listdin/listdin.c ADT/tree/tree.c ADT/mesinkarakter/charmachine.c ADT/datetime/time.c primitif/primitif.c ADT/liststatik/listpengguna.c teman/teman.c ADT/matriks/foto.c ADT/queue/prioqueue.c ADT/stack/drafStack.c ADT/graf/graf.c ADT/pcolor/pcolor.c data/data.c ADT/mesinkata/mesinkalimat.c profil/profil.c permintaan/requests.c utas/utas.c balasan/balasan.c draf/draf.c
 
 driver_pcolor:
 	$(CC) $(CFLAGS) -o $@ $^ ADT/pcolor/driver_pcolor.c ADT/pcolor/pcolor.c
 
-drivercharmachine:
+driver_charmachine:
 	$(CC) $(CFLAGS) -o $@ $^ ADT/mesinkarakter/drivercharmachine.c ADT/mesinkarakter/charmachine.c
 
-driverwordmachine:
+driver_wordmachine:
 	$(CC) $(CFLAGS) -o $@ $^ ADT/mesinkata/driverwordmachine.c ADT/mesinkarakter/charmachine.c ADT/mesinkata/wordmachine.c
 
-drivermesinkalimat:
+driver_mesinkalimat:
 	$(CC) $(CFLAGS) -o $@ $^ ADT/mesinkata/drivermesinkalimat.c ADT/mesinkarakter/charmachine.c ADT/mesinkata/wordmachine.c ADT/mesinkata/mesinkalimat.c
 
 # Clean
