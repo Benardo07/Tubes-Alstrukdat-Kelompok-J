@@ -25,10 +25,10 @@ typedef struct
 {
     int id;
     int totalfriends;
-    char nama[20];
-    char password[20];
-    char bio[135];
-    char noHp[100]; //to do: ubah noHP ke int
+    char nama[21];
+    char password[21];
+    char bio[136];
+    char noHp[100]; 
     char weton[10];
     char jenisAkun[10];
     PrioQueue friendRequest;

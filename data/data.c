@@ -829,20 +829,30 @@ void DAFTAR(){
         while (loop) {
             printf("\nMasukkan nama:\n");
             StartSentence();
-            strCpy(currentSentence.TabWord,nama);
+            if (currentSentence.Length > 20) printf("\nNama terlalu panjang.\n");
+            else {
+                strCpy(currentSentence.TabWord,nama);
 
-            if (searchNama(LPengguna, nama) != IDX_UNDEF) {
-                printf("\nWah, sayang sekali nama tersebut telah diambil. \n");
-            } else {
-                loop = false;
+                if (searchNama(LPengguna, nama) != IDX_UNDEF) {
+                    printf("\nWah, sayang sekali nama tersebut telah diambil. \n");
+                } else {
+                    loop = false;
+                }
             }
         }
 
         // terima sandi
         char sandi[21];
-        printf("\nMasukkan kata sandi:\n");
-        StartSentence();
-        strCpy(currentSentence.TabWord,sandi);
+        loop = true;
+        while (loop) {
+            printf("\nMasukkan kata sandi:\n");
+            StartSentence();
+            if (currentSentence.Length > 20) printf("\nPassword terlalu panjang.\n");
+            else {
+                strCpy(currentSentence.TabWord,sandi);
+                loop = false;
+            }
+        }
 
         Pengguna p;
         newPengguna(&p, nama, sandi);

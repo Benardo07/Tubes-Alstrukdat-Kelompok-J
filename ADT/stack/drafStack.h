@@ -10,7 +10,7 @@
 
 typedef struct 
 {
-    char drafTweet[280];
+    char drafTweet[281];
     DATETIME timeDraf;
 } Draf;
 

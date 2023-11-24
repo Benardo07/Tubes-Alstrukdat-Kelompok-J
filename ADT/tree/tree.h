@@ -11,8 +11,8 @@
 typedef struct
 {
     int id;
-    char tweet[280];
-    char writer[20];
+    char tweet[281];
+    char writer[21];
     DATETIME d;
 } Balasan;
 
