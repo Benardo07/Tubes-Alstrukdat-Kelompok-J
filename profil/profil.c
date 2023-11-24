@@ -11,7 +11,9 @@ void setBio(){
         if(i+1 == IdCurrentUser){
             strCpy(s,BIO(ELMT(LPengguna,i)));
             while(strlength(s) > 135){
-                printf("Bio memiliki panjang melebihi 135 karakter. Masukkan sesuai format lagi : \n");
+                printf("\nBio memiliki panjang melebihi 135 karakter. Masukkan lagi yuk! \n");
+                printf("\n");
+                printf("Masukkan Bio Akun (Max : 135 karakter): \n");
                 StartSentence();
                 s = currentSentence.TabWord;
                 strCpy(s,BIO(ELMT(LPengguna,i)));
@@ -37,24 +39,28 @@ void setNoHP(){
     printf("Masukkan No HP: \n");
     STARTWORD();
     char* hp;
-    char* hpnew;
     hp = currentWord.TabWord;
     int i;
+    while(strlength(hp)>15 || !NumberValid(currentWord)){
+        if(strlength(hp) > 15){
+            printf("\nNo Hp memiliki panjang melebihi 15 karakter. Masukkan lagi yuk!\n");
+            printf("\n");
+        }else if (!NumberValid(currentWord)){
+            printf("\n");
+            printf("No HP tidak valid. Masukkan lagi yuk!\n");
+            printf("\n");
+        }
+        printf("Masukkan No HP: \n");
+        STARTWORD();  
+    }
     for(i=0;i<listLengthP(LPengguna);i++){
         if(i+1 == IdCurrentUser){
             strCpy(hp,HP(ELMT(LPengguna,i)));
-            while(!NumberValid(currentWord)){
-                printf("\n");
-                printf("No HP tidak valid. Masukkan lagi yuk!\n");
-                printf("\n");
-                printf("Masukkan No HP: \n");
-                STARTWORD();
-                hpnew = currentWord.TabWord;
-                strCpy(hpnew,HP(ELMT(LPengguna,i)));
-            }
+            break;
         }
-    } 
-}
+    }
+} 
+
 
 void setWeton(){
     printf("Masukkan Weton: \n");
