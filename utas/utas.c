@@ -186,7 +186,8 @@ void hapusUtas(Kicau *k,int idx, char *aut){
                 printf("Kicauan sambungan berhasil dihapus!\n");
             }
             else{
-                deleteAt(&((*k).Utas),idx-1,k);
+                Kicau val;
+                deleteAt(&((*k).Utas),idx-1,&val);
                 printf("Kicauan sambungan berhasil dihapus!\n");
             }
         }
